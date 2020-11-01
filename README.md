@@ -19,7 +19,7 @@ Entity Validator main repository.
 
 ```xml
 <dependency>
-  <groupId>org.thinkit.generator.common</groupId>
+  <groupId>org.thinkit.framework.envali</groupId>
   <artifactId>entity-validator</artifactId>
   <version>vx.x.x</version>
 </dependency>
@@ -48,7 +48,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.thinkit.generator.common:entity-validator:vx.x.x'
+    implementation 'org.thinkit.framework.envali:entity-validator:vx.x.x'
 }
 ```
 
