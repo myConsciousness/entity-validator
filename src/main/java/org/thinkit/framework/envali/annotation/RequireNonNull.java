@@ -24,7 +24,17 @@ import java.lang.annotation.Target;
  * {@code null} .
  * <p>
  * Specify this annotation {@link RequireNonNull} for fields that do not allow
- * {@code null} .
+ * {@code null} as follows.
+ *
+ * <pre>
+ * <code>
+ * public class ConcreteEntity implements ValidatableEntity, Serializable {
+ *
+ *      &#64;RequireNonNull
+ *      private String literal;
+ * }
+ * </code>
+ * </pre>
  *
  * @author Kato Shinya
  * @since 1.0

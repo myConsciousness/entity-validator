@@ -23,7 +23,18 @@ import java.lang.annotation.Target;
  * An annotation that indicates the field is not allowed to be set to positive
  * numbers.
  * <p>
- * Specify this annotation for fields that do not allow positive numbers.
+ * Specify this annotation for fields that do not allow positive numbers as
+ * follows.
+ *
+ * <pre>
+ * <code>
+ * public class ConcreteEntity implements ValidatableEntity, Serializable {
+ *
+ *      &#64;RequireNegative
+ *      private int number;
+ * }
+ * </code>
+ * </pre>
  *
  * @author Kato Shinya
  * @since 1.0
