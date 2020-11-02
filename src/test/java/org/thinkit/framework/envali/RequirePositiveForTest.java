@@ -1,7 +1,3 @@
-package org.thinkit.framework.envali;
-
-import org.thinkit.framework.envali.annotation.RequirePositive;
-
 /*
  * Copyright 2020 Kato Shinya.
  *
@@ -16,6 +12,9 @@ import org.thinkit.framework.envali.annotation.RequirePositive;
  * the License.
  */
 
+package org.thinkit.framework.envali;
+
+import org.thinkit.framework.envali.annotation.RequirePositive;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 
 /**
