@@ -80,4 +80,4 @@ Regardless of the means or content of communication, I would love to hear from y
 - [Release Note](https://github.com/myConsciousness/entity-validator/releases)
 - [Package](https://github.com/myConsciousness/entity-validator/packages)
 - [File a Bug](https://github.com/myConsciousness/entity-validator/issues)
-- [Refernce](https://myconsciousness.github.io/entity-validator/)
+- [Reference](https://myconsciousness.github.io/entity-validator/)
