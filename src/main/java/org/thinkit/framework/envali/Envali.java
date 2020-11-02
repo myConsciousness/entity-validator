@@ -14,6 +14,18 @@
 
 package org.thinkit.framework.envali;
 
+import java.lang.annotation.Annotation;
+import java.util.Arrays;
+
+import org.thinkit.common.Preconditions;
+import org.thinkit.framework.envali.annotation.ParameterMapping;
+import org.thinkit.framework.envali.annotation.RequireEndWith;
+import org.thinkit.framework.envali.annotation.RequireNegative;
+import org.thinkit.framework.envali.annotation.RequireNonNull;
+import org.thinkit.framework.envali.annotation.RequirePositive;
+import org.thinkit.framework.envali.annotation.RequireRangeFromTo;
+import org.thinkit.framework.envali.annotation.RequireRangeTo;
+import org.thinkit.framework.envali.annotation.RequireStartWith;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 
 import lombok.NonNull;
@@ -27,7 +39,39 @@ import lombok.NonNull;
  */
 public interface Envali {
 
-    public static <R> R validate(@NonNull Class<? extends ValidatableEntity> entity) {
-        return null;
+    public static void validate(@NonNull ValidatableEntity entity) {
+
+        final Class<? extends ValidatableEntity> entityClass = entity.getClass();
+        final ParameterMapping parameter = entityClass.getAnnotation(ParameterMapping.class);
+
+        Arrays.asList(entityClass.getDeclaredFields()).forEach(field -> {
+            field.setAccessible(true);
+
+            Arrays.asList(field.getAnnotations()).forEach(annotation -> {
+                try {
+                    final Class<? extends Annotation> annotationType = annotation.annotationType();
+
+                    if (annotationType.equals(RequireNonNull.class)) {
+                        Preconditions.requireNonNull(field.get(entity), "");
+                    } else if (annotationType.equals(RequirePositive.class)) {
+
+                    } else if (annotationType.equals(RequireNegative.class)) {
+
+                    } else if (annotationType.equals(RequireRangeTo.class)) {
+
+                    } else if (annotationType.equals(RequireRangeFromTo.class)) {
+
+                    } else if (annotationType.equals(RequireStartWith.class)) {
+
+                    } else if (annotationType.equals(RequireEndWith.class)) {
+
+                    } else if (annotationType.equals(RequireNonNull.class)) {
+
+                    }
+                } catch (IllegalArgumentException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            });
+        });
     }
 }
