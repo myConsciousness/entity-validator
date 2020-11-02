@@ -21,14 +21,13 @@ import org.thinkit.common.Preconditions;
 import org.thinkit.framework.envali.annotation.ParameterMapping;
 import org.thinkit.framework.envali.annotation.RequireEndWith;
 import org.thinkit.framework.envali.annotation.RequireNegative;
+import org.thinkit.framework.envali.annotation.RequireNonEmpty;
 import org.thinkit.framework.envali.annotation.RequireNonNull;
 import org.thinkit.framework.envali.annotation.RequirePositive;
 import org.thinkit.framework.envali.annotation.RequireRangeFromTo;
 import org.thinkit.framework.envali.annotation.RequireRangeTo;
 import org.thinkit.framework.envali.annotation.RequireStartWith;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
-
-import lombok.NonNull;
 
 /**
  *
@@ -39,7 +38,18 @@ import lombok.NonNull;
  */
 public interface Envali {
 
-    public static void validate(@NonNull ValidatableEntity entity) {
+    /**
+     * {@link ValidatableEntity}
+     * インターフェースを実装したエンティティオブジェクトに設定されたアノテーションを解析しフィールドの値の有効性を検証します。
+     *
+     * @param entity {@link ValidatableEntity} インターフェースを実装した検証対象のエンティティオブジェクト
+     *
+     * @exception NullPointerException          引数として {@code null} が渡された場合
+     * @exception InvalidValueDetectedException 検証処理で無効な値を検知した場合
+     * @exception UnsupportedOperationException リフレクション処理時に想定外のオペレーションを検知した場合
+     */
+    public static void validate(ValidatableEntity entity) {
+        Preconditions.requireNonNull(entity);
 
         final Class<? extends ValidatableEntity> entityClass = entity.getClass();
         final ParameterMapping parameter = entityClass.getAnnotation(ParameterMapping.class);
@@ -52,11 +62,13 @@ public interface Envali {
                     final Class<? extends Annotation> annotationType = annotation.annotationType();
 
                     if (annotationType.equals(RequireNonNull.class)) {
-                        Preconditions.requireNonNull(field.get(entity), "");
+                        Preconditions.requireNonNull(field.get(entity));
                     } else if (annotationType.equals(RequirePositive.class)) {
-
+                        Preconditions.requirePositive(Integer.parseInt(String.valueOf(field.get(entity))),
+                                new InvalidValueDetectedException());
                     } else if (annotationType.equals(RequireNegative.class)) {
-
+                        Preconditions.requireNegative(Integer.parseInt(String.valueOf(field.get(entity))),
+                                new InvalidValueDetectedException());
                     } else if (annotationType.equals(RequireRangeTo.class)) {
 
                     } else if (annotationType.equals(RequireRangeFromTo.class)) {
@@ -65,11 +77,11 @@ public interface Envali {
 
                     } else if (annotationType.equals(RequireEndWith.class)) {
 
-                    } else if (annotationType.equals(RequireNonNull.class)) {
+                    } else if (annotationType.equals(RequireNonEmpty.class)) {
 
                     }
                 } catch (IllegalArgumentException | IllegalAccessException e) {
-                    e.printStackTrace();
+                    throw new UnsupportedOperationException(e);
                 }
             });
         });
