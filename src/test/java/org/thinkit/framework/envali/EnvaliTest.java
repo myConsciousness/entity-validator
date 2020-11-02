@@ -63,4 +63,22 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RequirePositiveForTest(parameter)));
         }
     }
+
+    @Nested
+    class TestRequireNegative {
+
+        @ParameterizedTest
+        @ValueSource(ints = { -1, -2, -10, -100, -1000 })
+        void testNegativeCases(int parameter) {
+            assertDoesNotThrow(() -> Envali.validate(new RequireNegativeForTest(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { 0, 1, 10, 100, 1000 })
+        void testPositiveCases(int parameter) {
+            assertThrows(InvalidValueDetectedException.class,
+                    () -> Envali.validate(new RequireNegativeForTest(parameter)));
+        }
+
+    }
 }
