@@ -36,14 +36,31 @@ public final class EnvaliTest {
 
         @ParameterizedTest
         @ValueSource(strings = { "test", "t", "test something", "", " ", " test", "test " })
-        void testStringCases(final String parameter) {
-            assertDoesNotThrow(() -> Envali.validate(new ValidatableEntityForTest(parameter)));
+        void testSimpleCases(final String parameter) {
+            assertDoesNotThrow(() -> Envali.validate(new RequireNonNullForTest(parameter)));
         }
 
         @Test
         void testWhenStringIsNull() {
             final String empty = null;
-            assertThrows(NullPointerException.class, () -> Envali.validate(new ValidatableEntityForTest(empty)));
+            assertThrows(NullPointerException.class, () -> Envali.validate(new RequireNonNullForTest(empty)));
+        }
+    }
+
+    @Nested
+    class TestRequirePositive {
+
+        @ParameterizedTest
+        @ValueSource(ints = { 0, 1, 10, 100, 1000 })
+        void testPositiveCases(int parameter) {
+            assertDoesNotThrow(() -> Envali.validate(new RequirePositiveForTest(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { -1, -2, -10, -100, -1000 })
+        void testNegativeCases(int parameter) {
+            assertThrows(InvalidValueDetectedException.class,
+                    () -> Envali.validate(new RequirePositiveForTest(parameter)));
         }
     }
 }

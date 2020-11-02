@@ -18,13 +18,14 @@ import org.thinkit.framework.envali.annotation.RequireNonNull;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 
 /**
- * {@link Envali} インターフェースをテストする際に使用するフィールドを定義するクラスです。
+ * {@link Envali} インターフェースと
+ * {@link RequireNonNull} アノテーションをテストする際に使用するフィールドを定義するクラスです。
  *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
  */
-final class ValidatableEntityForTest implements ValidatableEntity {
+final class RequireNonNullForTest implements ValidatableEntity {
 
     /**
      * {@code null} を許容しないフィールド
@@ -36,7 +37,7 @@ final class ValidatableEntityForTest implements ValidatableEntity {
      * デフォルトコンストラクタ
      */
     @SuppressWarnings("unused")
-    private ValidatableEntityForTest() {
+    private RequireNonNullForTest() {
     }
 
     /**
@@ -44,7 +45,7 @@ final class ValidatableEntityForTest implements ValidatableEntity {
      *
      * @param literal 文字列
      */
-    public ValidatableEntityForTest(String literal) {
+    public RequireNonNullForTest(String literal) {
         this.literal = literal;
     }
 }
