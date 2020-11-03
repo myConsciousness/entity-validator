@@ -48,6 +48,44 @@ import org.thinkit.framework.envali.entity.ValidatableEntity;
  * implement the {@link ValidatableEntity} interface. This interface has no
  * processing, but this marker interface required when using the
  * {@link Envali#validate} method.
+ * <p>
+ * For {@link RequireRangeTo} , {@link RequireRangeFromTo} ,
+ * {@link RequireStartWith}, {@link RequireEndWith} you need to create a content
+ * file that defines your expectations and map them with the
+ * {@link ParameterMapping} annotation.
+ * <p>
+ * The above description can be summarized as follows.
+ *
+ * <pre>
+ * Define the entities to be validated:
+ * <code>
+ * import org.thinkit.framework.envali.ParameterMapping;
+ * import org.thinkit.framework.envali.RequireNonNull;
+ * import org.thinkit.framework.envali.RequirePositive;
+ * import org.thinkit.framework.envali.RangeFromTo;
+ * import org.thinkit.framework.envali.entity.ValidatableEntity;
+ *
+ * &#64;ParameterMapping(content = "EnvaliContent")
+ * public class ConcreteEntity implements ValidatableEntity {
+ *
+ *      &#64;RequireNonNull
+ *      private String literal;
+ *
+ *      &#64;RequirePositive
+ *      private int positive;
+ *
+ *      &#64;RequireRangeFromTo
+ *      private int number;
+ * }
+ * </code>
+ * </pre>
+ *
+ * <pre>
+ * Then just run the {@link Envali#validate} method:
+ * <code>
+ * Envali.validate(concreteEntityObject);
+ * </code>
+ * </pre>
  *
  * @author Kato Shinya
  * @since 1.0
