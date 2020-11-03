@@ -16,8 +16,13 @@ package org.thinkit.framework.envali;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.thinkit.common.Preconditions;
+import org.thinkit.common.catalog.Extension;
+import org.thinkit.framework.content.ContentLoader;
 import org.thinkit.framework.envali.annotation.ParameterMapping;
 import org.thinkit.framework.envali.annotation.RequireEndWith;
 import org.thinkit.framework.envali.annotation.RequireNegative;
@@ -27,14 +32,30 @@ import org.thinkit.framework.envali.annotation.RequirePositive;
 import org.thinkit.framework.envali.annotation.RequireRangeFromTo;
 import org.thinkit.framework.envali.annotation.RequireRangeTo;
 import org.thinkit.framework.envali.annotation.RequireStartWith;
+import org.thinkit.framework.envali.catalog.EnvaliContentAttribute;
+import org.thinkit.framework.envali.catalog.EnvaliContentRoot;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 
 /**
- *
+ * {@link Envali} is a powerful interface that provides common and intuitive
+ * validation process for entity fields.
+ * <p>
+ * It is very easy and intuitive to use, you just need to annotate the fields of
+ * the entity to be validated such as {@link RequireNonNull} and
+ * {@link RequireNonEmpty} and others.
  *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
+ *
+ * @see RequireNonNull
+ * @see RequireNonEmpty
+ * @see RequirePositive
+ * @see RequireNegative
+ * @see RequireRangeTo
+ * @see RequireRangeFromTo
+ * @see RequireStartWith
+ * @see RequireEndWith
  */
 public interface Envali {
 
@@ -52,7 +73,7 @@ public interface Envali {
         Preconditions.requireNonNull(entity);
 
         final Class<? extends ValidatableEntity> entityClass = entity.getClass();
-        final ParameterMapping parameter = entityClass.getAnnotation(ParameterMapping.class);
+        getEnvaliContent(entityClass);
 
         Arrays.asList(entityClass.getDeclaredFields()).forEach(field -> {
             field.setAccessible(true);
@@ -85,5 +106,43 @@ public interface Envali {
                 }
             });
         });
+    }
+
+    /**
+     * Refer to the content file mapped to the entity object to be validated and get
+     * each expected value in {@link List} format to be used at validation.
+     * <p>
+     * If the content is not mapped to the entity object to be validated, an empty
+     * {@link List} is returned.
+     *
+     * @param entityClass Entity objects to be validated
+     * @return Envali's validation content
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
+    private static List<Map<String, String>> getEnvaliContent(final Class<? extends ValidatableEntity> entityClass) {
+        Preconditions.requireNonNull(entityClass);
+
+        final ParameterMapping content = entityClass.getAnnotation(ParameterMapping.class);
+
+        if (content == null) {
+            return List.of();
+        }
+
+        return ContentLoader.load(
+                entityClass.getClassLoader()
+                        .getResourceAsStream(EnvaliContentRoot.ROOT.getTag() + content.content() + Extension.json()),
+                getContentAttributes());
+    }
+
+    /**
+     * Returns a list containing Envali's content attributes based on the definition
+     * information for {@link EnvaliContentAttribute} .
+     *
+     * @return A list containing Envali's content attributes
+     */
+    private static List<String> getContentAttributes() {
+        return Arrays.asList(EnvaliContentAttribute.values()).stream().map(EnvaliContentAttribute::getTag)
+                .collect(Collectors.toList());
     }
 }
