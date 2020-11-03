@@ -15,12 +15,24 @@
 package org.thinkit.framework.envali.strategy;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import org.thinkit.common.catalog.Extension;
+import org.thinkit.framework.content.ContentLoader;
+import org.thinkit.framework.envali.annotation.ParameterMapping;
+import org.thinkit.framework.envali.catalog.EnvaliContentAttribute;
+import org.thinkit.framework.envali.catalog.EnvaliContentCondition;
+import org.thinkit.framework.envali.catalog.EnvaliContentRoot;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.ToString;
 
 /**
  * An abstract class that abstracts the strategy of validation.
@@ -29,6 +41,8 @@ import lombok.NonNull;
  * @since 1.0
  * @version 1.0
  */
+@ToString
+@EqualsAndHashCode
 abstract class ValidationStrategy {
 
     /**
@@ -42,6 +56,16 @@ abstract class ValidationStrategy {
      */
     @Getter(AccessLevel.PROTECTED)
     private Field field;
+
+    /**
+     * An entity class for validation
+     */
+    private Class<? extends ValidatableEntity> entityClass;
+
+    /**
+     * Envali's content mapping
+     */
+    private ParameterMapping contentMapping;
 
     /**
      * Default constructor
@@ -61,10 +85,85 @@ abstract class ValidationStrategy {
     protected ValidationStrategy(@NonNull ValidatableEntity entity, @NonNull Field field) {
         this.entity = entity;
         this.field = field;
+        this.entityClass = entity.getClass();
+        this.contentMapping = this.entityClass.getAnnotation(ParameterMapping.class);
     }
 
     /**
      * Execute the validation process according to the strategy.
      */
     public abstract void validate();
+
+    /**
+     * Returns a string value from a field object.
+     *
+     * @return A string field value
+     *
+     * @throws IllegalArgumentException If a different object is passed during the
+     *                                  reflection process
+     * @throws IllegalAccessException   If an attempt is made to access an area that
+     *                                  does not meet the permissions during the
+     *                                  reflection process
+     */
+    protected String getString() throws IllegalArgumentException, IllegalAccessException {
+        return String.valueOf(this.field.get(this.entity));
+    }
+
+    /**
+     * Returns an int value from a field object.
+     *
+     * @return An int field value
+     *
+     * @throws IllegalArgumentException If a different object is passed during the
+     *                                  reflection process
+     * @throws IllegalAccessException   If an attempt is made to access an area that
+     *                                  does not meet the permissions during the
+     *                                  reflection process
+     */
+    protected int getInt() throws NumberFormatException, IllegalArgumentException, IllegalAccessException {
+        return Integer.parseInt(this.getString());
+    }
+
+    /**
+     * Refer to the content file mapped to the entity object to be validated and get
+     * each expected value in {@link List} format to be used at validation.
+     *
+     * @return Envali's validation content
+     *
+     * @exception UnsupportedOperationException If couldn't get Envali's content
+     */
+    protected List<Map<String, String>> getEnvaliContent() {
+
+        final List<Map<String, String>> envaliContent = ContentLoader.load(
+                this.entityClass.getClassLoader().getResourceAsStream(
+                        EnvaliContentRoot.ROOT.getTag() + this.contentMapping.content() + Extension.json()),
+                this.getContentAttributes(), this.getContentConditions());
+
+        if (envaliContent.isEmpty()) {
+            throw new UnsupportedOperationException();
+        }
+
+        return envaliContent;
+    }
+
+    /**
+     * Returns a list containing Envali's content attributes based on the definition
+     * information for {@link EnvaliContentAttribute} .
+     *
+     * @return A list containing Envali's content attributes
+     */
+    private List<String> getContentAttributes() {
+        return Arrays.asList(EnvaliContentAttribute.values()).stream().map(EnvaliContentAttribute::getTag)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Returns a map containing Envali's content conditions based on the definition
+     * information for {@link EnvaliContentCondition} .
+     *
+     * @return A map containing Envali's content conditions
+     */
+    private Map<String, String> getContentConditions() {
+        return Map.of(EnvaliContentCondition.VARIABLE_NAME.getTag(), this.field.getName());
+    }
 }
