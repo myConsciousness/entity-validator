@@ -96,6 +96,21 @@ abstract class ValidationStrategy {
     public abstract void validate();
 
     /**
+     * Returns an object value from a field object.
+     *
+     * @return An object field value
+     *
+     * @throws IllegalArgumentException If a different object is passed during the
+     *                                  reflection process
+     * @throws IllegalAccessException   If an attempt is made to access an area that
+     *                                  does not meet the permissions during the
+     *                                  reflection process
+     */
+    protected Object get() throws IllegalArgumentException, IllegalAccessException {
+        return this.field.get(this.entity);
+    }
+
+    /**
      * Returns a string value from a field object.
      *
      * @return A string field value
@@ -107,7 +122,7 @@ abstract class ValidationStrategy {
      *                                  reflection process
      */
     protected String getString() throws IllegalArgumentException, IllegalAccessException {
-        return String.valueOf(this.field.get(this.entity));
+        return String.valueOf(this.get());
     }
 
     /**
@@ -127,7 +142,7 @@ abstract class ValidationStrategy {
 
     /**
      * Refer to the content file mapped to the entity object to be validated and get
-     * each expected value in {@link List} format to be used at validation.
+     * each expected value in {@link Map} format to be used at validation.
      *
      * @return Envali's validation content
      *
@@ -136,7 +151,7 @@ abstract class ValidationStrategy {
      *                                          to be validated
      * @exception UnsupportedOperationException If couldn't get Envali's content
      */
-    protected List<Map<String, String>> getEnvaliContent() {
+    protected Map<String, String> getEnvaliContent() {
         Preconditions.requireNonNull(this.contentMapping);
 
         final List<Map<String, String>> envaliContent = ContentLoader.load(
@@ -148,7 +163,7 @@ abstract class ValidationStrategy {
             throw new UnsupportedOperationException();
         }
 
-        return envaliContent;
+        return envaliContent.get(0);
     }
 
     /**
