@@ -100,28 +100,26 @@ abstract class ValidationStrategy {
      *
      * @return An object field value
      *
-     * @throws IllegalArgumentException If a different object is passed during the
-     *                                  reflection process
-     * @throws IllegalAccessException   If an attempt is made to access an area that
-     *                                  does not meet the permissions during the
-     *                                  reflection process
+     * @exception UnsupportedOperationException If a different object is passed
+     *                                          during the reflection process, or if
+     *                                          an attempt is made to access an area
+     *                                          that does not meet the permissions
+     *                                          during the reflection process
      */
-    protected Object get() throws IllegalArgumentException, IllegalAccessException {
-        return this.field.get(this.entity);
+    protected Object get() {
+        try {
+            return this.field.get(this.entity);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            throw new UnsupportedOperationException(e);
+        }
     }
 
     /**
      * Returns a string value from a field object.
      *
      * @return A string field value
-     *
-     * @throws IllegalArgumentException If a different object is passed during the
-     *                                  reflection process
-     * @throws IllegalAccessException   If an attempt is made to access an area that
-     *                                  does not meet the permissions during the
-     *                                  reflection process
      */
-    protected String getString() throws IllegalArgumentException, IllegalAccessException {
+    protected String getString() {
         return String.valueOf(this.get());
     }
 
@@ -129,14 +127,8 @@ abstract class ValidationStrategy {
      * Returns an int value from a field object.
      *
      * @return An int field value
-     *
-     * @throws IllegalArgumentException If a different object is passed during the
-     *                                  reflection process
-     * @throws IllegalAccessException   If an attempt is made to access an area that
-     *                                  does not meet the permissions during the
-     *                                  reflection process
      */
-    protected int getInt() throws NumberFormatException, IllegalArgumentException, IllegalAccessException {
+    protected int getInt() {
         return Integer.parseInt(this.getString());
     }
 
