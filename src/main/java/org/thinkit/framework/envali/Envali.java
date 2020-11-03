@@ -41,8 +41,13 @@ import org.thinkit.framework.envali.entity.ValidatableEntity;
  * validation process for entity fields.
  * <p>
  * It is very easy and intuitive to use, you just need to annotate the fields of
- * the entity to be validated such as {@link RequireNonNull} and
- * {@link RequireNonEmpty} and others.
+ * the entity to be validated with such as {@link RequireNonNull} and
+ * {@link RequireNonEmpty} and other annotations as follows.
+ * <p>
+ * Once you have annotated the fields of the entity to be validated, then
+ * implement the {@link ValidatableEntity} interface. This interface has no
+ * processing, but this marker interface required when using the
+ * {@link Envali#validate} method.
  *
  * @author Kato Shinya
  * @since 1.0
@@ -60,14 +65,19 @@ import org.thinkit.framework.envali.entity.ValidatableEntity;
 public interface Envali {
 
     /**
-     * {@link ValidatableEntity}
-     * インターフェースを実装したエンティティオブジェクトに設定されたアノテーションを解析しフィールドの値の有効性を検証します。
+     * Analyzes each annotation set to an entity object for validation and verifies
+     * the validity of the field's value.
      *
-     * @param entity {@link ValidatableEntity} インターフェースを実装した検証対象のエンティティオブジェクト
+     * @param entity The entity object to be validated that implements the
+     *               {@link ValidatableEntity} interface
      *
-     * @exception NullPointerException          引数として {@code null} が渡された場合
-     * @exception InvalidValueDetectedException 検証処理で無効な値を検知した場合
-     * @exception UnsupportedOperationException リフレクション処理時に想定外のオペレーションを検知した場合
+     * @exception NullPointerException          If {@code null} is passed as an
+     *                                          argument
+     * @exception InvalidValueDetectedException If the verification process detects
+     *                                          an invalid value
+     * @exception UnsupportedOperationException When an unexpected operation is
+     *                                          detected during the reflection
+     *                                          process
      */
     public static void validate(ValidatableEntity entity) {
         Preconditions.requireNonNull(entity);
