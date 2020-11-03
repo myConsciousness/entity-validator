@@ -79,6 +79,5 @@ public final class EnvaliTest {
             assertThrows(InvalidValueDetectedException.class,
                     () -> Envali.validate(new RequireNegativeForTest(parameter)));
         }
-
     }
 }
