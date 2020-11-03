@@ -181,6 +181,17 @@ public interface Envali {
 
                     } else if (annotationType.equals(RequireNonEmpty.class)) {
 
+                        final Class<?> fieldDataType = field.getType();
+
+                        if (fieldDataType.isArray() || fieldDataType.equals(List.class)) {
+                            Preconditions.requireNonEmpty(Arrays.asList(field.get(entity)));
+                        } else if (fieldDataType.equals(Map.class)) {
+                            Preconditions.requireNonEmpty((Map<?, ?>) field.get(entity));
+                        } else if (fieldDataType.equals(String.class)) {
+                            Preconditions.requireNonEmpty(getString(entity, field));
+                        } else {
+                            throw new UnsupportedOperationException();
+                        }
                     }
                 } catch (IllegalArgumentException | IllegalAccessException e) {
                     throw new UnsupportedOperationException(e);
