@@ -28,7 +28,7 @@ import org.thinkit.framework.envali.entity.ValidatableEntity;
 final class RequireNonNullForTest implements ValidatableEntity {
 
     /**
-     * {@code null} を許容しないフィールド
+     * {@code null} を文字列型の許容しないフィールド
      */
     @RequireNonNull
     private String literal;
