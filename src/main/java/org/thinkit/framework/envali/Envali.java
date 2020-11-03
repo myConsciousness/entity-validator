@@ -26,6 +26,7 @@ import org.thinkit.framework.content.ContentLoader;
 import org.thinkit.framework.envali.annotation.ParameterMapping;
 import org.thinkit.framework.envali.annotation.RequireEndWith;
 import org.thinkit.framework.envali.annotation.RequireNegative;
+import org.thinkit.framework.envali.annotation.RequireNonBlank;
 import org.thinkit.framework.envali.annotation.RequireNonEmpty;
 import org.thinkit.framework.envali.annotation.RequireNonNull;
 import org.thinkit.framework.envali.annotation.RequirePositive;
@@ -33,6 +34,7 @@ import org.thinkit.framework.envali.annotation.RequireRangeFromTo;
 import org.thinkit.framework.envali.annotation.RequireRangeTo;
 import org.thinkit.framework.envali.annotation.RequireStartWith;
 import org.thinkit.framework.envali.catalog.EnvaliContentAttribute;
+import org.thinkit.framework.envali.catalog.EnvaliContentCondition;
 import org.thinkit.framework.envali.catalog.EnvaliContentRoot;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 
@@ -92,6 +94,7 @@ import org.thinkit.framework.envali.entity.ValidatableEntity;
  * @version 1.0
  *
  * @see RequireNonNull
+ * @see RequireNonBlank
  * @see RequireNonEmpty
  * @see RequirePositive
  * @see RequireNegative
@@ -121,7 +124,7 @@ public interface Envali {
         Preconditions.requireNonNull(entity);
 
         final Class<? extends ValidatableEntity> entityClass = entity.getClass();
-        getEnvaliContent(entityClass);
+        final ParameterMapping contentMapping = entityClass.getAnnotation(ParameterMapping.class);
 
         Arrays.asList(entityClass.getDeclaredFields()).forEach(field -> {
             field.setAccessible(true);
@@ -132,6 +135,9 @@ public interface Envali {
 
                     if (annotationType.equals(RequireNonNull.class)) {
                         Preconditions.requireNonNull(field.get(entity));
+                    } else if (annotationType.equals(RequireNonBlank.class)) {
+                        Preconditions.requireNonBlank(String.valueOf(field.get(entity)),
+                                new InvalidValueDetectedException());
                     } else if (annotationType.equals(RequirePositive.class)) {
                         Preconditions.requirePositive(Integer.parseInt(String.valueOf(field.get(entity))),
                                 new InvalidValueDetectedException());
@@ -139,6 +145,9 @@ public interface Envali {
                         Preconditions.requireNegative(Integer.parseInt(String.valueOf(field.get(entity))),
                                 new InvalidValueDetectedException());
                     } else if (annotationType.equals(RequireRangeTo.class)) {
+
+                        final List<Map<String, String>> envaliContent = getEnvaliContent(entityClass, contentMapping,
+                                field.getName());
 
                     } else if (annotationType.equals(RequireRangeFromTo.class)) {
 
@@ -159,28 +168,32 @@ public interface Envali {
     /**
      * Refer to the content file mapped to the entity object to be validated and get
      * each expected value in {@link List} format to be used at validation.
-     * <p>
-     * If the content is not mapped to the entity object to be validated, an empty
-     * {@link List} is returned.
      *
-     * @param entityClass Entity objects to be validated
-     * @return Envali's validation content
+     * @param entityClass Entity objects to be validated @param contentMapping
+     *                    Content mapping object @return Envali's validation content
      *
-     * @exception NullPointerException If {@code null} is passed as an argument
+     * @exception NullPointerException          If {@code null} is passed as an
+     *                                          argument
+     * @exception IllegalArgumentException      If {@code null} or {@code ""} string
+     *                                          is passed as an argument
+     * @exception UnsupportedOperationException If couldn't get Envali's content
      */
-    private static List<Map<String, String>> getEnvaliContent(final Class<? extends ValidatableEntity> entityClass) {
+    private static List<Map<String, String>> getEnvaliContent(final Class<? extends ValidatableEntity> entityClass,
+            final ParameterMapping contentMapping, final String variableName) {
         Preconditions.requireNonNull(entityClass);
+        Preconditions.requireNonNull(contentMapping);
+        Preconditions.requireNonEmpty(variableName, new IllegalArgumentException());
 
-        final ParameterMapping content = entityClass.getAnnotation(ParameterMapping.class);
+        final List<Map<String, String>> envaliContent = ContentLoader.load(
+                entityClass.getClassLoader().getResourceAsStream(
+                        EnvaliContentRoot.ROOT.getTag() + contentMapping.content() + Extension.json()),
+                getContentAttributes(), getContentConditions(variableName));
 
-        if (content == null) {
-            return List.of();
+        if (envaliContent.isEmpty()) {
+            throw new UnsupportedOperationException();
         }
 
-        return ContentLoader.load(
-                entityClass.getClassLoader()
-                        .getResourceAsStream(EnvaliContentRoot.ROOT.getTag() + content.content() + Extension.json()),
-                getContentAttributes());
+        return envaliContent;
     }
 
     /**
@@ -192,5 +205,15 @@ public interface Envali {
     private static List<String> getContentAttributes() {
         return Arrays.asList(EnvaliContentAttribute.values()).stream().map(EnvaliContentAttribute::getTag)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Returns a map containing Envali's content conditions based on the definition
+     * information for {@link EnvaliContentCondition} .
+     *
+     * @return A map containing Envali's content conditions
+     */
+    private static Map<String, String> getContentConditions(final String variableName) {
+        return Map.of(EnvaliContentCondition.VARIABLE_NAME.getTag(), variableName);
     }
 }
