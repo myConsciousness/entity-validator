@@ -189,6 +189,20 @@ public interface Envali {
         });
     }
 
+    /**
+     * Returns a string value from a field object.
+     *
+     * @param entity Entity object for validation
+     * @param field  Field object for validation
+     * @return A string field value
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     * @throws IllegalArgumentException If a different object is passed during the
+     *                                  reflection process
+     * @throws IllegalAccessException   If an attempt is made to access an area that
+     *                                  does not meet the permissions during the
+     *                                  reflection process
+     */
     private static String getString(final ValidatableEntity entity, final Field field)
             throws IllegalArgumentException, IllegalAccessException {
         Preconditions.requireNonNull(entity);
@@ -196,6 +210,20 @@ public interface Envali {
         return String.valueOf(field.get(entity));
     }
 
+    /**
+     * Returns an int value from a field object.
+     *
+     * @param entity Entity object for validation
+     * @param field  Field object for validation
+     * @return An int field value
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     * @throws IllegalArgumentException If a different object is passed during the
+     *                                  reflection process
+     * @throws IllegalAccessException   If an attempt is made to access an area that
+     *                                  does not meet the permissions during the
+     *                                  reflection process
+     */
     private static int getInt(final ValidatableEntity entity, final Field field)
             throws NumberFormatException, IllegalArgumentException, IllegalAccessException {
         Preconditions.requireNonNull(entity);
