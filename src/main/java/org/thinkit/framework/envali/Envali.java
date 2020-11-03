@@ -15,6 +15,7 @@
 package org.thinkit.framework.envali;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -120,7 +121,7 @@ public interface Envali {
      *                                          detected during the reflection
      *                                          process
      */
-    public static void validate(ValidatableEntity entity) {
+    public static void validate(final ValidatableEntity entity) {
         Preconditions.requireNonNull(entity);
 
         final Class<? extends ValidatableEntity> entityClass = entity.getClass();
@@ -136,24 +137,47 @@ public interface Envali {
                     if (annotationType.equals(RequireNonNull.class)) {
                         Preconditions.requireNonNull(field.get(entity));
                     } else if (annotationType.equals(RequireNonBlank.class)) {
-                        Preconditions.requireNonBlank(String.valueOf(field.get(entity)),
-                                new InvalidValueDetectedException());
+                        Preconditions.requireNonBlank(getString(entity, field), new InvalidValueDetectedException());
                     } else if (annotationType.equals(RequirePositive.class)) {
-                        Preconditions.requirePositive(Integer.parseInt(String.valueOf(field.get(entity))),
-                                new InvalidValueDetectedException());
+                        Preconditions.requirePositive(getInt(entity, field), new InvalidValueDetectedException());
                     } else if (annotationType.equals(RequireNegative.class)) {
-                        Preconditions.requireNegative(Integer.parseInt(String.valueOf(field.get(entity))),
-                                new InvalidValueDetectedException());
+                        Preconditions.requireNegative(getInt(entity, field), new InvalidValueDetectedException());
                     } else if (annotationType.equals(RequireRangeTo.class)) {
 
                         final Map<String, String> envaliContent = getEnvaliContent(entityClass, contentMapping,
                                 field.getName()).get(0);
 
+                        Preconditions.requireRange(getInt(entity, field),
+                                Integer.parseInt(envaliContent.get(EnvaliContentAttribute.RANGE_TO.getTag())),
+                                new InvalidValueDetectedException());
+
                     } else if (annotationType.equals(RequireRangeFromTo.class)) {
+
+                        final Map<String, String> envaliContent = getEnvaliContent(entityClass, contentMapping,
+                                field.getName()).get(0);
+
+                        Preconditions.requireRange(getInt(entity, field),
+                                Integer.parseInt(envaliContent.get(EnvaliContentAttribute.RANGE_FROM.getTag())),
+                                Integer.parseInt(envaliContent.get(EnvaliContentAttribute.RANGE_TO.getTag())),
+                                new InvalidValueDetectedException());
 
                     } else if (annotationType.equals(RequireStartWith.class)) {
 
+                        final Map<String, String> envaliContent = getEnvaliContent(entityClass, contentMapping,
+                                field.getName()).get(0);
+
+                        Preconditions.requireStartWith(getString(entity, field),
+                                envaliContent.get(EnvaliContentAttribute.START_WITH.getTag()),
+                                new InvalidValueDetectedException());
+
                     } else if (annotationType.equals(RequireEndWith.class)) {
+
+                        final Map<String, String> envaliContent = getEnvaliContent(entityClass, contentMapping,
+                                field.getName()).get(0);
+
+                        Preconditions.requireEndWith(getString(entity, field),
+                                envaliContent.get(EnvaliContentAttribute.END_WITH.getTag()),
+                                new InvalidValueDetectedException());
 
                     } else if (annotationType.equals(RequireNonEmpty.class)) {
 
@@ -163,6 +187,20 @@ public interface Envali {
                 }
             });
         });
+    }
+
+    private static String getString(final ValidatableEntity entity, final Field field)
+            throws IllegalArgumentException, IllegalAccessException {
+        Preconditions.requireNonNull(entity);
+        Preconditions.requireNonNull(field);
+        return String.valueOf(field.get(entity));
+    }
+
+    private static int getInt(final ValidatableEntity entity, final Field field)
+            throws NumberFormatException, IllegalArgumentException, IllegalAccessException {
+        Preconditions.requireNonNull(entity);
+        Preconditions.requireNonNull(field);
+        return Integer.parseInt(getString(entity, field));
     }
 
     /**
