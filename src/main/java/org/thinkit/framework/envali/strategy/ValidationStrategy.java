@@ -14,17 +14,57 @@
 
 package org.thinkit.framework.envali.strategy;
 
+import java.lang.reflect.Field;
+
+import org.thinkit.framework.envali.entity.ValidatableEntity;
+
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NonNull;
+
 /**
- * An interface that abstracts the strategy of validation.
+ * An abstract class that abstracts the strategy of validation.
  *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
  */
-interface ValidationStrategy {
+abstract class ValidationStrategy {
+
+    /**
+     * The entity for validation
+     */
+    @Getter(AccessLevel.PROTECTED)
+    private ValidatableEntity entity;
+
+    /**
+     * The field for validation
+     */
+    @Getter(AccessLevel.PROTECTED)
+    private Field field;
+
+    /**
+     * Default constructor
+     */
+    @SuppressWarnings("unused")
+    private ValidationStrategy() {
+    }
+
+    /**
+     * Constructor
+     *
+     * @param entity The entity for validation
+     * @param field  The field for validation
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
+    protected ValidationStrategy(@NonNull ValidatableEntity entity, @NonNull Field field) {
+        this.entity = entity;
+        this.field = field;
+    }
 
     /**
      * Execute the validation process according to the strategy.
      */
-    public void validate();
+    public abstract void validate();
 }
