@@ -146,8 +146,8 @@ public interface Envali {
                                 new InvalidValueDetectedException());
                     } else if (annotationType.equals(RequireRangeTo.class)) {
 
-                        final List<Map<String, String>> envaliContent = getEnvaliContent(entityClass, contentMapping,
-                                field.getName());
+                        final Map<String, String> envaliContent = getEnvaliContent(entityClass, contentMapping,
+                                field.getName()).get(0);
 
                     } else if (annotationType.equals(RequireRangeFromTo.class)) {
 
@@ -169,8 +169,10 @@ public interface Envali {
      * Refer to the content file mapped to the entity object to be validated and get
      * each expected value in {@link List} format to be used at validation.
      *
-     * @param entityClass Entity objects to be validated @param contentMapping
-     *                    Content mapping object @return Envali's validation content
+     * @param entityClass    Entity objects to be validated
+     * @param contentMapping Content mapping object
+     * @param fieldName      Field name for validation
+     * @return Envali's validation content
      *
      * @exception NullPointerException          If {@code null} is passed as an
      *                                          argument
@@ -179,15 +181,15 @@ public interface Envali {
      * @exception UnsupportedOperationException If couldn't get Envali's content
      */
     private static List<Map<String, String>> getEnvaliContent(final Class<? extends ValidatableEntity> entityClass,
-            final ParameterMapping contentMapping, final String variableName) {
+            final ParameterMapping contentMapping, final String fieldName) {
         Preconditions.requireNonNull(entityClass);
         Preconditions.requireNonNull(contentMapping);
-        Preconditions.requireNonEmpty(variableName, new IllegalArgumentException());
+        Preconditions.requireNonEmpty(fieldName, new IllegalArgumentException());
 
         final List<Map<String, String>> envaliContent = ContentLoader.load(
                 entityClass.getClassLoader().getResourceAsStream(
                         EnvaliContentRoot.ROOT.getTag() + contentMapping.content() + Extension.json()),
-                getContentAttributes(), getContentConditions(variableName));
+                getContentAttributes(), getContentConditions(fieldName));
 
         if (envaliContent.isEmpty()) {
             throw new UnsupportedOperationException();
@@ -211,9 +213,14 @@ public interface Envali {
      * Returns a map containing Envali's content conditions based on the definition
      * information for {@link EnvaliContentCondition} .
      *
+     * @param fieldName Field name for validation
      * @return A map containing Envali's content conditions
+     *
+     * @exception IllegalArgumentException If {@code null} or {@code ""} string is
+     *                                     passed as an argument
      */
-    private static Map<String, String> getContentConditions(final String variableName) {
-        return Map.of(EnvaliContentCondition.VARIABLE_NAME.getTag(), variableName);
+    private static Map<String, String> getContentConditions(final String fieldName) {
+        Preconditions.requireNonEmpty(fieldName, new IllegalArgumentException());
+        return Map.of(EnvaliContentCondition.VARIABLE_NAME.getTag(), fieldName);
     }
 }
