@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.thinkit.common.Preconditions;
 import org.thinkit.common.catalog.Extension;
 import org.thinkit.framework.content.ContentLoader;
 import org.thinkit.framework.envali.annotation.ParameterMapping;
@@ -130,9 +131,13 @@ abstract class ValidationStrategy {
      *
      * @return Envali's validation content
      *
+     * @exception NullPointerException          If no {@link ParameterMapping}
+     *                                          annotation is attached to the entity
+     *                                          to be validated
      * @exception UnsupportedOperationException If couldn't get Envali's content
      */
     protected List<Map<String, String>> getEnvaliContent() {
+        Preconditions.requireNonNull(this.contentMapping);
 
         final List<Map<String, String>> envaliContent = ContentLoader.load(
                 this.entityClass.getClassLoader().getResourceAsStream(
