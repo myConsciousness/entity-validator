@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.thinkit.framework.envali.strategy;
+package org.thinkit.framework.envali;
 
 public class EnvaliAnnotationContext {
 
