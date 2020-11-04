@@ -14,8 +14,23 @@
 
 package org.thinkit.framework.envali.strategy;
 
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import lombok.ToString;
 
+/**
+ * Context class to execute the validation strategy.
+ * <p>
+ * create an instance of the class using the {@link #of(ValidationStrategy)} and
+ * validate it according to the annotations using the {@link #validate()}
+ * method.
+ *
+ * @author Kato Shinya
+ * @since 1.0
+ * @version 1.0
+ */
+@ToString
+@EqualsAndHashCode
 final class ValidationStrategyContext {
 
     /**
@@ -55,8 +70,8 @@ final class ValidationStrategyContext {
     /**
      * Execute a validation strategy.
      *
-     * @exception InvalidValueDetectedException If the validation process detects
-     *                                          an invalid value
+     * @exception InvalidValueDetectedException If the validation process detects an
+     *                                          invalid value
      * @exception UnsupportedOperationException When an unexpected operation is
      *                                          detected during the reflection
      *                                          process
