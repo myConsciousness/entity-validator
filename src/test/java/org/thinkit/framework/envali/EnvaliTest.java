@@ -24,7 +24,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
 
 /**
- * {@link Envali} インターフェースのテストケースを管理するクラスです。
+ * The test class that manages test cases for {@link Envali} interface.
  *
  * @author Kato Shinya
  * @since 1.0
@@ -79,6 +79,23 @@ public final class EnvaliTest {
         void testPositiveCases(int parameter) {
             assertThrows(InvalidValueDetectedException.class,
                     () -> Envali.validate(new RequireNegativeForTest(parameter)));
+        }
+    }
+
+    @Nested
+    class TestRequireRangeTo {
+
+        @ParameterizedTest
+        @ValueSource(ints = { -10, -1, 0, 1, 9, 10 })
+        void testWithinTheLimitsCases(final int parameter) {
+            assertDoesNotThrow(() -> Envali.validate(new RequireRangeToForTest(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { 11, 12, 100, 1000 })
+        void testNotWithinTheLimitsCases(final int parameter) {
+            assertThrows(InvalidValueDetectedException.class,
+                    () -> Envali.validate(new RequireRangeToForTest(parameter)));
         }
     }
 }
