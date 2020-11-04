@@ -19,8 +19,8 @@ import org.thinkit.framework.envali.annotation.RequireNegative;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 
 /**
- * {@link Envali} インターフェースと {@link RequireNegative}
- * アノテーションをテストする際に使用するフィールドを定義するクラスです。
+ * The entity class that defines fields to be used when testing the
+ * {@link Envali} interface and the {@link RequireNegative} annotation.
  *
  * @author Kato Shinya
  * @since 1.0
@@ -29,22 +29,22 @@ import org.thinkit.framework.envali.entity.ValidatableEntity;
 final class RequireNegativeForTest implements ValidatableEntity {
 
     /**
-     * 正数が許容されないフィールド
+     * The negative field
      */
     @RequireNegative
     private int negative;
 
     /**
-     * デフォルトコンストラクタ
+     * Default constructor
      */
     @SuppressWarnings("unused")
     private RequireNegativeForTest() {
     }
 
     /**
-     * コンストラクタ
+     * Constructor
      *
-     * @param negative 負数
+     * @param negative negative number (expected)
      */
     public RequireNegativeForTest(int negative) {
         this.negative = negative;

@@ -18,8 +18,8 @@ import org.thinkit.framework.envali.annotation.RequirePositive;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 
 /**
- * {@link Envali} インターフェースと {@link RequirePositive}
- * アノテーションをテストする際に使用するフィールドを定義するクラスです。
+ * The entity class that defines fields to be used when testing the
+ * {@link Envali} interface and the {@link RequirePositive} annotation.
  *
  * @author Kato Shinya
  * @since 1.0
@@ -28,22 +28,22 @@ import org.thinkit.framework.envali.entity.ValidatableEntity;
 final class RequirePositiveForTest implements ValidatableEntity {
 
     /**
-     * 負数が許容されないフィールド
+     * The positive number
      */
     @RequirePositive
     private int positive;
 
     /**
-     * デフォルトコンストラクタ
+     * Default constructor
      */
     @SuppressWarnings("unused")
     private RequirePositiveForTest() {
     }
 
     /**
-     * コンストラクタ
+     * Constructor
      *
-     * @param positive 正数
+     * @param positive The positive number (expected)
      */
     public RequirePositiveForTest(int positive) {
         this.positive = positive;
