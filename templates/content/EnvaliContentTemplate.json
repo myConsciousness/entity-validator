@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "author": "",
+    "since": "",
+    "version": "",
+    "creationDate": "",
+    "encoding": "",
+    "description": ""
+  },
+
+  "selectionNodes": [
+    {
+      "node": {
+        "conditionId": "0",
+        "rangeFrom": "",
+        "rangeTo": "",
+        "startWith": "",
+        "endWith": ""
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "1",
+        "rangeFrom": "",
+        "rangeTo": "",
+        "startWith": "",
+        "endWith": ""
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "2",
+        "rangeFrom": "",
+        "rangeTo": "",
+        "startWith": "",
+        "endWith": ""
+      }
+    }
+  ],
+
+  "conditionNodes": [
+    {
+      "node": {
+        "conditionId": "0",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "variableName",
+            "operand": "=",
+            "value": ""
+          }
+        ]
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "1",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "variableName",
+            "operand": "=",
+            "value": ""
+          }
+        ]
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "2",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "variableName",
+            "operand": "=",
+            "value": ""
+          }
+        ]
+      }
+    }
+  ]
+}
