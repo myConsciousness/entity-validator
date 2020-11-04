@@ -38,6 +38,7 @@ import org.thinkit.framework.envali.catalog.EnvaliContentAttribute;
 import org.thinkit.framework.envali.catalog.EnvaliContentCondition;
 import org.thinkit.framework.envali.catalog.EnvaliContentRoot;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
+import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
 
 /**
  * {@link Envali} is a powerful interface that provides common and intuitive
