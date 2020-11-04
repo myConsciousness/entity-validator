@@ -57,7 +57,6 @@ final class RequireNegativeStrategy extends ValidationStrategy {
      * @return The new instance of {@link RequireNegativeStrategy} class
      *
      * @exception NullPointerException If {@code null} is passed as an argument
-     *
      */
     public static ValidationStrategy of(@NonNull ValidatableEntity entity, @NonNull Field field) {
         return new RequireNegativeStrategy(entity, field);

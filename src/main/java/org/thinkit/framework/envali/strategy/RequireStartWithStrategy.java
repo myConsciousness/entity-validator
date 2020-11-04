@@ -58,7 +58,6 @@ final class RequireStartWithStrategy extends ValidationStrategy {
      * @return The new instance of {@link RequireStartWithStrategy} class
      *
      * @exception NullPointerException If {@code null} is passed as an argument
-     *
      */
     public static ValidationStrategy of(@NonNull ValidatableEntity entity, @NonNull Field field) {
         return new RequireStartWithStrategy(entity, field);

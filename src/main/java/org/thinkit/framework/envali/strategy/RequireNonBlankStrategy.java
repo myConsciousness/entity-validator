@@ -57,7 +57,6 @@ final class RequireNonBlankStrategy extends ValidationStrategy {
      * @return The new instance of {@link RequireNonBlankStrategy} class
      *
      * @exception NullPointerException If {@code null} is passed as an argument
-     *
      */
     public static ValidationStrategy of(@NonNull ValidatableEntity entity, @NonNull Field field) {
         return new RequireNonBlankStrategy(entity, field);
