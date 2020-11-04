@@ -107,8 +107,8 @@ public interface Envali {
      *
      * @exception NullPointerException          If {@code null} is passed as an
      *                                          argument
-     * @exception InvalidValueDetectedException If the validation process detects
-     *                                          an invalid value
+     * @exception InvalidValueDetectedException If the validation process detects an
+     *                                          invalid value
      * @exception UnsupportedOperationException When an unexpected operation is
      *                                          detected during the reflection
      *                                          process
