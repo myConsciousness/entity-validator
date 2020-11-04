@@ -69,6 +69,11 @@ abstract class ValidationStrategy {
     private ParameterMapping contentMapping;
 
     /**
+     * Envali's content
+     */
+    private Map<String, String> envaliContent;
+
+    /**
      * Default constructor
      */
     @SuppressWarnings("unused")
@@ -146,16 +151,20 @@ abstract class ValidationStrategy {
     protected Map<String, String> getEnvaliContent() {
         Preconditions.requireNonNull(this.contentMapping);
 
-        final List<Map<String, String>> envaliContent = ContentLoader.load(
-                this.entityClass.getClassLoader().getResourceAsStream(
-                        EnvaliContentRoot.ROOT.getTag() + this.contentMapping.content() + Extension.json()),
-                this.getContentAttributes(), this.getContentConditions());
+        if (this.envaliContent == null) {
+            final List<Map<String, String>> envaliContent = ContentLoader.load(
+                    this.entityClass.getClassLoader().getResourceAsStream(
+                            EnvaliContentRoot.ROOT.getTag() + this.contentMapping.content() + Extension.json()),
+                    this.getContentAttributes(), this.getContentConditions());
 
-        if (envaliContent.isEmpty()) {
-            throw new UnsupportedOperationException();
+            if (envaliContent.isEmpty()) {
+                throw new UnsupportedOperationException();
+            }
+
+            this.envaliContent = envaliContent.get(0);
         }
 
-        return envaliContent.get(0);
+        return this.envaliContent;
     }
 
     /**
