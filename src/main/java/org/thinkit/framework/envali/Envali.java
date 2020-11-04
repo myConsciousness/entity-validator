@@ -116,9 +116,7 @@ public interface Envali {
     public static void validate(final ValidatableEntity entity) {
         Preconditions.requireNonNull(entity);
 
-        final Class<? extends ValidatableEntity> entityClass = entity.getClass();
-
-        Arrays.asList(entityClass.getDeclaredFields()).forEach(field -> {
+        Arrays.asList(entity.getClass().getDeclaredFields()).forEach(field -> {
             field.setAccessible(true);
 
             Arrays.asList(field.getAnnotations()).forEach(annotation -> {
