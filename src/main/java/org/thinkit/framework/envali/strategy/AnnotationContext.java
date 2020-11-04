@@ -35,6 +35,12 @@ import lombok.NonNull;
 import lombok.ToString;
 
 /**
+ * Context class to determine the validation strategy based on the annotation
+ * data type.
+ * <p>
+ * create an instance of the class using the
+ * {@link #of(ValidatableEntity, Field, Class)} and validate it according to the
+ * annotations using the {@link #validate()} method.
  *
  * @author Kato Shinya
  * @since 1.0
@@ -99,6 +105,15 @@ public final class AnnotationContext {
         return new AnnotationContext(entity, field, annotationType);
     }
 
+    /**
+     * Execute a validation strategy based on the data type of the annotation.
+     *
+     * @exception InvalidValueDetectedException If the validation process detects an
+     *                                          invalid value
+     * @exception UnsupportedOperationException When an unexpected operation is
+     *                                          detected during the reflection
+     *                                          process
+     */
     public void validate() {
 
         final Class<? extends Annotation> annotationType = this.getAnnotationType();

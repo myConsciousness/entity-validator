@@ -29,14 +29,38 @@ final class ValidationStrategyContext {
     private ValidationStrategyContext() {
     }
 
+    /**
+     * Constructor
+     *
+     * @param validationStrategy The validation strategy for field
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
     private ValidationStrategyContext(@NonNull ValidationStrategy validationStrategy) {
         this.validationStrategy = validationStrategy;
     }
 
+    /**
+     * Returns the new instance of {@link ValidationStrategyContext} class.
+     *
+     * @param validationStrategy The validation strategy for field
+     * @return The new instance of {@link ValidationStrategyContext} class
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
     public static ValidationStrategyContext of(@NonNull ValidationStrategy validationStrategy) {
         return new ValidationStrategyContext(validationStrategy);
     }
 
+    /**
+     * Execute a validation strategy.
+     *
+     * @exception InvalidValueDetectedException If the validation process detects
+     *                                          an invalid value
+     * @exception UnsupportedOperationException When an unexpected operation is
+     *                                          detected during the reflection
+     *                                          process
+     */
     public void validate() {
         this.validationStrategy.validate();
     }
