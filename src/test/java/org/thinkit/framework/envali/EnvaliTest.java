@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
 
 /**
  * {@link Envali} インターフェースのテストケースを管理するクラスです。
