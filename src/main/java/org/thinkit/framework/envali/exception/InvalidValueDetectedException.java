@@ -12,7 +12,9 @@
  * the License.
  */
 
-package org.thinkit.framework.envali;
+package org.thinkit.framework.envali.exception;
+
+import org.thinkit.framework.envali.Envali;
 
 /**
  * Thrown to indicate that the validation process on the {@link Envali}
@@ -22,7 +24,7 @@ package org.thinkit.framework.envali;
  * @since 1.0
  * @version 1.0
  */
-final class InvalidValueDetectedException extends RuntimeException {
+public final class InvalidValueDetectedException extends RuntimeException {
 
     /**
      * serialVersionUID
