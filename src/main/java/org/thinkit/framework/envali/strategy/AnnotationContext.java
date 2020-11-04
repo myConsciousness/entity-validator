@@ -27,6 +27,7 @@ import org.thinkit.framework.envali.annotation.RequireRangeFromTo;
 import org.thinkit.framework.envali.annotation.RequireRangeTo;
 import org.thinkit.framework.envali.annotation.RequireStartWith;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
+import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
