@@ -21,7 +21,7 @@ Entity Validator main repository.
 <dependency>
   <groupId>org.thinkit.framework.envali</groupId>
   <artifactId>entity-validator</artifactId>
-  <version>vx.x.x</version>
+  <version>v1.0.0</version>
 </dependency>
 
 <servers>
@@ -48,7 +48,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.thinkit.framework.envali:entity-validator:vx.x.x'
+    implementation 'org.thinkit.framework.envali:entity-validator:v1.0.0'
 }
 ```
 
