@@ -14,6 +14,7 @@
 
 package org.thinkit.framework.envali.strategy;
 
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +29,7 @@ import org.thinkit.framework.envali.catalog.EnvaliContentAttribute;
 import org.thinkit.framework.envali.catalog.EnvaliContentCondition;
 import org.thinkit.framework.envali.catalog.EnvaliContentRoot;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
+import org.thinkit.framework.envali.exception.ContentNotFoundException;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -146,15 +148,28 @@ abstract class ValidationStrategy {
      * @exception NullPointerException          If no {@link ParameterMapping}
      *                                          annotation is attached to the entity
      *                                          to be validated
+     * @exception ContentNotFoundException      If the content file defined in
+     *                                          {@link ParameterMapping} annotation
+     *                                          was not found
      * @exception UnsupportedOperationException If couldn't get Envali's content
      */
     protected Map<String, String> getEnvaliContent() {
         Preconditions.requireNonNull(this.contentMapping);
 
         if (this.envaliContent == null) {
-            final List<Map<String, String>> envaliContent = ContentLoader.load(
-                    this.entityClass.getClassLoader().getResourceAsStream(
-                            EnvaliContentRoot.ROOT.getTag() + this.contentMapping.content() + Extension.json()),
+
+            final String contentResourcePath = new StringBuilder().append(EnvaliContentRoot.ROOT.getTag())
+                    .append(this.contentMapping.content()).append(Extension.json()).toString();
+            final InputStream contentStream = this.entityClass.getClassLoader()
+                    .getResourceAsStream(contentResourcePath);
+
+            if (contentStream == null) {
+                throw new ContentNotFoundException(String.format(
+                        "The content file defined in ParameterMapping annotation was not found. Please check the path to the resource. Resource path to the defined content: %s",
+                        contentResourcePath));
+            }
+
+            final List<Map<String, String>> envaliContent = ContentLoader.load(contentStream,
                     this.getContentAttributes(), this.getContentConditions());
 
             if (envaliContent.isEmpty()) {
