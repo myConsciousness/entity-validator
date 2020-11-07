@@ -98,4 +98,21 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RequireRangeToForTest(parameter)));
         }
     }
+
+    @Nested
+    class TestRequireRangeFromTo {
+
+        @ParameterizedTest
+        @ValueSource(ints = { -10, -1, 0, 1, 9, 10 })
+        void testWithinTheLimitsFromToCases(final int parameter) {
+            assertDoesNotThrow(() -> Envali.validate(new RequireRangeFromToForTest(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { -100, -12, -11, 11, 12, 100, 1000 })
+        void testNotWithinTheLimitsFromToCases(final int parameter) {
+            assertThrows(InvalidValueDetectedException.class,
+                    () -> Envali.validate(new RequireRangeFromToForTest(parameter)));
+        }
+    }
 }
