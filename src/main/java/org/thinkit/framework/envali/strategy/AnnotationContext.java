@@ -139,7 +139,6 @@ public final class AnnotationContext {
         } else if (annotationType.equals(RequireNonEmpty.class)) {
             ValidationStrategyContext.of(RequireNonEmptyStrategy.of(this.getEntity(), this.getField())).validate();
         } else if (annotationType.equals(NestedEntity.class)) {
-            ValidationStrategyContext.of(RequireNonNullStrategy.of(this.getEntity(), this.getField())).validate();
             ValidationStrategyContext.of(NestedEntityStrategy.of(this.getEntity(), this.getField())).validate();
         }
     }
