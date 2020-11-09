@@ -17,6 +17,7 @@ package org.thinkit.framework.envali.strategy;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
+import org.thinkit.framework.envali.annotation.NestedEntity;
 import org.thinkit.framework.envali.annotation.RequireEndWith;
 import org.thinkit.framework.envali.annotation.RequireNegative;
 import org.thinkit.framework.envali.annotation.RequireNonBlank;
@@ -137,6 +138,8 @@ public final class AnnotationContext {
             ValidationStrategyContext.of(RequireEndWithStrategy.of(this.getEntity(), this.getField())).validate();
         } else if (annotationType.equals(RequireNonEmpty.class)) {
             ValidationStrategyContext.of(RequireNonEmptyStrategy.of(this.getEntity(), this.getField())).validate();
+        } else if (annotationType.equals(NestedEntity.class)) {
+            ValidationStrategyContext.of(RequireNonNullStrategy.of(this.getEntity(), this.getField())).validate();
         }
     }
 }
