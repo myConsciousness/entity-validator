@@ -1,4 +1,7 @@
+![Build](https://img.shields.io/badge/Build-Automated-2980b9.svg?style=for-the-badge)
+![Latest Version](https://img.shields.io/badge/Version-v1.0.0-27ae60.svg?style=for-the-badge)</br>
 ![Java CI with Gradle](https://github.com/myConsciousness/entity-validator/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=main)
+
 
 # Envali: Entity Validator
 
