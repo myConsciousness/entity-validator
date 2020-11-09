@@ -28,3 +28,6 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+      env:
+        GITHUB_USER: myConsciousness
+        GITHUB_DOWNLOAD_PACKAGE_TOKEN: ${{ secrets.ACCESS_TOKEN }}
