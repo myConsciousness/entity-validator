@@ -29,5 +29,5 @@ jobs:
     - name: Build with Gradle
       env:
         GITHUB_PACKAGE_USERNAME: myConsciousness
-        GITHUB_PACKAGE_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        GITHUB_PACKAGE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: ./gradlew build
