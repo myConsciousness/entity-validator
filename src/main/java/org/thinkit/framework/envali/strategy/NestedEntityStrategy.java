@@ -16,6 +16,7 @@ package org.thinkit.framework.envali.strategy;
 
 import java.lang.reflect.Field;
 
+import org.thinkit.framework.envali.Envali;
 import org.thinkit.framework.envali.annotation.NestedEntity;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 
@@ -34,16 +35,33 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 final class NestedEntityStrategy extends ValidationStrategy {
 
+    /**
+     * Constructor
+     *
+     * @param entity The entity for validation
+     * @param field  The field for validation
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
     private NestedEntityStrategy(@NonNull ValidatableEntity entity, @NonNull Field field) {
         super(entity, field);
     }
 
+    /**
+     * Returns the new instance of {@link NestedEntityStrategy} class.
+     *
+     * @param entity The entity for validation
+     * @param field  The field for validation
+     * @return The new instance of {@link NestedEntityStrategy} class
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
     public static ValidationStrategy of(@NonNull ValidatableEntity entity, @NonNull Field field) {
         return new NestedEntityStrategy(entity, field);
     }
 
     @Override
     public void validate() {
-
+        Envali.validate(super.getEntity());
     }
 }
