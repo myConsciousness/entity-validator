@@ -12,6 +12,7 @@
 
 - [Envali: Entity Validator](#envali-entity-validator)
   - [What is it?](#what-is-it)
+  - [Benefits](#benefits)
   - [How To Use](#how-to-use)
     - [1. Add the dependencies](#1-add-the-dependencies)
   - [License](#license)
@@ -21,7 +22,18 @@
 
 ## What is it?
 
-Entity Validator main repository.
+**_Provides intuitive and productive Entity validation capabilities!_**
+
+`Envali` is a Java-based framework that provides an intuitive and productive way to validate Entity's field elements.
+
+Validation items can be configured by adding annotations to the target field in `AOP-like`.
+
+## Benefits
+
+- Intuitive addition of validation annotations
+- Easy to manage validation items per Entity
+- Safe execution of the validation by the framework
+- Improved source code maintainability by centralizing the validation
 
 ## How To Use
 
