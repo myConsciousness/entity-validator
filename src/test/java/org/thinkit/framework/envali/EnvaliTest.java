@@ -15,7 +15,10 @@
 package org.thinkit.framework.envali;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -113,6 +116,32 @@ public final class EnvaliTest {
         void testNotWithinTheLimitsFromToCases(final int parameter) {
             assertThrows(InvalidValueDetectedException.class,
                     () -> Envali.validate(new RequireRangeFromToForTest(parameter)));
+        }
+    }
+
+    @Nested
+    class TestNestedEntity {
+
+        @ParameterizedTest
+        @ValueSource(ints = { -1, -2, -10, -100, -1000 })
+        void testNestedRequireNegativeWhenNumbersAreNegative(final int parameter) {
+            assertDoesNotThrow(() -> Envali.validate(new NestedEntityForTest(new RequireNegativeForTest(parameter))));
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { 0, 1, 2, 10, 100, 1000 })
+        void testNestedRequireNegativeWhenNumbersArePositive(final int parameter) {
+            assertThrows(InvalidValueDetectedException.class,
+                    () -> Envali.validate(new NestedEntityForTest(new RequireNegativeForTest(parameter))));
+        }
+
+        @Test
+        void testWhenNestedEntityIsNotValidatable() {
+            final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
+                    () -> Envali.validate(new NestedEntityWithNotValidatableEntityForTest(List.of())));
+
+            assertEquals("Any object with NestedEntity annotation must implement ValidatableEntity interface",
+                    exception.getMessage());
         }
     }
 }
