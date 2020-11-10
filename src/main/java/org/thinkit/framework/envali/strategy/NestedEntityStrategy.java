@@ -15,6 +15,8 @@
 package org.thinkit.framework.envali.strategy;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 
 import org.thinkit.framework.envali.Envali;
 import org.thinkit.framework.envali.annotation.NestedEntity;
@@ -62,6 +64,32 @@ final class NestedEntityStrategy extends ValidationStrategy {
 
     @Override
     public void validate() {
-        Envali.validate(super.getEntity());
+
+        if (!this.isValidatableEntity()) {
+            throw new UnsupportedOperationException(
+                    "Any object with NestedEntity annotation must implement ValidatableEntity interface");
+        }
+
+        Envali.validate((ValidatableEntity) super.get());
+    }
+
+    /**
+     * Determines if a field object annotated with {@link NestedEntity} implements
+     * the {@link ValidatableEntity} interface.
+     *
+     * @return {@code true} if a field object implemets the the
+     *         {@link ValidatableEntity} , or {@code false}
+     */
+    private boolean isValidatableEntity() {
+
+        final List<Class<?>> interfaces = Arrays.asList(super.get().getClass().getInterfaces());
+
+        for (Class<?> _interface : interfaces) {
+            if (_interface.equals(ValidatableEntity.class)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
