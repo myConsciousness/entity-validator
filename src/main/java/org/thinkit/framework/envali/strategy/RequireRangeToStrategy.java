@@ -65,7 +65,7 @@ final class RequireRangeToStrategy extends ValidationStrategy {
 
     @Override
     public void validate() {
-        Preconditions.requireRange(super.getInt(),
+        Preconditions.requireRangeTo(super.getInt(),
                 Integer.parseInt(super.getEnvaliContent().get(EnvaliContentAttribute.RANGE_TO.getTag())),
                 new InvalidValueDetectedException());
     }

@@ -27,6 +27,7 @@ import java.lang.annotation.Target;
  *
  * <pre>
  * <code>
+ * &#64;ParameterMapping( content = "Parameter" )
  * public class ConcreteEntity implements ValidatableEntity, Serializable {
  *
  *      &#64;RequireRangeTo
