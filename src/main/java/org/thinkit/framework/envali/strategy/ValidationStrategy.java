@@ -38,12 +38,6 @@ import lombok.ToString;
 abstract class ValidationStrategy {
 
     /**
-     * The field for validation
-     */
-    @Getter(AccessLevel.PROTECTED)
-    private Field field;
-
-    /**
      * The field helper
      */
     @Getter(AccessLevel.PROTECTED)
@@ -71,7 +65,6 @@ abstract class ValidationStrategy {
      * @exception NullPointerException If {@code null} is passed as an argument
      */
     protected ValidationStrategy(@NonNull ValidatableEntity entity, @NonNull Field field) {
-        this.field = field;
         this.fieldHelper = EnvaliFieldHelper.of(entity, field);
         this.contentHelper = EnvaliContentHelper.of(entity, field);
     }

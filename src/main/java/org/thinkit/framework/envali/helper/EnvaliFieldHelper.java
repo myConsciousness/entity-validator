@@ -223,6 +223,15 @@ public final class EnvaliFieldHelper {
     }
 
     /**
+     * Checks if the data type of the field is Long.
+     *
+     * @return {@code true} if the data type of field is Long, or {@code false}
+     */
+    public boolean isLong() {
+        return this.fieldDataType.equals(Long.class) || this.fieldDataType.equals(long.class);
+    }
+
+    /**
      * Checks if the data type of the field is Short.
      *
      * @return {@code true} if the data type of field is Short, or {@code false}
