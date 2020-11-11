@@ -33,7 +33,7 @@ Validation items can be configured by adding annotations to the target field in 
 - Intuitive addition of validation annotations
 - Easy to manage validation items per Entity
 - Safe execution of the validation by the framework
-- Improved source code maintainability by centralizing the validation
+- Improve source code maintainability by centralizing the validation
 
 ## How To Use
 
