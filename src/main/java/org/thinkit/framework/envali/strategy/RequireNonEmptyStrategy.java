@@ -15,13 +15,11 @@
 package org.thinkit.framework.envali.strategy;
 
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.thinkit.common.Preconditions;
 import org.thinkit.framework.envali.annotation.RequireNonEmpty;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
+import org.thinkit.framework.envali.helper.EnvaliFieldHelper;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -67,16 +65,16 @@ final class RequireNonEmptyStrategy extends ValidationStrategy {
     @Override
     public void validate() {
 
-        final Class<?> fieldDataType = super.getField().getType();
+        final EnvaliFieldHelper field = super.getFieldHelper();
 
-        if (fieldDataType.isArray() || fieldDataType.equals(List.class)) {
-            Preconditions.requireNonEmpty(super.getFieldHelper().getList());
-        } else if (fieldDataType.equals(Map.class)) {
-            Preconditions.requireNonEmpty(super.getFieldHelper().getMap());
-        } else if (fieldDataType.equals(Set.class)) {
-            Preconditions.requireNonEmpty(super.getFieldHelper().getSet());
-        } else if (fieldDataType.equals(String.class)) {
-            Preconditions.requireNonEmpty(super.getFieldHelper().getString());
+        if (field.isArray() || field.isList()) {
+            Preconditions.requireNonEmpty(field.getList());
+        } else if (field.isMap()) {
+            Preconditions.requireNonEmpty(field.getMap());
+        } else if (field.isSet()) {
+            Preconditions.requireNonEmpty(field.getSet());
+        } else if (field.isString()) {
+            Preconditions.requireNonEmpty(field.getString());
         } else {
             throw new UnsupportedOperationException();
         }
