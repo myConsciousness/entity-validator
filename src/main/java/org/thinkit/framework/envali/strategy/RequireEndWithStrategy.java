@@ -66,7 +66,6 @@ final class RequireEndWithStrategy extends ValidationStrategy {
     @Override
     public void validate() {
         Preconditions.requireEndWith(super.getFieldHelper().getString(),
-                super.getEnvaliContent().get(EnvaliContentAttribute.END_WITH.getTag()),
-                new InvalidValueDetectedException());
+                super.getContentHelper().get(EnvaliContentAttribute.END_WITH), new InvalidValueDetectedException());
     }
 }

@@ -14,22 +14,10 @@
 
 package org.thinkit.framework.envali.strategy;
 
-import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-import org.thinkit.common.Preconditions;
-import org.thinkit.common.catalog.Extension;
-import org.thinkit.framework.content.ContentLoader;
-import org.thinkit.framework.envali.annotation.ParameterMapping;
-import org.thinkit.framework.envali.catalog.EnvaliContentAttribute;
-import org.thinkit.framework.envali.catalog.EnvaliContentCondition;
-import org.thinkit.framework.envali.catalog.EnvaliContentRoot;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
-import org.thinkit.framework.envali.exception.ContentNotFoundException;
+import org.thinkit.framework.envali.helper.EnvaliContentHelper;
 import org.thinkit.framework.envali.helper.EnvaliFieldHelper;
 
 import lombok.AccessLevel;
@@ -50,12 +38,6 @@ import lombok.ToString;
 abstract class ValidationStrategy {
 
     /**
-     * The entity for validation
-     */
-    @Getter(AccessLevel.PROTECTED)
-    private ValidatableEntity entity;
-
-    /**
      * The field for validation
      */
     @Getter(AccessLevel.PROTECTED)
@@ -68,19 +50,10 @@ abstract class ValidationStrategy {
     private EnvaliFieldHelper fieldHelper;
 
     /**
-     * An entity class for validation
+     * The content helper
      */
-    private Class<? extends ValidatableEntity> entityClass;
-
-    /**
-     * Envali's content mapping
-     */
-    private ParameterMapping contentMapping;
-
-    /**
-     * Envali's content
-     */
-    private Map<String, String> envaliContent;
+    @Getter(AccessLevel.PROTECTED)
+    private EnvaliContentHelper contentHelper;
 
     /**
      * Default constructor
@@ -98,79 +71,13 @@ abstract class ValidationStrategy {
      * @exception NullPointerException If {@code null} is passed as an argument
      */
     protected ValidationStrategy(@NonNull ValidatableEntity entity, @NonNull Field field) {
-        this.entity = entity;
         this.field = field;
         this.fieldHelper = EnvaliFieldHelper.of(entity, field);
-        this.entityClass = entity.getClass();
-        this.contentMapping = this.entityClass.getAnnotation(ParameterMapping.class);
+        this.contentHelper = EnvaliContentHelper.of(entity, field);
     }
 
     /**
      * Execute the validation process according to the strategy.
      */
     public abstract void validate();
-
-    /**
-     * Refer to the content file mapped to the entity object to be validated and get
-     * each expected value in {@link Map} format to be used at validation.
-     *
-     * @return Envali's validation content
-     *
-     * @exception NullPointerException          If no {@link ParameterMapping}
-     *                                          annotation is attached to the entity
-     *                                          to be validated
-     * @exception ContentNotFoundException      If the content file defined in
-     *                                          {@link ParameterMapping} annotation
-     *                                          was not found
-     * @exception UnsupportedOperationException If couldn't get Envali's content
-     */
-    protected Map<String, String> getEnvaliContent() {
-        Preconditions.requireNonNull(this.contentMapping);
-
-        if (this.envaliContent == null) {
-
-            final String contentResourcePath = new StringBuilder().append(EnvaliContentRoot.ROOT.getTag())
-                    .append(this.contentMapping.content()).append(Extension.json()).toString();
-            final InputStream contentStream = this.entityClass.getClassLoader()
-                    .getResourceAsStream(contentResourcePath);
-
-            if (contentStream == null) {
-                throw new ContentNotFoundException(String.format(
-                        "The content file defined in ParameterMapping annotation was not found. Please check the path to the resource. Resource path to the defined content: %s",
-                        contentResourcePath));
-            }
-
-            final List<Map<String, String>> envaliContent = ContentLoader.load(contentStream,
-                    this.getContentAttributes(), this.getContentConditions());
-
-            if (envaliContent.isEmpty()) {
-                throw new UnsupportedOperationException();
-            }
-
-            this.envaliContent = envaliContent.get(0);
-        }
-
-        return this.envaliContent;
-    }
-
-    /**
-     * Returns a list containing Envali's content attributes based on the definition
-     * information for {@link EnvaliContentAttribute} .
-     *
-     * @return A list containing Envali's content attributes
-     */
-    private List<String> getContentAttributes() {
-        return Arrays.asList(EnvaliContentAttribute.values()).stream().map(EnvaliContentAttribute::getTag)
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Returns a map containing Envali's content conditions based on the definition
-     * information for {@link EnvaliContentCondition} .
-     *
-     * @return A map containing Envali's content conditions
-     */
-    private Map<String, String> getContentConditions() {
-        return Map.of(EnvaliContentCondition.VARIABLE_NAME.getTag(), this.field.getName());
-    }
 }
