@@ -68,7 +68,7 @@ dependencies {
 
     implementation 'org.thinkit.common:dev-utils:v1.0.2'
     implementation 'org.thinkit.framework.content:content-framework:v1.0.3'
-    implementation 'org.thinkit.common:precondition-validator:v1.0.8'
+    implementation 'org.thinkit.common:precondition-validator:v1.0.9'
     implementation 'org.thinkit.api.catalog:catalog-api:v1.0.1'
 }
 
