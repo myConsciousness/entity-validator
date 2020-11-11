@@ -14,6 +14,7 @@
 
 package org.thinkit.framework.envali.helper;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
@@ -247,6 +248,42 @@ public final class EnvaliFieldHelper {
      */
     public boolean isFloat() {
         return this.fieldDataType.equals(Float.class) || this.fieldDataType.equals(float.class);
+    }
+
+    /**
+     * Checks if the data type of the field is Array.
+     *
+     * @return {@code true} if the data type of field is Array, or {@code false}
+     */
+    public boolean isArray() {
+        return this.fieldDataType.equals(Array.class);
+    }
+
+    /**
+     * Checks if the data type of the field is List.
+     *
+     * @return {@code true} if the data type of field is List, or {@code false}
+     */
+    public boolean isList() {
+        return this.fieldDataType.equals(List.class);
+    }
+
+    /**
+     * Checks if the data type of the field is Map.
+     *
+     * @return {@code true} if the data type of field is Map, or {@code false}
+     */
+    public boolean isMap() {
+        return this.fieldDataType.equals(Map.class);
+    }
+
+    /**
+     * Checks if the data type of the field is Set.
+     *
+     * @return {@code true} if the data type of field is Set, or {@code false}
+     */
+    public boolean isSet() {
+        return this.fieldDataType.equals(Set.class);
     }
 
     /**
