@@ -14,7 +14,6 @@
 
 package org.thinkit.framework.envali.helper;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
@@ -256,7 +255,7 @@ public final class EnvaliFieldHelper {
      * @return {@code true} if the data type of field is Array, or {@code false}
      */
     public boolean isArray() {
-        return this.fieldDataType.equals(Array.class);
+        return this.fieldDataType.isArray();
     }
 
     /**
