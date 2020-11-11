@@ -65,7 +65,7 @@ final class RequireStartWithStrategy extends ValidationStrategy {
 
     @Override
     public void validate() {
-        Preconditions.requireStartWith(super.getString(),
+        Preconditions.requireStartWith(super.getFieldHelper().getString(),
                 super.getEnvaliContent().get(EnvaliContentAttribute.START_WITH.getTag()),
                 new InvalidValueDetectedException());
     }

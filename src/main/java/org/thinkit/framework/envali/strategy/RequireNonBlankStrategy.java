@@ -64,6 +64,6 @@ final class RequireNonBlankStrategy extends ValidationStrategy {
 
     @Override
     public void validate() {
-        Preconditions.requireNonBlank(super.getString(), new InvalidValueDetectedException());
+        Preconditions.requireNonBlank(super.getFieldHelper().getString(), new InvalidValueDetectedException());
     }
 }

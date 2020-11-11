@@ -70,7 +70,7 @@ final class NestedEntityStrategy extends ValidationStrategy {
                     "Any object with NestedEntity annotation must implement ValidatableEntity interface");
         }
 
-        Envali.validate((ValidatableEntity) super.get());
+        Envali.validate(super.getFieldHelper().getValidatableEntity());
     }
 
     /**
@@ -82,7 +82,7 @@ final class NestedEntityStrategy extends ValidationStrategy {
      */
     private boolean isValidatableEntity() {
 
-        final List<Class<?>> interfaces = Arrays.asList(super.get().getClass().getInterfaces());
+        final List<Class<?>> interfaces = Arrays.asList(super.getFieldHelper().get().getClass().getInterfaces());
 
         for (Class<?> _interface : interfaces) {
             if (_interface.equals(ValidatableEntity.class)) {

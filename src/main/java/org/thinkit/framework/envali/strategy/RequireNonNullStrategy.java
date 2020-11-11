@@ -63,6 +63,6 @@ final class RequireNonNullStrategy extends ValidationStrategy {
 
     @Override
     public void validate() {
-        Preconditions.requireNonNull(super.get());
+        Preconditions.requireNonNull(super.getFieldHelper().get());
     }
 }

@@ -64,7 +64,16 @@ final class RequireRangeFromStrategy extends ValidationStrategy {
 
     @Override
     public void validate() {
-        Preconditions.requireRangeFrom(super.getInt(),
-                Integer.valueOf(super.getEnvaliContent().get(EnvaliContentAttribute.RANGE_FROM.getTag())));
+
+        final Class<?> fieldDataType = super.getField().getType();
+
+        if (fieldDataType.equals(Integer.class) || fieldDataType.equals(int.class)) {
+            Preconditions.requireRangeFrom(super.getFieldHelper().getInt(),
+                    Integer.valueOf(super.getEnvaliContent().get(EnvaliContentAttribute.RANGE_FROM.getTag())));
+        } else if (fieldDataType.equals(Long.class) || fieldDataType.equals(long.class)) {
+            Preconditions.requireRangeFrom(super.getFieldHelper().getLong(),
+                    Integer.valueOf(super.getEnvaliContent().get(EnvaliContentAttribute.RANGE_FROM.getTag())));
+        }
+
     }
 }

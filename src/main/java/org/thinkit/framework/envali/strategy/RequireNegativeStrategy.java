@@ -64,6 +64,6 @@ final class RequireNegativeStrategy extends ValidationStrategy {
 
     @Override
     public void validate() {
-        Preconditions.requireNegative(super.getInt(), new InvalidValueDetectedException());
+        Preconditions.requireNegative(super.getFieldHelper().getInt(), new InvalidValueDetectedException());
     }
 }

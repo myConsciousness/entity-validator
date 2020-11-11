@@ -15,9 +15,9 @@
 package org.thinkit.framework.envali.strategy;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.thinkit.common.Preconditions;
 import org.thinkit.framework.envali.annotation.RequireNonEmpty;
@@ -70,11 +70,13 @@ final class RequireNonEmptyStrategy extends ValidationStrategy {
         final Class<?> fieldDataType = super.getField().getType();
 
         if (fieldDataType.isArray() || fieldDataType.equals(List.class)) {
-            Preconditions.requireNonEmpty(Arrays.asList(super.get()));
+            Preconditions.requireNonEmpty(super.getFieldHelper().getList());
         } else if (fieldDataType.equals(Map.class)) {
-            Preconditions.requireNonEmpty((Map<?, ?>) super.get());
+            Preconditions.requireNonEmpty(super.getFieldHelper().getMap());
+        } else if (fieldDataType.equals(Set.class)) {
+            Preconditions.requireNonEmpty(super.getFieldHelper().getSet());
         } else if (fieldDataType.equals(String.class)) {
-            Preconditions.requireNonEmpty(super.getString());
+            Preconditions.requireNonEmpty(super.getFieldHelper().getString());
         } else {
             throw new UnsupportedOperationException();
         }

@@ -64,6 +64,6 @@ final class RequirePositiveStrategy extends ValidationStrategy {
 
     @Override
     public void validate() {
-        Preconditions.requirePositive(super.getInt(), new InvalidValueDetectedException());
+        Preconditions.requirePositive(super.getFieldHelper().getInt(), new InvalidValueDetectedException());
     }
 }

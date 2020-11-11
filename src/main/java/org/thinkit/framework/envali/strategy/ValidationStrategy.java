@@ -30,6 +30,7 @@ import org.thinkit.framework.envali.catalog.EnvaliContentCondition;
 import org.thinkit.framework.envali.catalog.EnvaliContentRoot;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.framework.envali.exception.ContentNotFoundException;
+import org.thinkit.framework.envali.helper.EnvaliFieldHelper;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -59,6 +60,12 @@ abstract class ValidationStrategy {
      */
     @Getter(AccessLevel.PROTECTED)
     private Field field;
+
+    /**
+     * The field helper
+     */
+    @Getter(AccessLevel.PROTECTED)
+    private EnvaliFieldHelper fieldHelper;
 
     /**
      * An entity class for validation
@@ -93,6 +100,7 @@ abstract class ValidationStrategy {
     protected ValidationStrategy(@NonNull ValidatableEntity entity, @NonNull Field field) {
         this.entity = entity;
         this.field = field;
+        this.fieldHelper = EnvaliFieldHelper.of(entity, field);
         this.entityClass = entity.getClass();
         this.contentMapping = this.entityClass.getAnnotation(ParameterMapping.class);
     }
@@ -101,43 +109,6 @@ abstract class ValidationStrategy {
      * Execute the validation process according to the strategy.
      */
     public abstract void validate();
-
-    /**
-     * Returns an object value from a field object.
-     *
-     * @return An object field value
-     *
-     * @exception UnsupportedOperationException If a different object is passed
-     *                                          during the reflection process, or if
-     *                                          an attempt is made to access an area
-     *                                          that does not meet the permissions
-     *                                          during the reflection process
-     */
-    protected Object get() {
-        try {
-            return this.field.get(this.entity);
-        } catch (IllegalArgumentException | IllegalAccessException e) {
-            throw new UnsupportedOperationException(e);
-        }
-    }
-
-    /**
-     * Returns a string value from a field object.
-     *
-     * @return A string field value
-     */
-    protected String getString() {
-        return String.valueOf(this.get());
-    }
-
-    /**
-     * Returns an int value from a field object.
-     *
-     * @return An int field value
-     */
-    protected int getInt() {
-        return Integer.parseInt(this.getString());
-    }
 
     /**
      * Refer to the content file mapped to the entity object to be validated and get
