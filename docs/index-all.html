@@ -52,7 +52,7 @@ loadScripts(document, 'script');</script>
 <div class="header">
 <h1>Index</h1>
 </div>
-<a href="#I:A">A</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:V">V</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a>
+<a href="#I:A">A</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:V">V</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a>
 <h2 class="title" id="I:A">A</h2>
 <dl class="index">
 <dt><a href="org/thinkit/framework/envali/strategy/AnnotationContext.html" title="class in org.thinkit.framework.envali.strategy"><span class="type-name-link">AnnotationContext</span></a> - Class in <a href="org/thinkit/framework/envali/strategy/package-summary.html">org.thinkit.framework.envali.strategy</a></dt>
@@ -67,6 +67,30 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the path to a content file with defined expectations to be used when
  performing the verification.</div>
+</dd>
+<dt><a href="org/thinkit/framework/envali/exception/ContentNotFoundException.html" title="class in org.thinkit.framework.envali.exception"><span class="type-name-link">ContentNotFoundException</span></a> - Exception in <a href="org/thinkit/framework/envali/exception/package-summary.html">org.thinkit.framework.envali.exception</a></dt>
+<dd>
+<div class="block">Thrown to indicate that the validation process on the
+ <a href="org/thinkit/framework/envali/annotation/ParameterMapping.html" title="annotation in org.thinkit.framework.envali.annotation"><code>ParameterMapping</code></a> interface has detected an invalid content path.</div>
+</dd>
+<dt><span class="member-name-link"><a href="org/thinkit/framework/envali/exception/ContentNotFoundException.html#%3Cinit%3E()">ContentNotFoundException()</a></span> - Constructor for exception org.thinkit.framework.envali.exception.<a href="org/thinkit/framework/envali/exception/ContentNotFoundException.html" title="class in org.thinkit.framework.envali.exception">ContentNotFoundException</a></dt>
+<dd>
+<div class="block">Constructs an <code>ContentNotFoundException</code> with no detail message.</div>
+</dd>
+<dt><span class="member-name-link"><a href="org/thinkit/framework/envali/exception/ContentNotFoundException.html#%3Cinit%3E(java.lang.String)">ContentNotFoundException(String)</a></span> - Constructor for exception org.thinkit.framework.envali.exception.<a href="org/thinkit/framework/envali/exception/ContentNotFoundException.html" title="class in org.thinkit.framework.envali.exception">ContentNotFoundException</a></dt>
+<dd>
+<div class="block">Constructs an <code>ContentNotFoundException</code> with the specified detail
+ message.</div>
+</dd>
+<dt><span class="member-name-link"><a href="org/thinkit/framework/envali/exception/ContentNotFoundException.html#%3Cinit%3E(java.lang.String,java.lang.Throwable)">ContentNotFoundException(String, Throwable)</a></span> - Constructor for exception org.thinkit.framework.envali.exception.<a href="org/thinkit/framework/envali/exception/ContentNotFoundException.html" title="class in org.thinkit.framework.envali.exception">ContentNotFoundException</a></dt>
+<dd>
+<div class="block">Constructs a new exception with the specified detail message and cause.</div>
+</dd>
+<dt><span class="member-name-link"><a href="org/thinkit/framework/envali/exception/ContentNotFoundException.html#%3Cinit%3E(java.lang.Throwable)">ContentNotFoundException(Throwable)</a></span> - Constructor for exception org.thinkit.framework.envali.exception.<a href="org/thinkit/framework/envali/exception/ContentNotFoundException.html" title="class in org.thinkit.framework.envali.exception">ContentNotFoundException</a></dt>
+<dd>
+<div class="block">Constructs a new exception with the specified cause and a detail message of
+ <code>(cause==null ? null : cause.toString())</code> (which typically
+ contains the class and detail message of <code>cause</code>).</div>
 </dd>
 </dl>
 <h2 class="title" id="I:E">E</h2>
@@ -155,6 +179,13 @@ loadScripts(document, 'script');</script>
  contains the class and detail message of <code>cause</code>).</div>
 </dd>
 </dl>
+<h2 class="title" id="I:N">N</h2>
+<dl class="index">
+<dt><a href="org/thinkit/framework/envali/annotation/NestedEntity.html" title="annotation in org.thinkit.framework.envali.annotation"><span class="type-name-link">NestedEntity</span></a> - Annotation Type in <a href="org/thinkit/framework/envali/annotation/package-summary.html">org.thinkit.framework.envali.annotation</a></dt>
+<dd>
+<div class="block">An annotation that indicates the field is the nested validatable entity.</div>
+</dd>
+</dl>
 <h2 class="title" id="I:O">O</h2>
 <dl class="index">
 <dt><span class="member-name-link"><a href="org/thinkit/framework/envali/strategy/AnnotationContext.html#of(org.thinkit.framework.envali.entity.ValidatableEntity,java.lang.reflect.Field,java.lang.Class)">of(ValidatableEntity, Field, Class&lt;? extends Annotation&gt;)</a></span> - Static method in class org.thinkit.framework.envali.strategy.<a href="org/thinkit/framework/envali/strategy/AnnotationContext.html" title="class in org.thinkit.framework.envali.strategy">AnnotationContext</a></dt>
@@ -220,6 +251,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">An annotation that indicates the field is not allowed to be set to negative
  numbers.</div>
+</dd>
+<dt><a href="org/thinkit/framework/envali/annotation/RequireRangeFrom.html" title="annotation in org.thinkit.framework.envali.annotation"><span class="type-name-link">RequireRangeFrom</span></a> - Annotation Type in <a href="org/thinkit/framework/envali/annotation/package-summary.html">org.thinkit.framework.envali.annotation</a></dt>
+<dd>
+<div class="block">An annotation indicating that the value is not under the lower limit.</div>
 </dd>
 <dt><a href="org/thinkit/framework/envali/annotation/RequireRangeFromTo.html" title="annotation in org.thinkit.framework.envali.annotation"><span class="type-name-link">RequireRangeFromTo</span></a> - Annotation Type in <a href="org/thinkit/framework/envali/annotation/package-summary.html">org.thinkit.framework.envali.annotation</a></dt>
 <dd>
@@ -298,7 +333,7 @@ the order they are declared.</div>
 <div class="block">Envali's content condition key: <code>"variableName"</code></div>
 </dd>
 </dl>
-<a href="#I:A">A</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:V">V</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a></main>
+<a href="#I:A">A</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:V">V</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a></main>
 <footer role="contentinfo">
 <nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
