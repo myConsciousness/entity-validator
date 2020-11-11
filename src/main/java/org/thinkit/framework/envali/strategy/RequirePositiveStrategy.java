@@ -58,7 +58,7 @@ final class RequirePositiveStrategy extends ValidationStrategy {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    public static ValidationStrategy of(@NonNull ValidatableEntity entity, @NonNull Field field) {
+    protected static ValidationStrategy of(@NonNull ValidatableEntity entity, @NonNull Field field) {
         return new RequirePositiveStrategy(entity, field);
     }
 

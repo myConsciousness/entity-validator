@@ -58,7 +58,7 @@ final class NestedEntityStrategy extends ValidationStrategy {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    public static ValidationStrategy of(@NonNull ValidatableEntity entity, @NonNull Field field) {
+    proteced static ValidationStrategy of(@NonNull ValidatableEntity entity, @NonNull Field field) {
         return new NestedEntityStrategy(entity, field);
     }
 

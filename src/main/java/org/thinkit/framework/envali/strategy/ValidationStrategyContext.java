@@ -14,6 +14,8 @@
 
 package org.thinkit.framework.envali.strategy;
 
+import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
+
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
@@ -63,7 +65,7 @@ final class ValidationStrategyContext {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    public static ValidationStrategyContext of(@NonNull ValidationStrategy validationStrategy) {
+    protected static ValidationStrategyContext of(@NonNull ValidationStrategy validationStrategy) {
         return new ValidationStrategyContext(validationStrategy);
     }
 
