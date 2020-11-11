@@ -49,6 +49,11 @@ public final class EnvaliFieldHelper {
     private Field field;
 
     /**
+     * The field data type
+     */
+    private Class<?> fieldDataType;
+
+    /**
      * Default Constructor
      */
     private EnvaliFieldHelper() {
@@ -65,6 +70,7 @@ public final class EnvaliFieldHelper {
     private EnvaliFieldHelper(@NonNull ValidatableEntity validatableEntity, @NonNull Field field) {
         this.validatableEntity = validatableEntity;
         this.field = field;
+        this.fieldDataType = field.getType();
     }
 
     /**
@@ -196,5 +202,69 @@ public final class EnvaliFieldHelper {
      */
     public ValidatableEntity getValidatableEntity() {
         return (ValidatableEntity) this.get();
+    }
+
+    /**
+     * Checks if the data type of the field is String.
+     *
+     * @return {@code true} if the data type of field is String, or {@code false}
+     */
+    public boolean isString() {
+        return this.fieldDataType.equals(String.class);
+    }
+
+    /**
+     * Checks if the data type of the field is Integer.
+     *
+     * @return {@code true} if the data type of field is Integer, or {@code false}
+     */
+    public boolean isInteger() {
+        return this.fieldDataType.equals(Integer.class) || this.fieldDataType.equals(int.class);
+    }
+
+    /**
+     * Checks if the data type of the field is Short.
+     *
+     * @return {@code true} if the data type of field is Short, or {@code false}
+     */
+    public boolean isShort() {
+        return this.fieldDataType.equals(Short.class) || this.fieldDataType.equals(short.class);
+    }
+
+    /**
+     * Checks if the data type of the field is Byte.
+     *
+     * @return {@code true} if the data type of field is Byte, or {@code false}
+     */
+    public boolean isByte() {
+        return this.fieldDataType.equals(Byte.class) || this.fieldDataType.equals(byte.class);
+    }
+
+    /**
+     * Checks if the data type of the field is Float.
+     *
+     * @return {@code true} if the data type of field is Float, or {@code false}
+     */
+    public boolean isFloat() {
+        return this.fieldDataType.equals(Float.class) || this.fieldDataType.equals(float.class);
+    }
+
+    /**
+     * Checks if the data type of the field is Double.
+     *
+     * @return {@code true} if the data type of field is Double, or {@code false}
+     */
+    public boolean isDouble() {
+        return this.fieldDataType.equals(Double.class) || this.fieldDataType.equals(double.class);
+    }
+
+    /**
+     * Checks if the data type of the field is {@link ValidatableEntity} .
+     *
+     * @return {@code true} if the data type of field is {@link ValidatableEntity} ,
+     *         or {@code false}
+     */
+    public boolean isValidatableEntity() {
+        return this.fieldDataType.equals(ValidatableEntity.class);
     }
 }
