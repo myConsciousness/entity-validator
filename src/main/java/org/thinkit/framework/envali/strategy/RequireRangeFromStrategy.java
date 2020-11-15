@@ -20,6 +20,7 @@ import org.thinkit.common.Preconditions;
 import org.thinkit.framework.envali.annotation.RequireRangeFrom;
 import org.thinkit.framework.envali.catalog.EnvaliContentAttribute;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
+import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
 import org.thinkit.framework.envali.helper.EnvaliFieldHelper;
 
 import lombok.EqualsAndHashCode;
@@ -70,11 +71,12 @@ final class RequireRangeFromStrategy extends ValidationStrategy {
 
         if (field.isInteger()) {
             Preconditions.requireRangeFrom(field.getInt(),
-                    Integer.valueOf(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)));
+                    Integer.valueOf(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
+                    new InvalidValueDetectedException());
         } else if (field.isLong()) {
             Preconditions.requireRangeFrom(field.getLong(),
-                    Integer.valueOf(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)));
+                    Long.valueOf(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
+                    new InvalidValueDetectedException());
         }
-
     }
 }
