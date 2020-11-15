@@ -86,6 +86,23 @@ public final class EnvaliTest {
     }
 
     @Nested
+    class TestRequireRangeFrom {
+
+        @ParameterizedTest
+        @ValueSource(ints = { 0, 1, 2, 9, 10, 11 })
+        void testWithinTheLimitsCases(final int parameter) {
+            assertDoesNotThrow(() -> Envali.validate(new RequireRangeFromForTest(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { -10, -9, -2, -1 })
+        void testNotWithinTheLimitsCases(final int parameter) {
+            assertThrows(InvalidValueDetectedException.class,
+                    () -> Envali.validate(new RequireRangeFromForTest(parameter)));
+        }
+    }
+
+    @Nested
     class TestRequireRangeTo {
 
         @ParameterizedTest
