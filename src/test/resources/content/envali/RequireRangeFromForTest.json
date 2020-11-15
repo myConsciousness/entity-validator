@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "author": "Kato Shinya",
+    "since": "1.0",
+    "version": "1.0",
+    "creationDate": "2020/11/15",
+    "encoding": "utf-8",
+    "description": "The content used to test the RequireRangeFrom annotation."
+  },
+
+  "selectionNodes": [
+    {
+      "node": {
+        "conditionId": "0",
+        "rangeFrom": "0",
+        "rangeTo": "",
+        "startWith": "",
+        "endWith": ""
+      }
+    }
+  ],
+
+  "conditionNodes": [
+    {
+      "node": {
+        "conditionId": "0",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "variableName",
+            "operand": "=",
+            "value": "number"
+          }
+        ]
+      }
+    }
+  ]
+}
