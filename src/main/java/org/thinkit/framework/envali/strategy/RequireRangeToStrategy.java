@@ -21,6 +21,7 @@ import org.thinkit.framework.envali.annotation.RequireRangeTo;
 import org.thinkit.framework.envali.catalog.EnvaliContentAttribute;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
+import org.thinkit.framework.envali.helper.EnvaliFieldHelper;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -65,8 +66,33 @@ final class RequireRangeToStrategy extends ValidationStrategy {
 
     @Override
     public void validate() {
-        Preconditions.requireRangeTo(super.getFieldHelper().getInt(),
-                Integer.parseInt(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)),
-                new InvalidValueDetectedException());
+
+        final EnvaliFieldHelper field = super.getFieldHelper();
+
+        if (field.isInteger()) {
+            Preconditions.requireRangeTo(field.getInt(),
+                    Integer.parseInt(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)),
+                    new InvalidValueDetectedException());
+        } else if (field.isLong()) {
+            Preconditions.requireRangeTo(field.getLong(),
+                    Long.parseLong(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)),
+                    new InvalidValueDetectedException());
+        } else if (field.isShort()) {
+            Preconditions.requireRangeTo(field.getShort(),
+                    Short.parseShort(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)),
+                    new InvalidValueDetectedException());
+        } else if (field.isByte()) {
+            Preconditions.requireRangeTo(field.getByte(),
+                    Byte.parseByte(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)),
+                    new InvalidValueDetectedException());
+        } else if (field.isFloat()) {
+            Preconditions.requireRangeTo(field.getFloat(),
+                    Float.parseFloat(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)),
+                    new InvalidValueDetectedException());
+        } else if (field.isDouble()) {
+            Preconditions.requireRangeTo(field.getDouble(),
+                    Double.parseDouble(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)),
+                    new InvalidValueDetectedException());
+        }
     }
 }
