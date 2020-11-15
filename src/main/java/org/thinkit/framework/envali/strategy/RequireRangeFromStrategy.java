@@ -77,6 +77,22 @@ final class RequireRangeFromStrategy extends ValidationStrategy {
             Preconditions.requireRangeFrom(field.getLong(),
                     Long.valueOf(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
                     new InvalidValueDetectedException());
+        } else if (field.isShort()) {
+            Preconditions.requireRangeFrom(field.getShort(),
+                    Short.valueOf(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
+                    new InvalidValueDetectedException());
+        } else if (field.isByte()) {
+            Preconditions.requireRangeFrom(field.getByte(),
+                    Byte.valueOf(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
+                    new InvalidValueDetectedException());
+        } else if (field.isFloat()) {
+            Preconditions.requireRangeFrom(field.getFloat(),
+                    Float.valueOf(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
+                    new InvalidValueDetectedException());
+        } else if (field.isDouble()) {
+            Preconditions.requireRangeFrom(field.getDouble(),
+                    Double.valueOf(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
+                    new InvalidValueDetectedException());
         }
     }
 }
