@@ -24,6 +24,7 @@ import org.thinkit.framework.envali.annotation.RequireNonBlank;
 import org.thinkit.framework.envali.annotation.RequireNonEmpty;
 import org.thinkit.framework.envali.annotation.RequireNonNull;
 import org.thinkit.framework.envali.annotation.RequirePositive;
+import org.thinkit.framework.envali.annotation.RequireRangeFrom;
 import org.thinkit.framework.envali.annotation.RequireRangeFromTo;
 import org.thinkit.framework.envali.annotation.RequireRangeTo;
 import org.thinkit.framework.envali.annotation.RequireStartWith;
@@ -128,6 +129,8 @@ public final class AnnotationContext {
             ValidationStrategyContext.of(RequirePositiveStrategy.of(this.getEntity(), this.getField())).validate();
         } else if (annotationType.equals(RequireNegative.class)) {
             ValidationStrategyContext.of(RequireNegativeStrategy.of(this.getEntity(), this.getField())).validate();
+        } else if (annotationType.equals(RequireRangeFrom.class)) {
+            ValidationStrategyContext.of(RequireRangeFromStrategy.of(this.getEntity(), this.getField())).validate();
         } else if (annotationType.equals(RequireRangeTo.class)) {
             ValidationStrategyContext.of(RequireRangeToStrategy.of(this.getEntity(), this.getField())).validate();
         } else if (annotationType.equals(RequireRangeFromTo.class)) {
