@@ -71,27 +71,27 @@ final class RequireRangeFromStrategy extends ValidationStrategy {
 
         if (field.isInteger()) {
             Preconditions.requireRangeFrom(field.getInt(),
-                    Integer.valueOf(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
+                    Integer.parseInt(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
                     new InvalidValueDetectedException());
         } else if (field.isLong()) {
             Preconditions.requireRangeFrom(field.getLong(),
-                    Long.valueOf(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
+                    Long.parseLong(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
                     new InvalidValueDetectedException());
         } else if (field.isShort()) {
             Preconditions.requireRangeFrom(field.getShort(),
-                    Short.valueOf(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
+                    Short.parseShort(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
                     new InvalidValueDetectedException());
         } else if (field.isByte()) {
             Preconditions.requireRangeFrom(field.getByte(),
-                    Byte.valueOf(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
+                    Byte.parseByte(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
                     new InvalidValueDetectedException());
         } else if (field.isFloat()) {
             Preconditions.requireRangeFrom(field.getFloat(),
-                    Float.valueOf(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
+                    Float.parseFloat(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
                     new InvalidValueDetectedException());
         } else if (field.isDouble()) {
             Preconditions.requireRangeFrom(field.getDouble(),
-                    Double.valueOf(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
+                    Double.parseDouble(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
                     new InvalidValueDetectedException());
         }
     }
