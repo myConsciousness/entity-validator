@@ -102,6 +102,11 @@ public final class EnvaliContentHelper {
     /**
      * Refer to the content file mapped to the entity object to be validated and get
      * each expected value in {@link Map} format to be used at validation.
+     * <p>
+     * Because the content is cached on the first call to
+     * {@link #get(EnvaliContentAttribute)} method, there is no performance
+     * degradation due to consecutive calls to
+     * {@link #get(EnvaliContentAttribute)}ethod.
      *
      * @param attribute The {@link EnvaliContentAttribute} element to be retrieved
      *                  from the content
@@ -120,29 +125,35 @@ public final class EnvaliContentHelper {
         Preconditions.requireNonNull(this.contentMapping);
 
         if (this.envaliContent == null) {
-
-            final String contentResourcePath = new StringBuilder().append(EnvaliContentRoot.ROOT.getTag())
-                    .append(this.contentMapping.content()).append(Extension.json()).toString();
-            final InputStream contentStream = this.entityClass.getClassLoader()
-                    .getResourceAsStream(contentResourcePath);
-
-            if (contentStream == null) {
-                throw new ContentNotFoundException(String.format(
-                        "The content file defined in ParameterMapping annotation was not found. Please check the path to the resource. Resource path to the defined content: %s",
-                        contentResourcePath));
-            }
-
-            final List<Map<String, String>> envaliContent = ContentLoader.load(contentStream,
-                    this.getContentAttributes(), this.getContentConditions());
-
-            if (envaliContent.isEmpty()) {
-                throw new UnsupportedOperationException();
-            }
-
-            this.envaliContent = envaliContent.get(0);
+            this.cacheContent();
         }
 
         return this.envaliContent.get(attribute.getTag());
+    }
+
+    /**
+     * Caches the content mapped by {@link ParameterMapping} annotation.
+     */
+    private void cacheContent() {
+
+        final String contentResourcePath = new StringBuilder().append(EnvaliContentRoot.ROOT.getTag())
+                .append(this.contentMapping.content()).append(Extension.json()).toString();
+        final InputStream contentStream = this.entityClass.getClassLoader().getResourceAsStream(contentResourcePath);
+
+        if (contentStream == null) {
+            throw new ContentNotFoundException(String.format(
+                    "The content file defined in ParameterMapping annotation was not found. Please check the path to the resource. Resource path to the defined content: %s",
+                    contentResourcePath));
+        }
+
+        final List<Map<String, String>> envaliContent = ContentLoader.load(contentStream, this.getContentAttributes(),
+                this.getContentConditions());
+
+        if (envaliContent.isEmpty()) {
+            throw new UnsupportedOperationException();
+        }
+
+        this.envaliContent = envaliContent.get(0);
     }
 
     /**
