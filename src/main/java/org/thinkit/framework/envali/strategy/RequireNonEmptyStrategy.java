@@ -75,8 +75,6 @@ final class RequireNonEmptyStrategy extends ValidationStrategy {
             Preconditions.requireNonEmpty(field.getSet());
         } else if (field.isString()) {
             Preconditions.requireNonEmpty(field.getString());
-        } else {
-            throw new UnsupportedOperationException();
         }
     }
 }
