@@ -99,6 +99,12 @@ import org.thinkit.framework.envali.strategy.AnnotationContext;
 public final class Envali {
 
     /**
+     * Default constructor
+     */
+    private Envali() {
+    }
+
+    /**
      * Analyzes each annotation set to an entity object for validation and verifies
      * the validity of the field's value.
      *
