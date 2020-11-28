@@ -32,7 +32,7 @@ import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
 import org.thinkit.framework.envali.strategy.AnnotationContext;
 
 /**
- * {@link Envali} is a powerful interface that provides common and intuitive
+ * {@link Envali} is a powerful validator that provides common and intuitive
  * validation process for entity fields.
  * <p>
  * It is very easy and intuitive to use, you just need to annotate the fields of
@@ -96,7 +96,7 @@ import org.thinkit.framework.envali.strategy.AnnotationContext;
  * @see RequireStartWith
  * @see RequireEndWith
  */
-public interface Envali {
+public final class Envali {
 
     /**
      * Analyzes each annotation set to an entity object for validation and verifies
