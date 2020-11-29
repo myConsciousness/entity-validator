@@ -24,9 +24,8 @@
 
 **_Provides intuitive and productive Entity validation capabilities!_**
 
-`Envali` is a Java-based framework that provides an intuitive and productive way to validate Entity's field elements.
-
-Validation items can be configured by adding annotations to the target field in `AOP-like`.
+`Envali` is a Java-based framework that provides an intuitive and productive way to validate Entity's field elements.<br>
+Validation items can be configured by adding annotations to the target field in `AOP`.
 
 ## Benefits
 
