@@ -55,9 +55,9 @@ public enum EnvaliContentAttribute implements BiCatalog<EnvaliContentAttribute, 
     ERROR_TYPE(4, "errorType"),
 
     /**
-     * Envali's content attributes: {@code "errorMessage"}
+     * Envali's content attributes: {@code "message"}
      */
-    ERROR_MESSAGE(5, "errorMessage");
+    MESSAGE(5, "message");
 
     /**
      * Code value
