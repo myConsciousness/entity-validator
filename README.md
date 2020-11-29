@@ -10,13 +10,12 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
-- [Envali: Entity Validator](#envali-entity-validator)
-  - [What is it?](#what-is-it)
-  - [Benefits](#benefits)
-  - [How To Use](#how-to-use)
-    - [1. Add the dependencies](#1-add-the-dependencies)
-  - [License](#license)
-  - [More Information](#more-information)
+- [What is it?](#what-is-it)
+- [Benefits](#benefits)
+- [How To Use](#how-to-use)
+  - [1. Add the dependencies](#1-add-the-dependencies)
+- [License](#license)
+- [More Information](#more-information)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
