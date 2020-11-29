@@ -42,7 +42,7 @@ public enum ErrorType implements Catalog<ErrorType> {
     /**
      * The runtime error
      */
-    RUNTIME(2),
+    RUNTIME(2);
 
     /**
      * Code value
