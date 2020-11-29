@@ -47,7 +47,17 @@ public enum EnvaliContentAttribute implements BiCatalog<EnvaliContentAttribute, 
     /**
      * Envali's content attributes: {@code "endWith"}
      */
-    END_WITH(3, "endWith");
+    END_WITH(3, "endWith"),
+
+    /**
+     * Envali's content attributes: {@code "errorType"}
+     */
+    ERROR_TYPE(4, "errorType"),
+
+    /**
+     * Envali's content attributes: {@code "errorMessage"}
+     */
+    ERROR_MESSAGE(5, "errorMessage");
 
     /**
      * Code value
