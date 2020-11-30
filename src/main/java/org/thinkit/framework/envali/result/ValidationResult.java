@@ -32,9 +32,6 @@ public final class ValidationResult {
 
     private final Map<Class<? extends ValidatableEntity>, List<BusinessError>> validationResult;
 
-  　/**
-   　* Default constructor
-   　*/
     private ValidationResult() {
         this.validationResult = new HashMap<>(0);
     }
