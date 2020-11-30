@@ -46,4 +46,12 @@ public final class BusinessError {
         this.errorType = errorType;
         this.message = message;
     }
+ 
+    public static BusinessError recoverable(@NonNull String message) {
+        return new BusinessError(ErrorType.RECOVERABLE, message);
+    }
+ 
+    public static BusinessError unrecoverable(@NonNull String message) {
+        return new BusinessError(ErrorType.UNRECOVERABLE, message);
+    }
 }
