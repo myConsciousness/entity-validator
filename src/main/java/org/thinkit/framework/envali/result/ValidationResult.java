@@ -14,6 +14,8 @@
  
 package org.thinkit.framework.envali.result;
 
+import org.thinkit.framework.envali.entity.ValidatableEntity;
+
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
