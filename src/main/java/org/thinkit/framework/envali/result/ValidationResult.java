@@ -30,7 +30,7 @@ import lombok.NonNull;
  * <p>
  * It provides the following features to operate comfortably with detected business errors.
  *
- * <pre
+ * <pre>
  * Test for the presence of business errors in any entity that implements {@link ValidatableEntity} .
  * <code>
  * final ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
@@ -64,7 +64,7 @@ public final class ValidationResult {
     }
 
     public void put(@NonNull Class<? extends ValidatableEntity> validatableEntity, @NonNull List<BusinessError> businessErrors) {
-        this.validationResult.put(validatableEntity, businessErrors);
+        this.validationResult.put(validatableEntity, List.of(businessErrors));
     }
 
     public List<BusinessError> get(@NonNull Class<? extends ValidatableEntity> validatableEntity) {
