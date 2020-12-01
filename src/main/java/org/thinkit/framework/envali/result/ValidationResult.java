@@ -19,6 +19,7 @@ import org.thinkit.framework.envali.catalog.ErrorType;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -64,11 +65,11 @@ public final class ValidationResult {
     }
 
     public void put(@NonNull Class<? extends ValidatableEntity> validatableEntity, @NonNull List<BusinessError> businessErrors) {
-        this.validationResult.put(validatableEntity, List.of(businessErrors));
+        this.validationResult.put(validatableEntity, businessErrors);
     }
 
     public List<BusinessError> get(@NonNull Class<? extends ValidatableEntity> validatableEntity) {
-        return this.validationResult.get(validatableEntity);
+        return new ArrayList<>(this.validationResult.get(validatableEntity));
     }
 
     public boolean hasError() {
