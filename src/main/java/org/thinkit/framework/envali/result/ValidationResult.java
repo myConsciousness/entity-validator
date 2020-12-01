@@ -96,7 +96,7 @@ public final class ValidationResult {
     }
 
     public List<BusinessError> getError(@NonNull Class<? extends ValidatableEntity> validatableEntity) {
-        return this.validationResult.get(validatableEntity).clone();
+        return List.copyOf(this.validationResult.get(validatableEntity));
     }
 
     public boolean hasError() {
