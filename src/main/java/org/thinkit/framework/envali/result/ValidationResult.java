@@ -69,7 +69,7 @@ public final class ValidationResult {
     /**
      * The validation result that manages business errors per-entity
      */
-    private final Map<Class<? extends ValidatableEntity>, List<BusinessError>> validationResult;
+    private Map<Class<? extends ValidatableEntity>, List<BusinessError>> validationResult;
 
     /**
      * Default constructor
