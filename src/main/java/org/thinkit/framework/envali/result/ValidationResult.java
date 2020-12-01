@@ -32,7 +32,7 @@ import lombok.NonNull;
  * It provides the following features to operate comfortably with detected business errors.
  *
  * <pre>
- * Test for the presence of business errors in any entity that implements {@link ValidatableEntity} .
+ * Test for the presence of business errors on any entity that implements {@link ValidatableEntity} .
  * <code>
  * final ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
  * // Returns {@code true} if there is a error on any {@link ValidatableEntity} , otherwise {@code false}
@@ -41,7 +41,7 @@ import lombok.NonNull;
  * </pre> 
  *
  * <pre>
- * Test for the presence of business errors in a specified entity that implements {@link ValidatableEntity} .
+ * Test for the presence of business errors on a specified entity that implements {@link ValidatableEntity} .
  * <code>
  * final ValidationResult validationResult = Envali.validate(concreteValidatableEntity); 
  * // Returns {@code true} if there is a error on ConcreteValidatableEntity, otherwise {@code false}
@@ -49,33 +49,60 @@ import lombok.NonNull;
  * </code>
  * </pre> 
  * 
+ * <pre>
+ * Get a business error of a specified entity that implements {@link ValidatableEntity} .
+ * <code>
+ * final ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
+ *
+ * if (validationResult.hasError(ConcreteValidationResult.class)) {
+ *     // Returns List<BusinessError>
+ *     validationResult.getError(ConcreteValidatableEntity.class);
+ * }
+ * </code>
+ * </pre> 
+ *
  * @author Kato Shinya
  * @since 1.0.1
  */
 public final class ValidationResult {
 
+    /**
+     * The validation result that manages business errors per-entity
+     */
     private final Map<Class<? extends ValidatableEntity>, List<BusinessError>> validationResult;
 
+    /**
+     * Default constructor
+     */
     private ValidationResult() {
-        this.validationResult = new HashMap<>(0);
     }
 
-    public static ValidationResult newInstance() {
-        return new ValidationResult();
+    /**
+     * Constructor
+     */
+    private ValidationResult(@NonNull Map<Class<? extends ValidatableEntity>, List<BusinessError>> validationResult) {
+        this.validationResult = validationResult;
     }
 
-    public void put(@NonNull Class<? extends ValidatableEntity> validatableEntity, @NonNull List<BusinessError> businessErrors) {
-        this.validationResult.put(validatableEntity, businessErrors);
+    /**
+     * Returns the new instance of {@link ValidationResult} based on {@code validationResult} passed as an argument.
+     *
+     * @return The new instance of {@link ValidationResult}
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
+    public static ValidationResult of(@NonNull Map<Class<? extends ValidatableEntity>, List<BusinessError>> validationResult) {
+        return new ValidationResult(validationResult);
     }
 
-    public List<BusinessError> get(@NonNull Class<? extends ValidatableEntity> validatableEntity) {
-        return new ArrayList<>(this.validationResult.get(validatableEntity));
+    public List<BusinessError> getError(@NonNull Class<? extends ValidatableEntity> validatableEntity) {
+        return this.validationResult.get(validatableEntity).clone();
     }
 
     public boolean hasError() {
-        return this.validationResult.isEmpty();
+        return !this.validationResult.isEmpty();
     }
-
+    
     public boolean hasError(@NonNull Class<? extends ValidatableEntity> validatableEntity) {
         return this.validationResult.containsKey(validatableEntity);
     }
