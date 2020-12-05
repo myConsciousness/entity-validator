@@ -11,25 +11,27 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
- 
+
 package org.thinkit.framework.envali.result;
+
+import java.util.List;
+import java.util.Map;
 
 import org.thinkit.framework.envali.Envali;
 import org.thinkit.framework.envali.catalog.ErrorType;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-
 import lombok.NonNull;
 
 /**
- * A data class that manages the results of validation by {@link Envali} . Manages {@link ErrorType#RECOVERABLE} and {@link ErrorType#UNRECOVERABLE}
- * business errors as a result of validation. Detected business errors are managed on a per-entity basis implementing the {@link ValidatableEntity} interface.
+ * A data class that manages the results of validation by {@link Envali} .
+ * Manages {@link ErrorType#RECOVERABLE} and {@link ErrorType#UNRECOVERABLE}
+ * business errors as a result of validation. Detected business errors are
+ * managed on a per-entity basis implementing the {@link ValidatableEntity}
+ * interface.
  * <p>
- * It provides the following features to operate comfortably with detected business errors.
+ * It provides the following features to operate comfortably with detected
+ * business errors.
  *
  * <pre>
  * Test for the presence of business errors on any entity that implements {@link ValidatableEntity} .
@@ -38,17 +40,17 @@ import lombok.NonNull;
  * // Returns {@code true} if there is a error on any {@link ValidatableEntity} , otherwise {@code false}
  * validationResult.hasError();
  * </code>
- * </pre> 
+ * </pre>
  *
  * <pre>
  * Test for the presence of business errors on a specified entity that implements {@link ValidatableEntity} .
  * <code>
- * final ValidationResult validationResult = Envali.validate(concreteValidatableEntity); 
+ * final ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
  * // Returns {@code true} if there is a error on ConcreteValidatableEntity, otherwise {@code false}
- * validationResult.hasError(ConcreteValidatableEntity.class); 
+ * validationResult.hasError(ConcreteValidatableEntity.class);
  * </code>
- * </pre> 
- * 
+ * </pre>
+ *
  * <pre>
  * Get a business error of a specified entity that implements {@link ValidatableEntity} .
  * <code>
@@ -59,7 +61,7 @@ import lombok.NonNull;
  *     validationResult.getError(ConcreteValidatableEntity.class);
  * }
  * </code>
- * </pre> 
+ * </pre>
  *
  * @author Kato Shinya
  * @since 1.0.1
@@ -85,24 +87,56 @@ public final class ValidationResult {
     }
 
     /**
-     * Returns the new instance of {@link ValidationResult} based on {@code validationResult} passed as an argument.
+     * Returns the new instance of {@link ValidationResult} based on
+     * {@code validationResult} passed as an argument.
      *
      * @return The new instance of {@link ValidationResult}
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    public static ValidationResult of(@NonNull Map<Class<? extends ValidatableEntity>, List<BusinessError>> validationResult) {
+    public static ValidationResult of(
+            @NonNull Map<Class<? extends ValidatableEntity>, List<BusinessError>> validationResult) {
         return new ValidationResult(validationResult);
     }
 
+    /**
+     * Returns the error list associated with the {@code validatableEntity} passed
+     * as an argument.
+     * <p>
+     * This method returns {@code null} if there is no error information associated
+     * with {@code validatableEntity} . Therefore, before calling the
+     * {@link #getError(Class)} method, call the {@link #hasError(Class)} method to
+     * check for the existence of an error.
+     *
+     * @param validatableEntity The validatable entity
+     * @return The error list associated with the {@code validatableEntity} passed
+     *         as an argument if there is an error, otherwise {@code null}
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
     public List<BusinessError> getError(@NonNull Class<? extends ValidatableEntity> validatableEntity) {
         return List.copyOf(this.validationResult.get(validatableEntity));
     }
 
+    /**
+     * Tests if there is any error associated with any {@link ValidatableEntity} .
+     *
+     * @return {@code true} if there is any error associated with any
+     *         {@link ValidatableEntity} , otherwise {@code false}
+     */
     public boolean hasError() {
         return !this.validationResult.isEmpty();
     }
-    
+
+    /**
+     * Tests if there is an error associated with specified
+     * {@code validatableEntity} passed as an argument.
+     *
+     * @return {@code true} if there is an error associated with any
+     *         {@code validatableEntity}, otherwise {@code false}
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
     public boolean hasError(@NonNull Class<? extends ValidatableEntity> validatableEntity) {
         return this.validationResult.containsKey(validatableEntity);
     }
