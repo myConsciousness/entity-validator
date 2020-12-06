@@ -16,7 +16,7 @@ package org.thinkit.framework.envali;
 
 import java.util.Arrays;
 
-import org.thinkit.common.Preconditions;
+import org.thinkit.common.base.precondition.Preconditions;
 import org.thinkit.framework.envali.annotation.ParameterMapping;
 import org.thinkit.framework.envali.annotation.RequireEndWith;
 import org.thinkit.framework.envali.annotation.RequireNegative;

@@ -16,7 +16,7 @@ package org.thinkit.framework.envali.strategy;
 
 import java.lang.reflect.Field;
 
-import org.thinkit.common.Preconditions;
+import org.thinkit.common.base.precondition.Preconditions;
 import org.thinkit.framework.envali.annotation.RequirePositive;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.framework.envali.exception.InvalidValueDetectedException;

@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.thinkit.common.Preconditions;
+import org.thinkit.common.base.precondition.Preconditions;
 import org.thinkit.common.catalog.Extension;
 import org.thinkit.framework.content.ContentLoader;
 import org.thinkit.framework.envali.annotation.ParameterMapping;
