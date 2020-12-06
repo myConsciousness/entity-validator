@@ -28,8 +28,8 @@
         "conditions": [
           {
             "keyName": "variableName",
-            "operand": "=",
-            "value": "number"
+            "operator": "=",
+            "operand": "number"
           }
         ]
       }

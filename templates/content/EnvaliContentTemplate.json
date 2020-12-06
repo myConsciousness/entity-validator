@@ -54,8 +54,8 @@
         "conditions": [
           {
             "keyName": "variableName",
-            "operand": "=",
-            "value": ""
+            "operator": "=",
+            "operand": ""
           }
         ]
       }
@@ -68,8 +68,8 @@
         "conditions": [
           {
             "keyName": "variableName",
-            "operand": "=",
-            "value": ""
+            "operator": "=",
+            "operand": ""
           }
         ]
       }
@@ -82,8 +82,8 @@
         "conditions": [
           {
             "keyName": "variableName",
-            "operand": "=",
-            "value": ""
+            "operator": "=",
+            "operand": ""
           }
         ]
       }
