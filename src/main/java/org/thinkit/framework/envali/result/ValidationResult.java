@@ -14,6 +14,7 @@
 
 package org.thinkit.framework.envali.result;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,9 @@ import org.thinkit.framework.envali.Envali;
 import org.thinkit.framework.envali.catalog.ErrorType;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import lombok.ToString;
 
 /**
  * A data class that manages the results of validation by {@link Envali} .
@@ -66,7 +69,14 @@ import lombok.NonNull;
  * @author Kato Shinya
  * @since 1.0.1
  */
-public final class ValidationResult {
+@ToString
+@EqualsAndHashCode
+public final class ValidationResult implements Serializable {
+
+    /**
+     * The serial version UID
+     */
+    private static final long serialVersionUID = -3775467610787292284L;
 
     /**
      * The validation result that manages business errors per-entity
