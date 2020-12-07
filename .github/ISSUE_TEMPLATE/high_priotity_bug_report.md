@@ -1,7 +1,7 @@
 ---
 name: High Priority Bug Report
 about: Something doesn't work.
-labels: "Priority: high", "Problem: bug"
+labels: "Priority: high, Problem: bug"
 assignees: "myConsciousness"
 ---
 
