@@ -1,7 +1,7 @@
 ---
 name: Bug Report
 about: Something doesn't work.
-labels: "bug"
+labels: "Problem: bug"
 assignees: "myConsciousness"
 ---
 
