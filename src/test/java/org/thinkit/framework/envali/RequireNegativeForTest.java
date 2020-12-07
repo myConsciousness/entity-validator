@@ -22,8 +22,7 @@ import org.thinkit.framework.envali.entity.ValidatableEntity;
  * {@link Envali} interface and the {@link RequireNegative} annotation.
  *
  * @author Kato Shinya
- * @since 1.0
- * @version 1.0
+ * @since 1.0.0
  */
 final class RequireNegativeForTest implements ValidatableEntity {
 

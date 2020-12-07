@@ -23,8 +23,7 @@ import org.thinkit.framework.envali.entity.ValidatableEntity;
  * {@link Envali} interface and the {@link RequireRangeFrom} annotation.
  *
  * @author Kato Shinya
- * @since 1.0
- * @version 1.0
+ * @since 1.0.0
  */
 @ParameterMapping(content = "RequireRangeFromForTest")
 final class RequireRangeFromForTest implements ValidatableEntity {

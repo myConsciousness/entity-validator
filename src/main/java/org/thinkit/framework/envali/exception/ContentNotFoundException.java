@@ -21,8 +21,7 @@ import org.thinkit.framework.envali.annotation.ParameterMapping;
  * {@link ParameterMapping} interface has detected an invalid content path.
  *
  * @author Kato Shinya
- * @since 1.0
- * @version 1.0
+ * @since 1.0.0
  */
 public final class ContentNotFoundException extends RuntimeException {
 

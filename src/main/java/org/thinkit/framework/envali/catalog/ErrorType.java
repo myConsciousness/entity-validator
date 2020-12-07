@@ -23,8 +23,7 @@ import lombok.RequiredArgsConstructor;
  * A catalog that manages error type.
  *
  * @author Kato Shinya
- * @since 1.0
- * @version 1.0
+ * @since 1.0.1
  */
 @RequiredArgsConstructor
 public enum ErrorType implements Catalog<ErrorType> {

@@ -21,8 +21,7 @@ package org.thinkit.framework.envali.entity;
  * the class that implements it is a verifiable entity.
  *
  * @author Kato Shinya
- * @since 1.0
- * @version 1.0
+ * @since 1.0.0
  */
 public interface ValidatableEntity {
 }

@@ -21,8 +21,7 @@ import org.thinkit.framework.envali.Envali;
  * interface has detected an invalid value.
  *
  * @author Kato Shinya
- * @since 1.0
- * @version 1.0
+ * @since 1.0.0
  */
 public final class InvalidValueDetectedException extends RuntimeException {
 

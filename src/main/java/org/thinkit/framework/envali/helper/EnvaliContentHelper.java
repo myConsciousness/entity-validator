@@ -39,8 +39,7 @@ import lombok.ToString;
  * A helper class that provides access to Envali's content.
  *
  * @author Kato Shinya
- * @since 1.0
- * @version 1.0
+ * @since 1.0.0
  */
 @ToString
 @EqualsAndHashCode

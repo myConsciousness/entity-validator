@@ -23,8 +23,7 @@ import lombok.RequiredArgsConstructor;
  * A catalog that manages Envali's content condition.
  *
  * @author Kato Shinya
- * @since 1.0
- * @version 1.0
+ * @since 1.0.0
  */
 @RequiredArgsConstructor
 public enum EnvaliContentCondition implements BiCatalog<EnvaliContentCondition, String> {
