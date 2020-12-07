@@ -20,7 +20,9 @@ import java.util.List;
 
 import org.thinkit.framework.envali.Envali;
 import org.thinkit.framework.envali.annotation.NestedEntity;
+import org.thinkit.framework.envali.context.ErrorContext;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
+import org.thinkit.framework.envali.result.BusinessError;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -40,37 +42,41 @@ final class NestedEntityStrategy extends ValidationStrategy {
     /**
      * Constructor
      *
-     * @param entity The entity for validation
-     * @param field  The field for validation
+     * @param errorContext The error context
+     * @param entity       The entity for validation
+     * @param field        The field for validation
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    private NestedEntityStrategy(@NonNull ValidatableEntity entity, @NonNull Field field) {
-        super(entity, field);
+    private NestedEntityStrategy(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
+            @NonNull Field field) {
+        super(errorContext, entity, field);
     }
 
     /**
      * Returns the new instance of {@link NestedEntityStrategy} class.
      *
-     * @param entity The entity for validation
-     * @param field  The field for validation
+     * @param errorContext The error context
+     * @param entity       The entity for validation
+     * @param field        The field for validation
      * @return The new instance of {@link NestedEntityStrategy} class
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    protected static ValidationStrategy of(@NonNull ValidatableEntity entity, @NonNull Field field) {
-        return new NestedEntityStrategy(entity, field);
+    protected static ValidationStrategy of(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
+            @NonNull Field field) {
+        return new NestedEntityStrategy(errorContext, entity, field);
     }
 
     @Override
-    public void validate() {
+    public BusinessError validate() {
 
         if (!this.isValidatableEntity()) {
             throw new UnsupportedOperationException(
                     "Any object with NestedEntity annotation must implement ValidatableEntity interface");
         }
 
-        Envali.validate(super.getFieldHelper().getValidatableEntity());
+        return BusinessError.nestedError(Envali.validate(super.getFieldHelper().getValidatableEntity()));
     }
 
     /**

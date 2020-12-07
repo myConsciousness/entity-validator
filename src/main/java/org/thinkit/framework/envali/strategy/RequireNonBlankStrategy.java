@@ -18,8 +18,10 @@ import java.lang.reflect.Field;
 
 import org.thinkit.common.base.precondition.Preconditions;
 import org.thinkit.framework.envali.annotation.RequireNonBlank;
+import org.thinkit.framework.envali.context.ErrorContext;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
+import org.thinkit.framework.envali.result.BusinessError;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -40,30 +42,62 @@ final class RequireNonBlankStrategy extends ValidationStrategy {
     /**
      * Constructor
      *
-     * @param entity The entity for validation
-     * @param field  The field for validation
+     * @param errorContext The error context
+     * @param entity       The entity for validation
+     * @param field        The field for validation
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    private RequireNonBlankStrategy(@NonNull ValidatableEntity entity, @NonNull Field field) {
-        super(entity, field);
+    private RequireNonBlankStrategy(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
+            @NonNull Field field) {
+        super(errorContext, entity, field);
     }
 
     /**
      * Returns the new instance of {@link RequireNonBlankStrategy} class.
      *
-     * @param entity The entity for validation
-     * @param field  The field for validation
+     * @param errorContext The error context
+     * @param entity       The entity for validation
+     * @param field        The field for validation
      * @return The new instance of {@link RequireNonBlankStrategy} class
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    protected static ValidationStrategy of(@NonNull ValidatableEntity entity, @NonNull Field field) {
-        return new RequireNonBlankStrategy(entity, field);
+    protected static ValidationStrategy of(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
+            @NonNull Field field) {
+        return new RequireNonBlankStrategy(errorContext, entity, field);
     }
 
     @Override
-    public void validate() {
-        Preconditions.requireNonBlank(super.getFieldHelper().getString(), new InvalidValueDetectedException());
+    public BusinessError validate() {
+
+        final ErrorContext errorContext = super.getErrorContext();
+
+        return switch (errorContext.getErrorType()) {
+            case RECOVERABLE -> {
+                try {
+                    Preconditions.requireNonBlank(super.getFieldHelper().getString(),
+                            new InvalidValueDetectedException());
+                    yield BusinessError.none();
+                } catch (InvalidValueDetectedException e) {
+                    yield BusinessError.recoverable(errorContext.getMessage());
+                }
+            }
+
+            case UNRECOVERABLE -> {
+                try {
+                    Preconditions.requireNonBlank(super.getFieldHelper().getString(),
+                            new InvalidValueDetectedException());
+                    yield BusinessError.none();
+                } catch (InvalidValueDetectedException e) {
+                    yield BusinessError.unrecoverable(errorContext.getMessage());
+                }
+            }
+
+            case RUNTIME -> {
+                Preconditions.requireNonBlank(super.getFieldHelper().getString());
+                yield BusinessError.none();
+            }
+        };
     }
 }

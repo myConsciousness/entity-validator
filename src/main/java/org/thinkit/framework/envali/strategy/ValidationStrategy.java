@@ -16,9 +16,11 @@ package org.thinkit.framework.envali.strategy;
 
 import java.lang.reflect.Field;
 
+import org.thinkit.framework.envali.context.ErrorContext;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.framework.envali.helper.EnvaliContentHelper;
 import org.thinkit.framework.envali.helper.EnvaliFieldHelper;
+import org.thinkit.framework.envali.result.BusinessError;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -36,6 +38,12 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 abstract class ValidationStrategy {
+
+    /**
+     * The error context
+     */
+    @Getter(AccessLevel.PROTECTED)
+    private ErrorContext errorContext;
 
     /**
      * The field helper
@@ -59,18 +67,24 @@ abstract class ValidationStrategy {
     /**
      * Constructor
      *
-     * @param entity The entity for validation
-     * @param field  The field for validation
+     * @param errorContext The error context
+     * @param entity       The entity for validation
+     * @param field        The field for validation
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    protected ValidationStrategy(@NonNull ValidatableEntity entity, @NonNull Field field) {
+    protected ValidationStrategy(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
+            @NonNull Field field) {
+        this.errorContext = errorContext;
         this.fieldHelper = EnvaliFieldHelper.of(entity, field);
         this.contentHelper = EnvaliContentHelper.of(entity, field);
     }
 
     /**
-     * Execute the validation process according to the strategy.
+     * Execute the validation process according to the strategy and return the
+     * business error as {@link BusinessError} if any error exists.
+     *
+     * @return The business error detected in the validate process
      */
-    public abstract void validate();
+    public abstract BusinessError validate();
 }

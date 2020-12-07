@@ -14,21 +14,25 @@
 
 package org.thinkit.framework.envali;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.thinkit.common.base.precondition.Preconditions;
 import org.thinkit.framework.envali.annotation.ParameterMapping;
 import org.thinkit.framework.envali.annotation.RequireEndWith;
-import org.thinkit.framework.envali.annotation.RequireNegative;
-import org.thinkit.framework.envali.annotation.RequireNonBlank;
 import org.thinkit.framework.envali.annotation.RequireNonEmpty;
 import org.thinkit.framework.envali.annotation.RequireNonNull;
-import org.thinkit.framework.envali.annotation.RequirePositive;
 import org.thinkit.framework.envali.annotation.RequireRangeFromTo;
 import org.thinkit.framework.envali.annotation.RequireRangeTo;
 import org.thinkit.framework.envali.annotation.RequireStartWith;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
+import org.thinkit.framework.envali.result.BusinessError;
+import org.thinkit.framework.envali.result.ValidationResult;
 import org.thinkit.framework.envali.strategy.AnnotationContext;
 
 /**
@@ -85,16 +89,6 @@ import org.thinkit.framework.envali.strategy.AnnotationContext;
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
- *
- * @see RequireNonNull
- * @see RequireNonBlank
- * @see RequireNonEmpty
- * @see RequirePositive
- * @see RequireNegative
- * @see RequireRangeTo
- * @see RequireRangeFromTo
- * @see RequireStartWith
- * @see RequireEndWith
  */
 public final class Envali {
 
@@ -119,15 +113,24 @@ public final class Envali {
      *                                          detected during the reflection
      *                                          process
      */
-    public static void validate(final ValidatableEntity entity) {
+    public static ValidationResult validate(final ValidatableEntity entity) {
         Preconditions.requireNonNull(entity);
 
-        Arrays.asList(entity.getClass().getDeclaredFields()).forEach(field -> {
+        final Map<Class<? extends ValidatableEntity>, List<BusinessError>> validationResult = new HashMap<>();
+
+        for (Field field : Arrays.asList(entity.getClass().getDeclaredFields())) {
             field.setAccessible(true);
 
-            Arrays.asList(field.getAnnotations()).forEach(annotation -> {
-                AnnotationContext.of(entity, field, annotation.annotationType()).validate();
-            });
-        });
+            for (Annotation annotation : Arrays.asList(field.getAnnotations())) {
+                final List<BusinessError> businessErrors = AnnotationContext
+                        .of(entity, field, annotation.annotationType()).validate();
+
+                if (!businessErrors.isEmpty()) {
+                    validationResult.put(entity.getClass(), businessErrors);
+                }
+            }
+        }
+
+        return ValidationResult.of(validationResult);
     }
 }

@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
+import org.thinkit.common.base.precondition.exception.PreconditionFailedException;
 
 /**
  * The test class that manages test cases for {@link Envali} interface.
@@ -63,7 +63,7 @@ public final class EnvaliTest {
         @ParameterizedTest
         @ValueSource(ints = { -1, -2, -10, -100, -1000 })
         void testNegativeCases(int parameter) {
-            assertThrows(InvalidValueDetectedException.class,
+            assertThrows(PreconditionFailedException.class,
                     () -> Envali.validate(new RequirePositiveForTest(parameter)));
         }
     }
@@ -80,7 +80,7 @@ public final class EnvaliTest {
         @ParameterizedTest
         @ValueSource(ints = { 0, 1, 10, 100, 1000 })
         void testPositiveCases(int parameter) {
-            assertThrows(InvalidValueDetectedException.class,
+            assertThrows(PreconditionFailedException.class,
                     () -> Envali.validate(new RequireNegativeForTest(parameter)));
         }
     }
@@ -97,7 +97,7 @@ public final class EnvaliTest {
         @ParameterizedTest
         @ValueSource(ints = { -10, -9, -2, -1 })
         void testNotWithinTheLimitsCases(final int parameter) {
-            assertThrows(InvalidValueDetectedException.class,
+            assertThrows(PreconditionFailedException.class,
                     () -> Envali.validate(new RequireRangeFromForTest(parameter)));
         }
     }
@@ -114,7 +114,7 @@ public final class EnvaliTest {
         @ParameterizedTest
         @ValueSource(ints = { 11, 12, 100, 1000 })
         void testNotWithinTheLimitsCases(final int parameter) {
-            assertThrows(InvalidValueDetectedException.class,
+            assertThrows(PreconditionFailedException.class,
                     () -> Envali.validate(new RequireRangeToForTest(parameter)));
         }
     }
@@ -131,7 +131,7 @@ public final class EnvaliTest {
         @ParameterizedTest
         @ValueSource(ints = { -100, -12, -11, 11, 12, 100, 1000 })
         void testNotWithinTheLimitsFromToCases(final int parameter) {
-            assertThrows(InvalidValueDetectedException.class,
+            assertThrows(PreconditionFailedException.class,
                     () -> Envali.validate(new RequireRangeFromToForTest(parameter)));
         }
     }
@@ -148,7 +148,7 @@ public final class EnvaliTest {
         @ParameterizedTest
         @ValueSource(ints = { 0, 1, 2, 10, 100, 1000 })
         void testNestedRequireNegativeWhenNumbersArePositive(final int parameter) {
-            assertThrows(InvalidValueDetectedException.class,
+            assertThrows(PreconditionFailedException.class,
                     () -> Envali.validate(new NestedEntityForTest(new RequireNegativeForTest(parameter))));
         }
 

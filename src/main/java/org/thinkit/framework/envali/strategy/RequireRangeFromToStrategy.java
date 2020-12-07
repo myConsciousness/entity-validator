@@ -17,11 +17,14 @@ package org.thinkit.framework.envali.strategy;
 import java.lang.reflect.Field;
 
 import org.thinkit.common.base.precondition.Preconditions;
+import org.thinkit.common.base.precondition.exception.PreconditionFailedException;
 import org.thinkit.framework.envali.annotation.RequireRangeFromTo;
 import org.thinkit.framework.envali.catalog.EnvaliContentAttribute;
+import org.thinkit.framework.envali.context.ErrorContext;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
 import org.thinkit.framework.envali.helper.EnvaliFieldHelper;
+import org.thinkit.framework.envali.result.BusinessError;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -42,63 +45,109 @@ final class RequireRangeFromToStrategy extends ValidationStrategy {
     /**
      * Constructor
      *
-     * @param entity The entity for validation
-     * @param field  The field for validation
+     * @param errorContext The error context
+     * @param entity       The entity for validation
+     * @param field        The field for validation
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    private RequireRangeFromToStrategy(@NonNull ValidatableEntity entity, @NonNull Field field) {
-        super(entity, field);
+    private RequireRangeFromToStrategy(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
+            @NonNull Field field) {
+        super(errorContext, entity, field);
     }
 
     /**
      * Returns the new instance of {@link RequireRangeFromToStrategy} class.
      *
-     * @param entity The entity for validation
-     * @param field  The field for validation
+     * @param errorContext The error context
+     * @param entity       The entity for validation
+     * @param field        The field for validation
      * @return The new instance of {@link RequireRangeFromToStrategy} class
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    protected static ValidationStrategy of(@NonNull ValidatableEntity entity, @NonNull Field field) {
-        return new RequireRangeFromToStrategy(entity, field);
+    protected static ValidationStrategy of(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
+            @NonNull Field field) {
+        return new RequireRangeFromToStrategy(errorContext, entity, field);
     }
 
     @Override
-    public void validate() {
+    public BusinessError validate() {
 
-        final EnvaliFieldHelper field = super.getFieldHelper();
+        final ErrorContext errorContext = super.getErrorContext();
 
+        return switch (errorContext.getErrorType()) {
+            case RECOVERABLE -> {
+                try {
+                    this.validate(super.getFieldHelper(), new InvalidValueDetectedException());
+                    yield BusinessError.none();
+                } catch (InvalidValueDetectedException e) {
+                    yield BusinessError.recoverable(errorContext.getMessage());
+                }
+            }
+
+            case UNRECOVERABLE -> {
+                try {
+                    this.validate(super.getFieldHelper(), new InvalidValueDetectedException());
+                    yield BusinessError.none();
+                } catch (InvalidValueDetectedException e) {
+                    yield BusinessError.unrecoverable(errorContext.getMessage());
+                }
+            }
+
+            case RUNTIME -> {
+                this.validate(super.getFieldHelper());
+                yield BusinessError.none();
+            }
+        };
+    }
+
+    /**
+     * Validates the field value and object based on the {@code field} passed as
+     * arguments.
+     *
+     * @param field The field to be validated
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
+    private void validate(@NonNull EnvaliFieldHelper field) {
+        this.validate(field, new PreconditionFailedException());
+    }
+
+    /**
+     * Validates the field value and object based on the {@code field} passed as
+     * arguments.
+     *
+     * @param field     The field to be validated
+     * @param exception The exception to be thrown when there is a error
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
+    private void validate(@NonNull EnvaliFieldHelper field, @NonNull RuntimeException exception) {
         if (field.isInteger()) {
             Preconditions.requireRange(field.getInt(),
                     Integer.parseInt(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
-                    Integer.parseInt(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)),
-                    new InvalidValueDetectedException());
+                    Integer.parseInt(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)), exception);
         } else if (field.isLong()) {
             Preconditions.requireRange(field.getLong(),
                     Long.parseLong(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
-                    Long.parseLong(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)),
-                    new InvalidValueDetectedException());
+                    Long.parseLong(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)), exception);
         } else if (field.isShort()) {
             Preconditions.requireRange(field.getShort(),
                     Short.parseShort(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
-                    Short.parseShort(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)),
-                    new InvalidValueDetectedException());
+                    Short.parseShort(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)), exception);
         } else if (field.isByte()) {
             Preconditions.requireRange(field.getByte(),
                     Byte.parseByte(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
-                    Byte.parseByte(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)),
-                    new InvalidValueDetectedException());
+                    Byte.parseByte(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)), exception);
         } else if (field.isFloat()) {
             Preconditions.requireRange(field.getFloat(),
                     Float.parseFloat(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
-                    Float.parseFloat(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)),
-                    new InvalidValueDetectedException());
+                    Float.parseFloat(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)), exception);
         } else if (field.isDouble()) {
             Preconditions.requireRange(field.getDouble(),
                     Double.parseDouble(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
-                    Double.parseDouble(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)),
-                    new InvalidValueDetectedException());
+                    Double.parseDouble(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)), exception);
         }
     }
 }

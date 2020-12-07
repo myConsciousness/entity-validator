@@ -18,7 +18,10 @@ import java.lang.reflect.Field;
 
 import org.thinkit.common.base.precondition.Preconditions;
 import org.thinkit.framework.envali.annotation.RequireNonNull;
+import org.thinkit.framework.envali.context.ErrorContext;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
+import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
+import org.thinkit.framework.envali.result.BusinessError;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -39,30 +42,60 @@ final class RequireNonNullStrategy extends ValidationStrategy {
     /**
      * Constructor
      *
-     * @param entity The entity for validation
-     * @param field  The field for validation
+     * @param errorContext The error context
+     * @param entity       The entity for validation
+     * @param field        The field for validation
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    private RequireNonNullStrategy(@NonNull ValidatableEntity entity, @NonNull Field field) {
-        super(entity, field);
+    private RequireNonNullStrategy(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
+            @NonNull Field field) {
+        super(errorContext, entity, field);
     }
 
     /**
      * Returns the new instance of {@link RequireNonNullStrategy} class.
      *
-     * @param entity The entity for validation
-     * @param field  The field for validation
+     * @param errorContext The error context
+     * @param entity       The entity for validation
+     * @param field        The field for validation
      * @return The new instance of {@link RequireNonNullStrategy} class
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    protected static ValidationStrategy of(@NonNull ValidatableEntity entity, @NonNull Field field) {
-        return new RequireNonNullStrategy(entity, field);
+    protected static ValidationStrategy of(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
+            @NonNull Field field) {
+        return new RequireNonNullStrategy(errorContext, entity, field);
     }
 
     @Override
-    public void validate() {
-        Preconditions.requireNonNull(super.getFieldHelper().get());
+    public BusinessError validate() {
+
+        final ErrorContext errorContext = super.getErrorContext();
+
+        return switch (errorContext.getErrorType()) {
+            case RECOVERABLE -> {
+                try {
+                    Preconditions.requireNonNull(super.getFieldHelper().get(), new InvalidValueDetectedException());
+                    yield BusinessError.none();
+                } catch (InvalidValueDetectedException e) {
+                    yield BusinessError.recoverable(errorContext.getMessage());
+                }
+            }
+
+            case UNRECOVERABLE -> {
+                try {
+                    Preconditions.requireNonNull(super.getFieldHelper().get(), new InvalidValueDetectedException());
+                    yield BusinessError.none();
+                } catch (InvalidValueDetectedException e) {
+                    yield BusinessError.unrecoverable(errorContext.getMessage());
+                }
+            }
+
+            case RUNTIME -> {
+                Preconditions.requireNonNull(super.getFieldHelper().get());
+                yield BusinessError.none();
+            }
+        };
     }
 }

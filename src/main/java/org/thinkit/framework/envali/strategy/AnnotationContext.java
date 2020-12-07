@@ -16,6 +16,8 @@ package org.thinkit.framework.envali.strategy;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.thinkit.framework.envali.annotation.NestedEntity;
 import org.thinkit.framework.envali.annotation.RequireEndWith;
@@ -28,8 +30,11 @@ import org.thinkit.framework.envali.annotation.RequireRangeFrom;
 import org.thinkit.framework.envali.annotation.RequireRangeFromTo;
 import org.thinkit.framework.envali.annotation.RequireRangeTo;
 import org.thinkit.framework.envali.annotation.RequireStartWith;
+import org.thinkit.framework.envali.catalog.ErrorType;
+import org.thinkit.framework.envali.context.ErrorContext;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
+import org.thinkit.framework.envali.result.BusinessError;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -117,32 +122,47 @@ public final class AnnotationContext {
      *                                          detected during the reflection
      *                                          process
      */
-    public void validate() {
+    public List<BusinessError> validate() {
 
+        final List<BusinessError> businessErrors = new ArrayList<>();
         final Class<? extends Annotation> annotationType = this.getAnnotationType();
 
         if (annotationType.equals(RequireNonNull.class)) {
-            ValidationStrategyContext.of(RequireNonNullStrategy.of(this.getEntity(), this.getField())).validate();
+            ValidationStrategyContext.of(RequireNonNullStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
+                    this.getEntity(), this.getField())).validate();
         } else if (annotationType.equals(RequireNonBlank.class)) {
-            ValidationStrategyContext.of(RequireNonBlankStrategy.of(this.getEntity(), this.getField())).validate();
+            ValidationStrategyContext.of(RequireNonBlankStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
+                    this.getEntity(), this.getField())).validate();
         } else if (annotationType.equals(RequirePositive.class)) {
-            ValidationStrategyContext.of(RequirePositiveStrategy.of(this.getEntity(), this.getField())).validate();
+            ValidationStrategyContext.of(RequirePositiveStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
+                    this.getEntity(), this.getField())).validate();
         } else if (annotationType.equals(RequireNegative.class)) {
-            ValidationStrategyContext.of(RequireNegativeStrategy.of(this.getEntity(), this.getField())).validate();
+            ValidationStrategyContext.of(RequireNegativeStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
+                    this.getEntity(), this.getField())).validate();
         } else if (annotationType.equals(RequireRangeFrom.class)) {
-            ValidationStrategyContext.of(RequireRangeFromStrategy.of(this.getEntity(), this.getField())).validate();
+            ValidationStrategyContext.of(RequireRangeFromStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
+                    this.getEntity(), this.getField())).validate();
         } else if (annotationType.equals(RequireRangeTo.class)) {
-            ValidationStrategyContext.of(RequireRangeToStrategy.of(this.getEntity(), this.getField())).validate();
+            ValidationStrategyContext.of(RequireRangeToStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
+                    this.getEntity(), this.getField())).validate();
         } else if (annotationType.equals(RequireRangeFromTo.class)) {
-            ValidationStrategyContext.of(RequireRangeFromToStrategy.of(this.getEntity(), this.getField())).validate();
+            ValidationStrategyContext.of(RequireRangeFromToStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
+                    this.getEntity(), this.getField())).validate();
         } else if (annotationType.equals(RequireStartWith.class)) {
-            ValidationStrategyContext.of(RequireStartWithStrategy.of(this.getEntity(), this.getField())).validate();
+            ValidationStrategyContext.of(RequireStartWithStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
+                    this.getEntity(), this.getField())).validate();
         } else if (annotationType.equals(RequireEndWith.class)) {
-            ValidationStrategyContext.of(RequireEndWithStrategy.of(this.getEntity(), this.getField())).validate();
+            ValidationStrategyContext.of(RequireEndWithStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
+                    this.getEntity(), this.getField())).validate();
         } else if (annotationType.equals(RequireNonEmpty.class)) {
-            ValidationStrategyContext.of(RequireNonEmptyStrategy.of(this.getEntity(), this.getField())).validate();
+            ValidationStrategyContext.of(RequireNonEmptyStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
+                    this.getEntity(), this.getField())).validate();
         } else if (annotationType.equals(NestedEntity.class)) {
-            ValidationStrategyContext.of(NestedEntityStrategy.of(this.getEntity(), this.getField())).validate();
+            ValidationStrategyContext.of(
+                    NestedEntityStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""), this.getEntity(), this.getField()))
+                    .validate();
         }
+
+        return businessErrors;
     }
 }

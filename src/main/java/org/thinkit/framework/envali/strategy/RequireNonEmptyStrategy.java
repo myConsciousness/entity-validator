@@ -17,9 +17,13 @@ package org.thinkit.framework.envali.strategy;
 import java.lang.reflect.Field;
 
 import org.thinkit.common.base.precondition.Preconditions;
+import org.thinkit.common.base.precondition.exception.PreconditionFailedException;
 import org.thinkit.framework.envali.annotation.RequireNonEmpty;
+import org.thinkit.framework.envali.context.ErrorContext;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
+import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
 import org.thinkit.framework.envali.helper.EnvaliFieldHelper;
+import org.thinkit.framework.envali.result.BusinessError;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -40,41 +44,93 @@ final class RequireNonEmptyStrategy extends ValidationStrategy {
     /**
      * Constructor
      *
-     * @param entity The entity for validation
-     * @param field  The field for validation
+     * @param errorContext The error context
+     * @param entity       The entity for validation
+     * @param field        The field for validation
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    private RequireNonEmptyStrategy(@NonNull ValidatableEntity entity, @NonNull Field field) {
-        super(entity, field);
+    private RequireNonEmptyStrategy(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
+            @NonNull Field field) {
+        super(errorContext, entity, field);
     }
 
     /**
      * Returns the new instance of {@link RequireNonEmptyStrategy} class.
      *
-     * @param entity The entity for validation
-     * @param field  The field for validation
+     * @param errorContext The error context
+     * @param entity       The entity for validation
+     * @param field        The field for validation
      * @return The new instance of {@link RequireNonEmptyStrategy} class
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    protected static ValidationStrategy of(@NonNull ValidatableEntity entity, @NonNull Field field) {
-        return new RequireNonEmptyStrategy(entity, field);
+    protected static ValidationStrategy of(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
+            @NonNull Field field) {
+        return new RequireNonEmptyStrategy(errorContext, entity, field);
     }
 
     @Override
-    public void validate() {
+    public BusinessError validate() {
 
-        final EnvaliFieldHelper field = super.getFieldHelper();
+        final ErrorContext errorContext = super.getErrorContext();
 
+        return switch (errorContext.getErrorType()) {
+            case RECOVERABLE -> {
+                try {
+                    this.validate(super.getFieldHelper(), new InvalidValueDetectedException());
+                    yield BusinessError.none();
+                } catch (InvalidValueDetectedException e) {
+                    yield BusinessError.recoverable(errorContext.getMessage());
+                }
+            }
+
+            case UNRECOVERABLE -> {
+                try {
+                    this.validate(super.getFieldHelper(), new InvalidValueDetectedException());
+                    yield BusinessError.none();
+                } catch (InvalidValueDetectedException e) {
+                    yield BusinessError.unrecoverable(errorContext.getMessage());
+                }
+            }
+
+            case RUNTIME -> {
+                this.validate(super.getFieldHelper());
+                yield BusinessError.none();
+            }
+        };
+    }
+
+    /**
+     * Validates the field value and object based on the {@code field} passed as
+     * arguments.
+     *
+     * @param field The field to be validated
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
+    private void validate(@NonNull EnvaliFieldHelper field) {
+        this.validate(field, new PreconditionFailedException());
+    }
+
+    /**
+     * Validates the field value and object based on the {@code field} passed as
+     * arguments.
+     *
+     * @param field     The field to be validated
+     * @param exception The exception to be thrown when there is a error
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
+    private void validate(@NonNull EnvaliFieldHelper field, @NonNull RuntimeException exception) {
         if (field.isArray() || field.isList()) {
-            Preconditions.requireNonEmpty(field.getList());
+            Preconditions.requireNonEmpty(field.getList(), exception);
         } else if (field.isMap()) {
-            Preconditions.requireNonEmpty(field.getMap());
+            Preconditions.requireNonEmpty(field.getMap(), exception);
         } else if (field.isSet()) {
-            Preconditions.requireNonEmpty(field.getSet());
+            Preconditions.requireNonEmpty(field.getSet(), exception);
         } else if (field.isString()) {
-            Preconditions.requireNonEmpty(field.getString());
+            Preconditions.requireNonEmpty(field.getString(), exception);
         }
     }
 }
