@@ -17,6 +17,7 @@ package org.thinkit.framework.envali.result;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.thinkit.framework.envali.Envali;
 import org.thinkit.framework.envali.catalog.ErrorType;
@@ -113,19 +114,35 @@ public final class ValidationResult implements Serializable {
      * Returns the error list associated with the {@code validatableEntity} passed
      * as an argument.
      * <p>
-     * This method returns {@code null} if there is no error information associated
-     * with {@code validatableEntity} . Therefore, before calling the
-     * {@link #getError(Class)} method, call the {@link #hasError(Class)} method to
-     * check for the existence of an error.
+     * This method returns immutable empty List created by {@link List#of()} if
+     * there is no error data associated with {@code validatableEntity} .
+     * <p>
+     * This method recursively searches the error data associated with the
+     * {@code validatableEntity} object passed as argument.
      *
      * @param validatableEntity The validatable entity
      * @return The error list associated with the {@code validatableEntity} passed
-     *         as an argument if there is an error, otherwise {@code null}
+     *         as an argument if there is an error, otherwise immutable empty List
+     *         created by {@link List#of()} .
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
     public List<BusinessError> getError(@NonNull Class<? extends ValidatableEntity> validatableEntity) {
-        return List.copyOf(this.validationResult.get(validatableEntity));
+
+        if (this.validationResult.containsKey(validatableEntity)) {
+            return List.copyOf(this.validationResult.get(validatableEntity));
+        }
+
+        for (Entry<Class<? extends ValidatableEntity>, List<BusinessError>> businessErrors : this.validationResult
+                .entrySet()) {
+            for (BusinessError businessError : businessErrors.getValue()) {
+                if (businessError.hasNestedError()) {
+                    return businessError.getNestedError().getError(validatableEntity);
+                }
+            }
+        }
+
+        return List.of();
     }
 
     /**
@@ -136,18 +153,5 @@ public final class ValidationResult implements Serializable {
      */
     public boolean hasError() {
         return !this.validationResult.isEmpty();
-    }
-
-    /**
-     * Tests if there is an error associated with specified
-     * {@code validatableEntity} passed as an argument.
-     *
-     * @return {@code true} if there is an error associated with any
-     *         {@code validatableEntity}, otherwise {@code false}
-     *
-     * @exception NullPointerException If {@code null} is passed as an argument
-     */
-    public boolean hasError(@NonNull Class<? extends ValidatableEntity> validatableEntity) {
-        return this.validationResult.containsKey(validatableEntity);
     }
 }
