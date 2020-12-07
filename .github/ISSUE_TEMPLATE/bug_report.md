@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Report a bug to improve functionality
+about: Something doesn't work.
 labels: "bug"
 assignees: "myConsciousness"
 ---
