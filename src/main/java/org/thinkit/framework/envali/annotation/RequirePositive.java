@@ -19,6 +19,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.thinkit.framework.envali.catalog.ErrorType;
+
 /**
  * An annotation that indicates the field is not allowed to be set to negative
  * numbers.
@@ -43,4 +45,20 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RequirePositive {
+
+    /**
+     * Returns the error type based on {@link ErrorType} , and
+     * {@link ErrorType#RUNTIME} is set as the default.
+     *
+     * @return The error type based on the {@link ErrorType}
+     */
+    public ErrorType errorType() default ErrorType.RUNTIME;
+
+    /**
+     * Returns the error type based on {@link ErrorType} , and empty ({@code ""}) is
+     * set as the default.
+     *
+     * @return The message
+     */
+    public String message() default "";
 }

@@ -128,35 +128,65 @@ public final class AnnotationContext {
         final Class<? extends Annotation> annotationType = this.getAnnotationType();
 
         if (annotationType.equals(RequireNonNull.class)) {
-            ValidationStrategyContext.of(RequireNonNullStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
-                    this.getEntity(), this.getField())).validate();
+            final RequireNonNull annotation = this.field.getAnnotation(RequireNonNull.class);
+            ValidationStrategyContext
+                    .of(RequireNonNullStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
+                            this.getEntity(), this.getField()))
+                    .validate();
         } else if (annotationType.equals(RequireNonBlank.class)) {
-            ValidationStrategyContext.of(RequireNonBlankStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
-                    this.getEntity(), this.getField())).validate();
+            final RequireNonBlank annotation = this.field.getAnnotation(RequireNonBlank.class);
+            ValidationStrategyContext
+                    .of(RequireNonBlankStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
+                            this.getEntity(), this.getField()))
+                    .validate();
         } else if (annotationType.equals(RequirePositive.class)) {
-            ValidationStrategyContext.of(RequirePositiveStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
-                    this.getEntity(), this.getField())).validate();
+            final RequirePositive annotation = this.field.getAnnotation(RequirePositive.class);
+            ValidationStrategyContext
+                    .of(RequirePositiveStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
+                            this.getEntity(), this.getField()))
+                    .validate();
         } else if (annotationType.equals(RequireNegative.class)) {
-            ValidationStrategyContext.of(RequireNegativeStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
-                    this.getEntity(), this.getField())).validate();
+            final RequireNegative annotation = this.field.getAnnotation(RequireNegative.class);
+            ValidationStrategyContext
+                    .of(RequireNegativeStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
+                            this.getEntity(), this.getField()))
+                    .validate();
         } else if (annotationType.equals(RequireRangeFrom.class)) {
-            ValidationStrategyContext.of(RequireRangeFromStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
-                    this.getEntity(), this.getField())).validate();
+            final RequireRangeFrom annotation = this.field.getAnnotation(RequireRangeFrom.class);
+            ValidationStrategyContext
+                    .of(RequireRangeFromStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
+                            this.getEntity(), this.getField()))
+                    .validate();
         } else if (annotationType.equals(RequireRangeTo.class)) {
-            ValidationStrategyContext.of(RequireRangeToStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
-                    this.getEntity(), this.getField())).validate();
+            final RequireRangeTo annotation = this.field.getAnnotation(RequireRangeTo.class);
+            ValidationStrategyContext
+                    .of(RequireRangeToStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
+                            this.getEntity(), this.getField()))
+                    .validate();
         } else if (annotationType.equals(RequireRangeFromTo.class)) {
-            ValidationStrategyContext.of(RequireRangeFromToStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
-                    this.getEntity(), this.getField())).validate();
+            final RequireRangeFromTo annotation = this.field.getAnnotation(RequireRangeFromTo.class);
+            ValidationStrategyContext
+                    .of(RequireRangeFromToStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
+                            this.getEntity(), this.getField()))
+                    .validate();
         } else if (annotationType.equals(RequireStartWith.class)) {
-            ValidationStrategyContext.of(RequireStartWithStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
-                    this.getEntity(), this.getField())).validate();
+            final RequireStartWith annotation = this.field.getAnnotation(RequireStartWith.class);
+            ValidationStrategyContext
+                    .of(RequireStartWithStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
+                            this.getEntity(), this.getField()))
+                    .validate();
         } else if (annotationType.equals(RequireEndWith.class)) {
-            ValidationStrategyContext.of(RequireEndWithStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
-                    this.getEntity(), this.getField())).validate();
+            final RequireEndWith annotation = this.field.getAnnotation(RequireEndWith.class);
+            ValidationStrategyContext
+                    .of(RequireEndWithStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
+                            this.getEntity(), this.getField()))
+                    .validate();
         } else if (annotationType.equals(RequireNonEmpty.class)) {
-            ValidationStrategyContext.of(RequireNonEmptyStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""),
-                    this.getEntity(), this.getField())).validate();
+            final RequireNonEmpty annotation = this.field.getAnnotation(RequireNonEmpty.class);
+            ValidationStrategyContext
+                    .of(RequireNonEmptyStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
+                            this.getEntity(), this.getField()))
+                    .validate();
         } else if (annotationType.equals(NestedEntity.class)) {
             ValidationStrategyContext.of(
                     NestedEntityStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""), this.getEntity(), this.getField()))
