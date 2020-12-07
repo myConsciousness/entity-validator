@@ -15,7 +15,6 @@
 package org.thinkit.framework.envali.helper;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -168,12 +167,21 @@ public final class EnvaliFieldHelper {
     }
 
     /**
+     * Returns an array from a field object.
+     *
+     * @return A field object of array
+     */
+    public Object[] getArray() {
+        return (Object[]) this.get();
+    }
+
+    /**
      * Returns a list from a field object.
      *
      * @return A field object of list
      */
     public List<?> getList() {
-        return Arrays.asList(this.get());
+        return (List<?>) this.get();
     }
 
     /**

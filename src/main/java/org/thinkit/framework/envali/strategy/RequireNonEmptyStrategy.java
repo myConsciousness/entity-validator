@@ -122,7 +122,9 @@ final class RequireNonEmptyStrategy extends ValidationStrategy {
      * @exception NullPointerException If {@code null} is passed as an argument
      */
     private void validate(@NonNull EnvaliFieldHelper field, @NonNull RuntimeException exception) {
-        if (field.isArray() || field.isList()) {
+        if (field.isArray()) {
+            Preconditions.requireNonEmpty(field.getArray(), exception);
+        } else if (field.isList()) {
             Preconditions.requireNonEmpty(field.getList(), exception);
         } else if (field.isMap()) {
             Preconditions.requireNonEmpty(field.getMap(), exception);

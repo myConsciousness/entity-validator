@@ -21,10 +21,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.thinkit.common.base.precondition.exception.PreconditionFailedException;
 import org.thinkit.framework.envali.result.BusinessError;
@@ -51,6 +58,21 @@ public final class EnvaliTest {
         void testWhenStringIsNull() {
             final String empty = null;
             assertThrows(NullPointerException.class, () -> Envali.validate(new RequireNonNullForTest(empty)));
+        }
+    }
+
+    @Nested
+    class TestRequireNonBlank {
+
+        @ParameterizedTest
+        @ValueSource(strings = { " ", "　", "t", "test" })
+        void testWhenStringIsNotBlank(final String parameter) {
+            assertDoesNotThrow(() -> Envali.validate(new RequireNonBlankForTest(parameter)));
+        }
+
+        @Test
+        void testWhenStringIsBlank() {
+            assertThrows(PreconditionFailedException.class, () -> Envali.validate(new RequireNonBlankForTest("")));
         }
     }
 
@@ -172,6 +194,41 @@ public final class EnvaliTest {
         void testWhenLiteralDoesNotEndWithSpecifiedPrefix(final String parameter) {
             assertThrows(PreconditionFailedException.class,
                     () -> Envali.validate(new RequireEndWithForTest(parameter)));
+        }
+    }
+
+    @Nested
+    @TestInstance(Lifecycle.PER_CLASS)
+    class TestRequireNonEmpty {
+
+        Stream<Arguments> nonEmptyObjectProvider() {
+            return Stream.of(Arguments.of("test", new String[] { "" }, List.of(""), Map.of("", ""), Set.of("")),
+                    Arguments.of("test", new String[] { "test" }, List.of("test"), Map.of("test", "test"),
+                            Set.of("test")));
+        }
+
+        Stream<Arguments> emptyObjectProvider() {
+            return Stream.of(Arguments.of("", new String[] { "" }, List.of(""), Map.of("", ""), Set.of("")),
+                    Arguments.of("test", new String[] {}, List.of(""), Map.of("", ""), Set.of("")),
+                    Arguments.of("test", new String[] { "" }, List.of(), Map.of("", ""), Set.of("")),
+                    Arguments.of("test", new String[] { "" }, List.of(""), Map.of(), Set.of("")),
+                    Arguments.of("test", new String[] { "" }, List.of(""), Map.of("", ""), Set.of()));
+        }
+
+        @ParameterizedTest
+        @MethodSource("nonEmptyObjectProvider")
+        void testWhenObjectIsNotEmpty(final String literal, final String[] literalArray, final List<String> literalList,
+                final Map<String, String> literalMap, final Set<String> literalSet) {
+            assertDoesNotThrow(() -> Envali
+                    .validate(new RequireNonEmptyForTest(literal, literalArray, literalList, literalMap, literalSet)));
+        }
+
+        @ParameterizedTest
+        @MethodSource("emptyObjectProvider")
+        void testWhenObjectIsEmpty(final String literal, final String[] literalArray, final List<String> literalList,
+                final Map<String, String> literalMap, final Set<String> literalSet) {
+            assertThrows(PreconditionFailedException.class, () -> Envali
+                    .validate(new RequireNonEmptyForTest(literal, literalArray, literalList, literalMap, literalSet)));
         }
     }
 

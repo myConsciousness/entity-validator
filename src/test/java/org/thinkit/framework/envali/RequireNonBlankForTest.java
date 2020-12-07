@@ -14,37 +14,37 @@
 
 package org.thinkit.framework.envali;
 
-import org.thinkit.framework.envali.annotation.RequireNonNull;
+import org.thinkit.framework.envali.annotation.RequireNonBlank;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 
 /**
  * The entity class that defines fields to be used when testing the
- * {@link Envali} interface and the {@link RequireNonNull} annotation.
+ * {@link Envali} interface and the {@link RequireNonBlank} annotation.
  *
  * @author Kato Shinya
  * @since 1.0.0
  */
-final class RequireNonNullForTest implements ValidatableEntity {
+final class RequireNonBlankForTest implements ValidatableEntity {
 
     /**
-     * The non null field
+     * The non blank field
      */
-    @RequireNonNull
+    @RequireNonBlank
     private String literal;
 
     /**
      * Default constructor
      */
     @SuppressWarnings("unused")
-    private RequireNonNullForTest() {
+    private RequireNonBlankForTest() {
     }
 
     /**
      * Constructor
      *
-     * @param literal The non null literal (expected)
+     * @param literal The non blank literal
      */
-    public RequireNonNullForTest(String literal) {
+    public RequireNonBlankForTest(String literal) {
         this.literal = literal;
     }
 }
