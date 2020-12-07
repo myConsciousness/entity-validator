@@ -1,5 +1,5 @@
 ---
-name: 00 Feature Request
+name: Question
 about: I have a question.
 labels: "Feedback: question"
 assignees: "myConsciousness"

@@ -1,5 +1,5 @@
 ---
-name: 01 Bug Report
+name: Bug Report
 about: Something doesn't work.
 labels: "Problem: bug"
 assignees: "myConsciousness"

@@ -1,5 +1,5 @@
 ---
-name: 02 Improvement
+name: Improvement
 about: I have a good idea for improvement.
 labels: "Type: improvement"
 assignees: "myConsciousness"
