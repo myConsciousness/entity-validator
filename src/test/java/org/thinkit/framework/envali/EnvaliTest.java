@@ -202,6 +202,107 @@ public final class EnvaliTest {
     }
 
     @Nested
+    class TestRecoverableRequireNonNull {
+
+        @ParameterizedTest
+        @ValueSource(strings = { "", " ", "　", "test", "t" })
+        void testWhenLiteralIsNotNull(final String parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequireNonNullForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @Test
+        void testWhenLiteralIsNull() {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequireNonNullForTest(null)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(RecoverableRequireNonNullForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isRecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
+    class TestRecoverableRequireNonBlank {
+
+        @ParameterizedTest
+        @ValueSource(strings = { " ", "　", "test", "t" })
+        void testWhenLiteralIsNotBlank(final String parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequireNonBlankForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @Test
+        void testWhenLiteralIsBlank() {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequireNonBlankForTest("")));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(RecoverableRequireNonBlankForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isRecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
+    class TestRecoverableRequireStartWith {
+
+        @ParameterizedTest
+        @ValueSource(strings = { "start something", "startsomething", "start" })
+        void testWhenLiteralStartsWithSpecifiedPrefix(final String parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequireStartWithForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = { "", " ", "star", "tart", "something start", "something start something", "aaastartaaa",
+                "somethingstart" })
+        void testWhenLiteralDoesNotStartWithSpecifiedPrefix(final String parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequireStartWithForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(RecoverableRequireStartWithForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isRecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
     class TestRecoverableRequireEndWith {
 
         @ParameterizedTest
