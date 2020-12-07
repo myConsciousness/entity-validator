@@ -136,7 +136,7 @@ extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/ja
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="alt-color" id="i4">
-<td class="col-first"><code>void</code></td>
+<td class="col-first"><code><a href="../result/BusinessError.html" title="org.thinkit.framework.envali.result内のクラス">BusinessError</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#validate()">validate</a></span>()</code></th>
 <td class="col-last">
 <div class="block">Execute a validation strategy based on the data type of the annotation.</div>
@@ -185,15 +185,16 @@ extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/ja
 <li>
 <section class="detail" id="validate()">
 <h3>validate</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">validate</span>()</div>
-<div class="block">Execute a validation strategy based on the data type of the annotation.</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../result/BusinessError.html" title="org.thinkit.framework.envali.result内のクラス">BusinessError</a></span>&nbsp;<span class="member-name">validate</span>()</div>
+<div class="block">Execute a validation strategy based on the data type of the annotation.
+ <p>
+ Returns <code>null</code> if annotation is not supported by Envali framework.</div>
 <dl class="notes">
+<dt>戻り値:</dt>
+<dd>The business error detected in the validate process</dd>
 <dt>例外:</dt>
-<dd><code><a href="../exception/InvalidValueDetectedException.html" title="org.thinkit.framework.envali.exception内のクラス">InvalidValueDetectedException</a></code> - If the validation process detects an
-                                          invalid value</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">UnsupportedOperationException</a></code> - When an unexpected operation is
-                                          detected during the reflection
-                                          process</dd>
+<dd><code>org.thinkit.common.base.precondition.exception.PreconditionFailedException</code> - If the validation process detects an
+                                        invalid value</dd>
 </dl>
 </section>
 </li>

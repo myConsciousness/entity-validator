@@ -134,16 +134,6 @@ extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/ja
 <dl class="notes">
 <dt>導入されたバージョン:</dt>
 <dd>1.0</dd>
-<dt>関連項目:</dt>
-<dd><a href="annotation/RequireNonNull.html" title="org.thinkit.framework.envali.annotation内の注釈"><code>RequireNonNull</code></a>, 
-<a href="annotation/RequireNonBlank.html" title="org.thinkit.framework.envali.annotation内の注釈"><code>RequireNonBlank</code></a>, 
-<a href="annotation/RequireNonEmpty.html" title="org.thinkit.framework.envali.annotation内の注釈"><code>RequireNonEmpty</code></a>, 
-<a href="annotation/RequirePositive.html" title="org.thinkit.framework.envali.annotation内の注釈"><code>RequirePositive</code></a>, 
-<a href="annotation/RequireNegative.html" title="org.thinkit.framework.envali.annotation内の注釈"><code>RequireNegative</code></a>, 
-<a href="annotation/RequireRangeTo.html" title="org.thinkit.framework.envali.annotation内の注釈"><code>RequireRangeTo</code></a>, 
-<a href="annotation/RequireRangeFromTo.html" title="org.thinkit.framework.envali.annotation内の注釈"><code>RequireRangeFromTo</code></a>, 
-<a href="annotation/RequireStartWith.html" title="org.thinkit.framework.envali.annotation内の注釈"><code>RequireStartWith</code></a>, 
-<a href="annotation/RequireEndWith.html" title="org.thinkit.framework.envali.annotation内の注釈"><code>RequireEndWith</code></a></dd>
 </dl>
 </section>
 <section class="summary">
@@ -165,7 +155,7 @@ extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/ja
 </thead>
 <tbody>
 <tr class="alt-color" id="i0">
-<td class="col-first"><code>static void</code></td>
+<td class="col-first"><code>static <a href="result/ValidationResult.html" title="org.thinkit.framework.envali.result内のクラス">ValidationResult</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#validate(org.thinkit.framework.envali.entity.ValidatableEntity)">validate</a></span>&#8203;(<a href="entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース">ValidatableEntity</a>&nbsp;entity)</code></th>
 <td class="col-last">
 <div class="block">Analyzes each annotation set to an entity object for validation and verifies
@@ -193,13 +183,15 @@ extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/ja
 <li>
 <section class="detail" id="validate(org.thinkit.framework.envali.entity.ValidatableEntity)">
 <h3>validate</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">validate</span>&#8203;(<span class="parameters"><a href="entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース">ValidatableEntity</a>&nbsp;entity)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="result/ValidationResult.html" title="org.thinkit.framework.envali.result内のクラス">ValidationResult</a></span>&nbsp;<span class="member-name">validate</span>&#8203;(<span class="parameters"><a href="entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース">ValidatableEntity</a>&nbsp;entity)</span></div>
 <div class="block">Analyzes each annotation set to an entity object for validation and verifies
  the validity of the field's value.</div>
 <dl class="notes">
 <dt>パラメータ:</dt>
 <dd><code>entity</code> - The entity object to be validated that implements the
                <a href="entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a> interface</dd>
+<dt>戻り値:</dt>
+<dd>The validation result includes business errors</dd>
 <dt>例外:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/NullPointerException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">NullPointerException</a></code> - If <code>null</code> is passed as an
                                           argument</dd>

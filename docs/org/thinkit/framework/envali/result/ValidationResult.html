@@ -15,7 +15,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":9};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":10};
 var tabs = {65535:["t0","\u3059\u3079\u3066\u306E\u30E1\u30BD\u30C3\u30C9"],1:["t1","static\u30E1\u30BD\u30C3\u30C9"],2:["t2","\u30A4\u30F3\u30B9\u30BF\u30F3\u30B9\u30FB\u30E1\u30BD\u30C3\u30C9"],8:["t4","concrete\u30E1\u30BD\u30C3\u30C9"]};
 var altColor = "alt-color";
 var rowColor = "row-color";
@@ -79,39 +79,48 @@ loadScripts(document, 'script');</script>
 <div class="inheritance">org.thinkit.framework.envali.result.ValidationResult</div>
 </div>
 <section class="description">
+<dl class="notes">
+<dt>すべての実装されたインタフェース:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/io/Serializable.html" title="java.io内のクラスまたはインタフェース" class="external-link">Serializable</a></code></dd>
+</dl>
 <hr>
 <pre>public final class <span class="type-name-label">ValidationResult</span>
-extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a></pre>
-<div class="block">A data class that manages the results of validation by <a href="../Envali.html" title="org.thinkit.framework.envali内のクラス"><code>Envali</code></a> . Manages <a href="../catalog/ErrorType.html#RECOVERABLE"><code>ErrorType.RECOVERABLE</code></a> and <a href="../catalog/ErrorType.html#UNRECOVERABLE"><code>ErrorType.UNRECOVERABLE</code></a>
- business errors as a result of validation. Detected business errors are managed on a per-entity basis implementing the <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a> interface.
+extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a>
+implements <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/io/Serializable.html" title="java.io内のクラスまたはインタフェース" class="external-link">Serializable</a></pre>
+<div class="block">A data class that manages the results of validation by <a href="../Envali.html" title="org.thinkit.framework.envali内のクラス"><code>Envali</code></a> .
+ Manages <a href="../catalog/ErrorType.html#RECOVERABLE"><code>ErrorType.RECOVERABLE</code></a> and <a href="../catalog/ErrorType.html#UNRECOVERABLE"><code>ErrorType.UNRECOVERABLE</code></a>
+ business errors as a result of validation. Detected business errors are
+ managed on a per-entity basis implementing the <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a>
+ interface.
  <p>
- It provides the following features to operate comfortably with detected business errors.
+ It provides the following features to operate comfortably with detected
+ business errors.
 
  <pre>
  Test for the presence of business errors on any entity that implements <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a> .
  <code>
  final ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
- // Returns <code>true</code> if there is a error on any <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a> , otherwise <code>false</code>
+ // Returns true if there is a error on any <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a> , otherwise false
  validationResult.hasError();
  </code>
- </pre> 
+ </pre>
 
  <pre>
  Test for the presence of business errors on a specified entity that implements <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a> .
  <code>
- final ValidationResult validationResult = Envali.validate(concreteValidatableEntity); 
- // Returns <code>true</code> if there is a error on ConcreteValidatableEntity, otherwise <code>false</code>
- validationResult.hasError(ConcreteValidatableEntity.class); 
+ final ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
+ // Returns true if there is a error on ConcreteValidatableEntity, otherwise false
+ validationResult.hasError(ConcreteValidatableEntity.class);
  </code>
- </pre> 
- 
+ </pre>
+
  <pre>
  Get a business error of a specified entity that implements <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a> .
  <code>
  final ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
 
  if (validationResult.hasError(ConcreteValidationResult.class)) {
-     // Returns List<BusinessError>
+     // Returns List&lt;BusinessError&gt;
      validationResult.getError(ConcreteValidatableEntity.class);
  }
  </code>
@@ -119,6 +128,8 @@ extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/ja
 <dl class="notes">
 <dt>導入されたバージョン:</dt>
 <dd>1.0.1</dd>
+<dt>関連項目:</dt>
+<dd><a href="../../../../../serialized-form.html#org.thinkit.framework.envali.result.ValidationResult">直列化された形式</a></dd>
 </dl>
 </section>
 <section class="summary">
@@ -140,26 +151,42 @@ extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/ja
 </thead>
 <tbody>
 <tr class="alt-color" id="i0">
-<td class="col-first"><code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/List.html" title="java.util内のクラスまたはインタフェース" class="external-link">List</a>&lt;<a href="BusinessError.html" title="org.thinkit.framework.envali.result内のクラス">BusinessError</a>&gt;</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getError(java.lang.Class)">getError</a></span>&#8203;(@NonNull <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Class.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Class</a>&lt;? extends <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース">ValidatableEntity</a>&gt;&nbsp;validatableEntity)</code></th>
+<td class="col-first"><code>boolean</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a>&nbsp;o)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color" id="i1">
-<td class="col-first"><code>boolean</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#hasError()">hasError</a></span>()</code></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-first"><code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/List.html" title="java.util内のクラスまたはインタフェース" class="external-link">List</a>&lt;<a href="BusinessError.html" title="org.thinkit.framework.envali.result内のクラス">BusinessError</a>&gt;</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getError(java.lang.Class)">getError</a></span>&#8203;(@NonNull <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Class.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Class</a>&lt;? extends <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース">ValidatableEntity</a>&gt;&nbsp;validatableEntity)</code></th>
+<td class="col-last">
+<div class="block">Returns the error list associated with the <code>validatableEntity</code> passed
+ as an argument.</div>
+</td>
 </tr>
 <tr class="alt-color" id="i2">
 <td class="col-first"><code>boolean</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#hasError(java.lang.Class)">hasError</a></span>&#8203;(@NonNull <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Class.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Class</a>&lt;? extends <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース">ValidatableEntity</a>&gt;&nbsp;validatableEntity)</code></th>
-<td class="col-last">&nbsp;</td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#hasError()">hasError</a></span>()</code></th>
+<td class="col-last">
+<div class="block">Tests if there is any error associated with any <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a> .</div>
+</td>
 </tr>
 <tr class="row-color" id="i3">
+<td class="col-first"><code>int</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#hashCode()">hashCode</a></span>()</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color" id="i4">
 <td class="col-first"><code>static <a href="ValidationResult.html" title="org.thinkit.framework.envali.result内のクラス">ValidationResult</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#of(java.util.Map)">of</a></span>&#8203;(@NonNull <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/Map.html" title="java.util内のクラスまたはインタフェース" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Class.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Class</a>&lt;? extends <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース">ValidatableEntity</a>&gt;,&#8203;<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/List.html" title="java.util内のクラスまたはインタフェース" class="external-link">List</a>&lt;<a href="BusinessError.html" title="org.thinkit.framework.envali.result内のクラス">BusinessError</a>&gt;&gt;&nbsp;validationResult)</code></th>
 <td class="col-last">
-<div class="block">Returns the new instance of <a href="ValidationResult.html" title="org.thinkit.framework.envali.result内のクラス"><code>ValidationResult</code></a> based on <code>validationResult</code> passed as an argument.</div>
+<div class="block">Returns the new instance of <a href="ValidationResult.html" title="org.thinkit.framework.envali.result内のクラス"><code>ValidationResult</code></a> based on
+ <code>validationResult</code> passed as an argument.</div>
 </td>
+</tr>
+<tr class="row-color" id="i5">
+<td class="col-first"><code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a></code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#toString()">toString</a></span>()</code></th>
+<td class="col-last">&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -167,7 +194,7 @@ extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/ja
 </div>
 <div class="inherited-list">
 <h3 id="methods.inherited.from.class.java.lang.Object">クラスから継承されたメソッド&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a></h3>
-<code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="java.lang内のクラスまたはインタフェース" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#getClass()" title="java.lang内のクラスまたはインタフェース" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#hashCode()" title="java.lang内のクラスまたはインタフェース" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#notify()" title="java.lang内のクラスまたはインタフェース" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#notifyAll()" title="java.lang内のクラスまたはインタフェース" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#toString()" title="java.lang内のクラスまたはインタフェース" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#wait()" title="java.lang内のクラスまたはインタフェース" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#wait(long)" title="java.lang内のクラスまたはインタフェース" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="java.lang内のクラスまたはインタフェース" class="external-link">wait</a></code></div>
+<code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#getClass()" title="java.lang内のクラスまたはインタフェース" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#notify()" title="java.lang内のクラスまたはインタフェース" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#notifyAll()" title="java.lang内のクラスまたはインタフェース" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#wait()" title="java.lang内のクラスまたはインタフェース" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#wait(long)" title="java.lang内のクラスまたはインタフェース" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="java.lang内のクラスまたはインタフェース" class="external-link">wait</a></code></div>
 </section>
 </li>
 </ul>
@@ -184,8 +211,11 @@ extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/ja
 <h3>of</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ValidationResult.html" title="org.thinkit.framework.envali.result内のクラス">ValidationResult</a></span>&nbsp;<span class="member-name">of</span>&#8203;(<span class="parameters">@NonNull
 @NonNull <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/Map.html" title="java.util内のクラスまたはインタフェース" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Class.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Class</a>&lt;? extends <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース">ValidatableEntity</a>&gt;,&#8203;<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/List.html" title="java.util内のクラスまたはインタフェース" class="external-link">List</a>&lt;<a href="BusinessError.html" title="org.thinkit.framework.envali.result内のクラス">BusinessError</a>&gt;&gt;&nbsp;validationResult)</span></div>
-<div class="block">Returns the new instance of <a href="ValidationResult.html" title="org.thinkit.framework.envali.result内のクラス"><code>ValidationResult</code></a> based on <code>validationResult</code> passed as an argument.</div>
+<div class="block">Returns the new instance of <a href="ValidationResult.html" title="org.thinkit.framework.envali.result内のクラス"><code>ValidationResult</code></a> based on
+ <code>validationResult</code> passed as an argument.</div>
 <dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>validationResult</code> - The validation result</dd>
 <dt>戻り値:</dt>
 <dd>The new instance of <a href="ValidationResult.html" title="org.thinkit.framework.envali.result内のクラス"><code>ValidationResult</code></a></dd>
 <dt>例外:</dt>
@@ -198,19 +228,66 @@ extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/ja
 <h3>getError</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/List.html" title="java.util内のクラスまたはインタフェース" class="external-link">List</a>&lt;<a href="BusinessError.html" title="org.thinkit.framework.envali.result内のクラス">BusinessError</a>&gt;</span>&nbsp;<span class="member-name">getError</span>&#8203;(<span class="parameters">@NonNull
 @NonNull <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Class.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Class</a>&lt;? extends <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース">ValidatableEntity</a>&gt;&nbsp;validatableEntity)</span></div>
+<div class="block">Returns the error list associated with the <code>validatableEntity</code> passed
+ as an argument.
+ <p>
+ This method returns immutable empty List created by <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/List.html#of()" title="java.util内のクラスまたはインタフェース" class="external-link"><code>List.of()</code></a> if
+ there is no error data associated with <code>validatableEntity</code> .
+ <p>
+ This method recursively searches the error data associated with the
+ <code>validatableEntity</code> object passed as argument.</div>
+<dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>validatableEntity</code> - The validatable entity</dd>
+<dt>戻り値:</dt>
+<dd>The error list associated with the <code>validatableEntity</code> passed
+         as an argument if there is an error, otherwise immutable empty List
+         created by <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/List.html#of()" title="java.util内のクラスまたはインタフェース" class="external-link"><code>List.of()</code></a> .</dd>
+<dt>例外:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/NullPointerException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">NullPointerException</a></code> - If <code>null</code> is passed as an argument</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="hasError()">
 <h3>hasError</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="member-name">hasError</span>()</div>
+<div class="block">Tests if there is any error associated with any <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a> .</div>
+<dl class="notes">
+<dt>戻り値:</dt>
+<dd><code>true</code> if there is any error associated with any
+         <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a> , otherwise <code>false</code></dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="hasError(java.lang.Class)">
-<h3>hasError</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="member-name">hasError</span>&#8203;(<span class="parameters">@NonNull
-@NonNull <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Class.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Class</a>&lt;? extends <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース">ValidatableEntity</a>&gt;&nbsp;validatableEntity)</span></div>
+<section class="detail" id="toString()">
+<h3>toString</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a></span>&nbsp;<span class="member-name">toString</span>()</div>
+<dl class="notes">
+<dt>オーバーライド:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#toString()" title="java.lang内のクラスまたはインタフェース" class="external-link">toString</a></code>&nbsp;クラス内&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="equals(java.lang.Object)">
+<h3>equals</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="member-name">equals</span>&#8203;(<span class="parameters"><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a>&nbsp;o)</span></div>
+<dl class="notes">
+<dt>オーバーライド:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="java.lang内のクラスまたはインタフェース" class="external-link">equals</a></code>&nbsp;クラス内&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="hashCode()">
+<h3>hashCode</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">hashCode</span>()</div>
+<dl class="notes">
+<dt>オーバーライド:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#hashCode()" title="java.lang内のクラスまたはインタフェース" class="external-link">hashCode</a></code>&nbsp;クラス内&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a></code></dd>
+</dl>
 </section>
 </li>
 </ul>

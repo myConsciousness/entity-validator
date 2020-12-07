@@ -55,6 +55,41 @@ loadScripts(document, 'script');</script>
 <ul class="block-list">
 <li>
 <section class="serialized-package-container">
+<h2 title="パッケージ">パッケージ&nbsp;org.thinkit.framework.envali.context</h2>
+<ul class="block-list">
+<li>
+<section class="serialized-class-details" id="org.thinkit.framework.envali.context.ErrorContext">
+<h3>Class <a href="org/thinkit/framework/envali/context/ErrorContext.html" title="org.thinkit.framework.envali.context内のクラス">org.thinkit.framework.envali.context.ErrorContext</a> extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a> implements Serializable</h3>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>4230489225683277809L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>直列化されたフィールド</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>errorType</h5>
+<pre><a href="org/thinkit/framework/envali/catalog/ErrorType.html" title="org.thinkit.framework.envali.catalog内の列挙型">ErrorType</a> errorType</pre>
+<div class="block">The error type</div>
+</li>
+<li class="block-list">
+<h5>message</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a> message</pre>
+<div class="block">The message</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-package-container">
 <h2 title="パッケージ">パッケージ&nbsp;org.thinkit.framework.envali.exception</h2>
 <ul class="block-list">
 <li>
@@ -73,6 +108,69 @@ loadScripts(document, 'script');</script>
 <dt>serialVersionUID:</dt>
 <dd>0L</dd>
 </dl>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-package-container">
+<h2 title="パッケージ">パッケージ&nbsp;org.thinkit.framework.envali.result</h2>
+<ul class="block-list">
+<li>
+<section class="serialized-class-details" id="org.thinkit.framework.envali.result.BusinessError">
+<h3>Class <a href="org/thinkit/framework/envali/result/BusinessError.html" title="org.thinkit.framework.envali.result内のクラス">org.thinkit.framework.envali.result.BusinessError</a> extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a> implements Serializable</h3>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>-842747765124841065L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>直列化されたフィールド</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>errorType</h5>
+<pre><a href="org/thinkit/framework/envali/catalog/InternalErrorType.html" title="org.thinkit.framework.envali.catalog内の列挙型">InternalErrorType</a> errorType</pre>
+<div class="block">The error type</div>
+</li>
+<li class="block-list">
+<h5>message</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a> message</pre>
+<div class="block">The message</div>
+</li>
+<li class="block-list">
+<h5>nestedError</h5>
+<pre><a href="org/thinkit/framework/envali/result/ValidationResult.html" title="org.thinkit.framework.envali.result内のクラス">ValidationResult</a> nestedError</pre>
+<div class="block">The nested error</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="org.thinkit.framework.envali.result.ValidationResult">
+<h3>Class <a href="org/thinkit/framework/envali/result/ValidationResult.html" title="org.thinkit.framework.envali.result内のクラス">org.thinkit.framework.envali.result.ValidationResult</a> extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a> implements Serializable</h3>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>-3775467610787292284L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>直列化されたフィールド</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>validationResult</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/Map.html" title="java.util内のクラスまたはインタフェース" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Class.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Class</a>&lt;? extends <a href="org/thinkit/framework/envali/entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース">ValidatableEntity</a>&gt;,&#8203;<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/List.html" title="java.util内のクラスまたはインタフェース" class="external-link">List</a>&lt;<a href="org/thinkit/framework/envali/result/BusinessError.html" title="org.thinkit.framework.envali.result内のクラス">BusinessError</a>&gt;&gt; validationResult</pre>
+<div class="block">The validation result that manages business errors per-entity</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
 </section>
 </li>
 </ul>

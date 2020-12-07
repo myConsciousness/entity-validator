@@ -15,7 +15,7 @@
 <script type="text/javascript" src="script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="all-classes-index-page">
-<script type="text/javascript">var data = {"i0":2,"i1":2,"i2":8,"i3":2,"i4":4,"i5":4,"i6":2,"i7":4,"i8":2,"i9":4,"i10":8,"i11":32,"i12":32,"i13":32,"i14":32,"i15":32,"i16":32,"i17":32,"i18":32,"i19":32,"i20":32,"i21":32,"i22":32,"i23":1,"i24":2};
+<script type="text/javascript">var data = {"i0":2,"i1":2,"i2":8,"i3":2,"i4":4,"i5":4,"i6":2,"i7":4,"i8":2,"i9":2,"i10":4,"i11":4,"i12":8,"i13":32,"i14":32,"i15":32,"i16":32,"i17":32,"i18":32,"i19":32,"i20":32,"i21":32,"i22":32,"i23":32,"i24":32,"i25":1,"i26":2};
 var tabs = {65535:["t0","\u3059\u3079\u3066\u306E\u30AF\u30E9\u30B9"],1:["t1","\u30A4\u30F3\u30BF\u30D5\u30A7\u30FC\u30B9\u306E\u6982\u8981"],2:["t2","\u30AF\u30E9\u30B9\u306E\u6982\u8981"],4:["t3","\u5217\u6319\u578B\u306E\u6982\u8981"],8:["t4","\u4F8B\u5916\u306E\u6982\u8981"],32:["t6","\u6CE8\u91C8\u578B\u306E\u6982\u8981"]};
 var altColor = "alt-color";
 var rowColor = "row-color";
@@ -79,7 +79,7 @@ loadScripts(document, 'script');</script>
 <tr class="row-color" id="i1">
 <td class="col-first"><a href="org/thinkit/framework/envali/result/BusinessError.html" title="org.thinkit.framework.envali.result内のクラス">BusinessError</a></td>
 <th class="col-last" scope="row">
-<div class="block">-</div>
+<div class="block">The class that represents a business error.</div>
 </th>
 </tr>
 <tr class="alt-color" id="i2">
@@ -128,104 +128,117 @@ loadScripts(document, 'script');</script>
 </th>
 </tr>
 <tr class="row-color" id="i9">
+<td class="col-first"><a href="org/thinkit/framework/envali/context/ErrorContext.html" title="org.thinkit.framework.envali.context内のクラス">ErrorContext</a></td>
+<th class="col-last" scope="row">
+<div class="block">The context that manages error details such as <a href="org/thinkit/framework/envali/catalog/ErrorType.html" title="org.thinkit.framework.envali.catalog内の列挙型"><code>ErrorType</code></a> and error
+ message.</div>
+</th>
+</tr>
+<tr class="alt-color" id="i10">
 <td class="col-first"><a href="org/thinkit/framework/envali/catalog/ErrorType.html" title="org.thinkit.framework.envali.catalog内の列挙型">ErrorType</a></td>
 <th class="col-last" scope="row">
 <div class="block">A catalog that manages error type.</div>
 </th>
 </tr>
-<tr class="alt-color" id="i10">
+<tr class="row-color" id="i11">
+<td class="col-first"><a href="org/thinkit/framework/envali/catalog/InternalErrorType.html" title="org.thinkit.framework.envali.catalog内の列挙型">InternalErrorType</a></td>
+<th class="col-last" scope="row">
+<div class="block">The catalog that manages internal error type.</div>
+</th>
+</tr>
+<tr class="alt-color" id="i12">
 <td class="col-first"><a href="org/thinkit/framework/envali/exception/InvalidValueDetectedException.html" title="org.thinkit.framework.envali.exception内のクラス">InvalidValueDetectedException</a></td>
 <th class="col-last" scope="row">
 <div class="block">Thrown to indicate that the validation process on the <a href="org/thinkit/framework/envali/Envali.html" title="org.thinkit.framework.envali内のクラス"><code>Envali</code></a>
  interface has detected an invalid value.</div>
 </th>
 </tr>
-<tr class="row-color" id="i11">
+<tr class="row-color" id="i13">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/NestedEntity.html" title="org.thinkit.framework.envali.annotation内の注釈">NestedEntity</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation that indicates the field is the nested validatable entity.</div>
 </th>
 </tr>
-<tr class="alt-color" id="i12">
+<tr class="alt-color" id="i14">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/ParameterMapping.html" title="org.thinkit.framework.envali.annotation内の注釈">ParameterMapping</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation that maps a content file that defines the expectations for
  entity validation.</div>
 </th>
 </tr>
-<tr class="row-color" id="i13">
+<tr class="row-color" id="i15">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireEndWith.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireEndWith</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation indicating that the string ends with a specific string.</div>
 </th>
 </tr>
-<tr class="alt-color" id="i14">
+<tr class="alt-color" id="i16">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireNegative.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireNegative</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation that indicates the field is not allowed to be set to positive
  numbers.</div>
 </th>
 </tr>
-<tr class="row-color" id="i15">
+<tr class="row-color" id="i17">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireNonBlank.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireNonBlank</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation that indicates the field is not allowed to be set to <code>""</code>
  .</div>
 </th>
 </tr>
-<tr class="alt-color" id="i16">
+<tr class="alt-color" id="i18">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireNonEmpty.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireNonEmpty</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation that indicates the field is not allowed to be set to
  <code>null</code> or empty.</div>
 </th>
 </tr>
-<tr class="row-color" id="i17">
+<tr class="row-color" id="i19">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireNonNull.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireNonNull</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation that indicates the field is not allowed to be set to
  <code>null</code> .</div>
 </th>
 </tr>
-<tr class="alt-color" id="i18">
+<tr class="alt-color" id="i20">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequirePositive.html" title="org.thinkit.framework.envali.annotation内の注釈">RequirePositive</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation that indicates the field is not allowed to be set to negative
  numbers.</div>
 </th>
 </tr>
-<tr class="row-color" id="i19">
+<tr class="row-color" id="i21">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireRangeFrom.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireRangeFrom</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation indicating that the value is not under the lower limit.</div>
 </th>
 </tr>
-<tr class="alt-color" id="i20">
+<tr class="alt-color" id="i22">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireRangeFromTo.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireRangeFromTo</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation that indicate that the numbers are within the lower and upper
  limits.</div>
 </th>
 </tr>
-<tr class="row-color" id="i21">
+<tr class="row-color" id="i23">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireRangeTo.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireRangeTo</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation indicating that the value is not above the upper limit.</div>
 </th>
 </tr>
-<tr class="alt-color" id="i22">
+<tr class="alt-color" id="i24">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireStartWith.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireStartWith</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation indicating that the string starts with a specific string.</div>
 </th>
 </tr>
-<tr class="row-color" id="i23">
+<tr class="row-color" id="i25">
 <td class="col-first"><a href="org/thinkit/framework/envali/entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース">ValidatableEntity</a></td>
 <th class="col-last" scope="row">
 <div class="block">A marker interface that indicates that it is a verifiable entity.</div>
 </th>
 </tr>
-<tr class="alt-color" id="i24">
+<tr class="alt-color" id="i26">
 <td class="col-first"><a href="org/thinkit/framework/envali/result/ValidationResult.html" title="org.thinkit.framework.envali.result内のクラス">ValidationResult</a></td>
 <th class="col-last" scope="row">
 <div class="block">A data class that manages the results of validation by <a href="org/thinkit/framework/envali/Envali.html" title="org.thinkit.framework.envali内のクラス"><code>Envali</code></a> .</div>

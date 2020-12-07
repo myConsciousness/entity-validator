@@ -1,6 +1,7 @@
 org.thinkit.framework.envali
 org.thinkit.framework.envali.annotation
 org.thinkit.framework.envali.catalog
+org.thinkit.framework.envali.context
 org.thinkit.framework.envali.entity
 org.thinkit.framework.envali.exception
 org.thinkit.framework.envali.helper
