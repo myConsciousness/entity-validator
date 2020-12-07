@@ -1,6 +1,6 @@
 ---
 name: Feature Request
-about: I have a good idea
+about: I have a good idea.
 labels: "Feedback: new feature"
 assignees: "myConsciousness"
 ---

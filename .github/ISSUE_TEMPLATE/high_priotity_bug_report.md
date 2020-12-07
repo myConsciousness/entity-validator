@@ -5,7 +5,7 @@ labels: "Priority: high", "Problem: bug"
 assignees: "myConsciousness"
 ---
 
-# Bug Report
+# High Priotity Bug Report
 
 ## 1. Bug Details
 
