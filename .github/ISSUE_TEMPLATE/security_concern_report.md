@@ -1,5 +1,5 @@
 ---
-name: Security Concern Report
+name: 01 Security Concern Report
 about: There is a security concern.
 labels: "Priority: high, Problem: security"
 assignees: "myConsciousness"

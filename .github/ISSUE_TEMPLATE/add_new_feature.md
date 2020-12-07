@@ -1,5 +1,5 @@
 ---
-name: Add New Feature
+name: 02 Add New Feature
 about: I have a good idea for a new feature.
 labels: "Type: new feature"
 assignees: "myConsciousness"

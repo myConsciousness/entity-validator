@@ -1,5 +1,5 @@
 ---
-name: Low Priority Bug Report
+name: 01 Low Priority Bug Report
 about: Something doesn't work.
 labels: "Priority: low, Problem: bug"
 assignees: "myConsciousness"

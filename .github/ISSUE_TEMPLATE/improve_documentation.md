@@ -1,5 +1,5 @@
 ---
-name: Improve Documentation
+name: 02 Improve Documentation
 about: I have a good idea for documentation.
 labels: "Type: documentation"
 assignees: "myConsciousness"
