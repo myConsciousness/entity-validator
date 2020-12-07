@@ -30,8 +30,7 @@ import org.thinkit.common.base.precondition.exception.PreconditionFailedExceptio
  * The test class that manages test cases for {@link Envali} interface.
  *
  * @author Kato Shinya
- * @since 1.0
- * @version 1.0
+ * @since 1.0.0
  */
 public final class EnvaliTest {
 
@@ -133,6 +132,42 @@ public final class EnvaliTest {
         void testNotWithinTheLimitsFromToCases(final int parameter) {
             assertThrows(PreconditionFailedException.class,
                     () -> Envali.validate(new RequireRangeFromToForTest(parameter)));
+        }
+    }
+
+    @Nested
+    class TestRequireStartWith {
+
+        @ParameterizedTest
+        @ValueSource(strings = { "start something", "startsomething", "start" })
+        void testWhenLiteralStartsWithSpecifiedPrefix(final String parameter) {
+            assertDoesNotThrow(() -> Envali.validate(new RequireStartWithForTest(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = { "", " ", "star", "tart", "something start", "something start something", "aaastartaaa",
+                "somethingstart" })
+        void testWhenLiteralDoesNotStartWithSpecifiedPrefix(final String parameter) {
+            assertThrows(PreconditionFailedException.class,
+                    () -> Envali.validate(new RequireStartWithForTest(parameter)));
+        }
+    }
+
+    @Nested
+    class TestRequireEndWith {
+
+        @ParameterizedTest
+        @ValueSource(strings = { "something end", "somethingend", "end" })
+        void testWhenLiteralEndsWithSpecifiedPrefix(final String parameter) {
+            assertDoesNotThrow(() -> Envali.validate(new RequireEndWithForTest(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = { "", " ", "nd", "en", "endsomething", "something end something", "aaaendaaa",
+                "endsomething" })
+        void testWhenLiteralDoesNotEndWithSpecifiedPrefix(final String parameter) {
+            assertThrows(PreconditionFailedException.class,
+                    () -> Envali.validate(new RequireEndWithForTest(parameter)));
         }
     }
 
