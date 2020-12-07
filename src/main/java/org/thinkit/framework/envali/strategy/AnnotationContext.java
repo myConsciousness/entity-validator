@@ -16,8 +16,6 @@ package org.thinkit.framework.envali.strategy;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.thinkit.framework.envali.annotation.NestedEntity;
 import org.thinkit.framework.envali.annotation.RequireEndWith;
@@ -33,7 +31,7 @@ import org.thinkit.framework.envali.annotation.RequireStartWith;
 import org.thinkit.framework.envali.catalog.ErrorType;
 import org.thinkit.framework.envali.context.ErrorContext;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
-import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
+import org.thinkit.common.base.precondition.exception.PreconditionFailedException;
 import org.thinkit.framework.envali.result.BusinessError;
 
 import lombok.AccessLevel;
@@ -115,84 +113,84 @@ public final class AnnotationContext {
 
     /**
      * Execute a validation strategy based on the data type of the annotation.
+     * <p>
+     * Returns {@code null} if annotation is not supported by Envali framework.
      *
-     * @exception InvalidValueDetectedException If the validation process detects an
-     *                                          invalid value
-     * @exception UnsupportedOperationException When an unexpected operation is
-     *                                          detected during the reflection
-     *                                          process
+     * @return The business error detected in the validate process
+     *
+     * @exception PreconditionFailedException If the validation process detects an
+     *                                        invalid value
      */
-    public List<BusinessError> validate() {
+    public BusinessError validate() {
 
-        final List<BusinessError> businessErrors = new ArrayList<>();
         final Class<? extends Annotation> annotationType = this.getAnnotationType();
 
         if (annotationType.equals(RequireNonNull.class)) {
             final RequireNonNull annotation = this.field.getAnnotation(RequireNonNull.class);
-            ValidationStrategyContext
+            return ValidationStrategyContext
                     .of(RequireNonNullStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
                             this.getEntity(), this.getField()))
                     .validate();
         } else if (annotationType.equals(RequireNonBlank.class)) {
             final RequireNonBlank annotation = this.field.getAnnotation(RequireNonBlank.class);
-            ValidationStrategyContext
+            return ValidationStrategyContext
                     .of(RequireNonBlankStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
                             this.getEntity(), this.getField()))
                     .validate();
         } else if (annotationType.equals(RequirePositive.class)) {
             final RequirePositive annotation = this.field.getAnnotation(RequirePositive.class);
-            ValidationStrategyContext
+            return ValidationStrategyContext
                     .of(RequirePositiveStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
                             this.getEntity(), this.getField()))
                     .validate();
         } else if (annotationType.equals(RequireNegative.class)) {
             final RequireNegative annotation = this.field.getAnnotation(RequireNegative.class);
-            ValidationStrategyContext
+            return ValidationStrategyContext
                     .of(RequireNegativeStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
                             this.getEntity(), this.getField()))
                     .validate();
         } else if (annotationType.equals(RequireRangeFrom.class)) {
             final RequireRangeFrom annotation = this.field.getAnnotation(RequireRangeFrom.class);
-            ValidationStrategyContext
+            return ValidationStrategyContext
                     .of(RequireRangeFromStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
                             this.getEntity(), this.getField()))
                     .validate();
         } else if (annotationType.equals(RequireRangeTo.class)) {
             final RequireRangeTo annotation = this.field.getAnnotation(RequireRangeTo.class);
-            ValidationStrategyContext
+            return ValidationStrategyContext
                     .of(RequireRangeToStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
                             this.getEntity(), this.getField()))
                     .validate();
         } else if (annotationType.equals(RequireRangeFromTo.class)) {
             final RequireRangeFromTo annotation = this.field.getAnnotation(RequireRangeFromTo.class);
-            ValidationStrategyContext
+            return ValidationStrategyContext
                     .of(RequireRangeFromToStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
                             this.getEntity(), this.getField()))
                     .validate();
         } else if (annotationType.equals(RequireStartWith.class)) {
             final RequireStartWith annotation = this.field.getAnnotation(RequireStartWith.class);
-            ValidationStrategyContext
+            return ValidationStrategyContext
                     .of(RequireStartWithStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
                             this.getEntity(), this.getField()))
                     .validate();
         } else if (annotationType.equals(RequireEndWith.class)) {
             final RequireEndWith annotation = this.field.getAnnotation(RequireEndWith.class);
-            ValidationStrategyContext
+            return ValidationStrategyContext
                     .of(RequireEndWithStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
                             this.getEntity(), this.getField()))
                     .validate();
         } else if (annotationType.equals(RequireNonEmpty.class)) {
             final RequireNonEmpty annotation = this.field.getAnnotation(RequireNonEmpty.class);
-            ValidationStrategyContext
+            return ValidationStrategyContext
                     .of(RequireNonEmptyStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
                             this.getEntity(), this.getField()))
                     .validate();
         } else if (annotationType.equals(NestedEntity.class)) {
-            ValidationStrategyContext.of(
+            return ValidationStrategyContext.of(
                     NestedEntityStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""), this.getEntity(), this.getField()))
                     .validate();
         }
 
-        return businessErrors;
+        return null;
     }
 }

@@ -16,8 +16,8 @@ package org.thinkit.framework.envali;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -104,6 +104,7 @@ public final class Envali {
      *
      * @param entity The entity object to be validated that implements the
      *               {@link ValidatableEntity} interface
+     * @return The validation result includes business errors
      *
      * @exception NullPointerException          If {@code null} is passed as an
      *                                          argument
@@ -116,21 +117,21 @@ public final class Envali {
     public static ValidationResult validate(final ValidatableEntity entity) {
         Preconditions.requireNonNull(entity);
 
-        final Map<Class<? extends ValidatableEntity>, List<BusinessError>> validationResult = new HashMap<>();
+        final List<BusinessError> businessErrors = new ArrayList<>();
 
         for (Field field : Arrays.asList(entity.getClass().getDeclaredFields())) {
             field.setAccessible(true);
 
             for (Annotation annotation : Arrays.asList(field.getAnnotations())) {
-                final List<BusinessError> businessErrors = AnnotationContext
-                        .of(entity, field, annotation.annotationType()).validate();
+                final BusinessError businessError = AnnotationContext.of(entity, field, annotation.annotationType())
+                        .validate();
 
-                if (!businessErrors.isEmpty()) {
-                    validationResult.put(entity.getClass(), businessErrors);
+                if (businessError != null && businessError.hasError()) {
+                    businessErrors.add(businessError);
                 }
             }
         }
 
-        return ValidationResult.of(validationResult);
+        return ValidationResult.of(Map.of(entity.getClass(), businessErrors));
     }
 }

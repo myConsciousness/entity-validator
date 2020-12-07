@@ -58,7 +58,7 @@ import lombok.ToString;
  * Nested error:
  * <code>
  * BusinessError businessError = BusinessError.nestedError(validationResult);
- * businessError.hasNestedError(); // It returns {@code true}
+ * businessError.hasNestedError(); // It returns true
  * </code>
  * </pre>
  *
@@ -145,6 +145,8 @@ public final class BusinessError implements Serializable {
      * indicates an unrecoverable error.
      *
      * @param message The error message
+     * @return The new instance of {@link BusinessError} with the error type
+     *         {@link InternalErrorType#RECOVERABLE}
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
@@ -162,6 +164,8 @@ public final class BusinessError implements Serializable {
      * indicates an recoverable error.
      *
      * @param message The error message
+     * @return The new instance of {@link BusinessError} with the error type
+     *         {@link InternalErrorType#UNRECOVERABLE}
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */

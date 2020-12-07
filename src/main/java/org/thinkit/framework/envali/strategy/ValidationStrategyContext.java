@@ -14,7 +14,8 @@
 
 package org.thinkit.framework.envali.strategy;
 
-import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
+import org.thinkit.common.base.precondition.exception.PreconditionFailedException;
+import org.thinkit.framework.envali.result.BusinessError;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -72,13 +73,12 @@ final class ValidationStrategyContext {
     /**
      * Execute a validation strategy.
      *
-     * @exception InvalidValueDetectedException If the validation process detects an
-     *                                          invalid value
-     * @exception UnsupportedOperationException When an unexpected operation is
-     *                                          detected during the reflection
-     *                                          process
+     * @return The business error detected in the validate process
+     *
+     * @exception PreconditionFailedException If the validation process detects an
+     *                                        invalid value
      */
-    public void validate() {
-        this.validationStrategy.validate();
+    public BusinessError validate() {
+        return this.validationStrategy.validate();
     }
 }

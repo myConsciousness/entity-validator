@@ -41,7 +41,7 @@ import lombok.ToString;
  * Test for the presence of business errors on any entity that implements {@link ValidatableEntity} .
  * <code>
  * final ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
- * // Returns {@code true} if there is a error on any {@link ValidatableEntity} , otherwise {@code false}
+ * // Returns true if there is a error on any {@link ValidatableEntity} , otherwise false
  * validationResult.hasError();
  * </code>
  * </pre>
@@ -50,7 +50,7 @@ import lombok.ToString;
  * Test for the presence of business errors on a specified entity that implements {@link ValidatableEntity} .
  * <code>
  * final ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
- * // Returns {@code true} if there is a error on ConcreteValidatableEntity, otherwise {@code false}
+ * // Returns true if there is a error on ConcreteValidatableEntity, otherwise false
  * validationResult.hasError(ConcreteValidatableEntity.class);
  * </code>
  * </pre>
@@ -61,7 +61,7 @@ import lombok.ToString;
  * final ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
  *
  * if (validationResult.hasError(ConcreteValidationResult.class)) {
- *     // Returns List<BusinessError>
+ *     // Returns List&lt;BusinessError&gt;
  *     validationResult.getError(ConcreteValidatableEntity.class);
  * }
  * </code>
@@ -101,6 +101,7 @@ public final class ValidationResult implements Serializable {
      * Returns the new instance of {@link ValidationResult} based on
      * {@code validationResult} passed as an argument.
      *
+     * @param validationResult The validation result
      * @return The new instance of {@link ValidationResult}
      *
      * @exception NullPointerException If {@code null} is passed as an argument
@@ -152,6 +153,20 @@ public final class ValidationResult implements Serializable {
      *         {@link ValidatableEntity} , otherwise {@code false}
      */
     public boolean hasError() {
-        return !this.validationResult.isEmpty();
+
+        if (!this.validationResult.isEmpty()) {
+            return true;
+        }
+
+        for (Entry<Class<? extends ValidatableEntity>, List<BusinessError>> businessErrors : this.validationResult
+                .entrySet()) {
+            for (BusinessError businessError : businessErrors.getValue()) {
+                if (businessError.hasError()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
