@@ -16,29 +16,31 @@ package org.thinkit.framework.envali;
 
 import org.thinkit.framework.envali.annotation.ParameterMapping;
 import org.thinkit.framework.envali.annotation.RequireEndWith;
+import org.thinkit.framework.envali.catalog.ErrorType;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 
 /**
  * The entity class that defines fields to be used when testing the
- * {@link Envali} interface and the {@link RequireEndWith} annotation.
+ * {@link Envali} interface and the recoverable {@link RequireEndWith}
+ * annotation.
  *
  * @author Kato Shinya
  * @since 1.0.0
  */
 @ParameterMapping(content = "RequireEndWithForTest")
-final class RequireEndWithForTest implements ValidatableEntity {
+final class RecoverableRequireEndWithForTest implements ValidatableEntity {
 
     /**
      * The literal expected to end with specified suffix
      */
-    @RequireEndWith
+    @RequireEndWith(errorType = ErrorType.RECOVERABLE, message = "success")
     private String literal;
 
     /**
      * Default constructor
      */
     @SuppressWarnings("unused")
-    private RequireEndWithForTest() {
+    private RecoverableRequireEndWithForTest() {
     }
 
     /**
@@ -46,7 +48,7 @@ final class RequireEndWithForTest implements ValidatableEntity {
      *
      * @param literal The literal expected to end with specified suffix
      */
-    public RequireEndWithForTest(String literal) {
+    public RecoverableRequireEndWithForTest(String literal) {
         this.literal = literal;
     }
 }

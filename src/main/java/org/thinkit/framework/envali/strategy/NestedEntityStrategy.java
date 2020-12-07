@@ -23,6 +23,7 @@ import org.thinkit.framework.envali.annotation.NestedEntity;
 import org.thinkit.framework.envali.context.ErrorContext;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.framework.envali.result.BusinessError;
+import org.thinkit.framework.envali.result.ValidationResult;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -75,7 +76,13 @@ final class NestedEntityStrategy extends ValidationStrategy {
                     "Any object with NestedEntity annotation must implement ValidatableEntity interface");
         }
 
-        return BusinessError.nestedError(Envali.validate(super.getFieldHelper().getValidatableEntity()));
+        final ValidationResult validationResult = Envali.validate(super.getFieldHelper().getValidatableEntity());
+
+        if (validationResult.isEmpty()) {
+            return BusinessError.none();
+        }
+
+        return BusinessError.nestedError(validationResult);
     }
 
     /**

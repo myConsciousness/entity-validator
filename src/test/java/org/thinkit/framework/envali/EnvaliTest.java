@@ -16,7 +16,9 @@ package org.thinkit.framework.envali;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
@@ -25,6 +27,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.thinkit.common.base.precondition.exception.PreconditionFailedException;
+import org.thinkit.framework.envali.result.BusinessError;
+import org.thinkit.framework.envali.result.ValidationResult;
 
 /**
  * The test class that manages test cases for {@link Envali} interface.
@@ -194,6 +198,41 @@ public final class EnvaliTest {
 
             assertEquals("Any object with NestedEntity annotation must implement ValidatableEntity interface",
                     exception.getMessage());
+        }
+    }
+
+    @Nested
+    class TestRecoverableRequireEndWith {
+
+        @ParameterizedTest
+        @ValueSource(strings = { "something end", "somethingend", "end" })
+        void testWhenLiteralEndsWithSpecifiedSuffix(final String parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequireEndWithForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = { "", " ", "nd", "en", "endsomething", "something end something", "aaaendaaa",
+                "endsomething" })
+        void testWhenLiteralDoesNotEndWithSpecifiedSuffix(final String parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequireEndWithForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(RecoverableRequireEndWithForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isRecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
         }
     }
 }

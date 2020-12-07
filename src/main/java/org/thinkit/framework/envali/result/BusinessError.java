@@ -77,7 +77,6 @@ public final class BusinessError implements Serializable {
     /**
      * The error type
      */
-    @Getter
     private InternalErrorType errorType;
 
     /**
@@ -203,5 +202,25 @@ public final class BusinessError implements Serializable {
      */
     public boolean hasNestedError() {
         return this.errorType == InternalErrorType.NESTED;
+    }
+
+    /**
+     * Tests if a business error is a recoverable error.
+     *
+     * @return {@code true} if a business error is a recoverable error, otherwise
+     *         {@code false}
+     */
+    public boolean isRecoverable() {
+        return this.errorType == InternalErrorType.RECOVERABLE;
+    }
+
+    /**
+     * Tests if a business error is an unrecoverable error.
+     *
+     * @return {@code true} if a business error is an unrecoverable error, otherwise
+     *         {@code false}
+     */
+    public boolean isUnrecoverable() {
+        return this.errorType == InternalErrorType.UNRECOVERABLE;
     }
 }

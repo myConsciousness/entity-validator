@@ -98,6 +98,15 @@ public final class ValidationResult implements Serializable {
     }
 
     /**
+     * Returns the new instance of empty {@link ValidationResult} .
+     *
+     * @return The new instance of empty {@link ValidationResult} .
+     */
+    public static ValidationResult none() {
+        return new ValidationResult(Map.of());
+    }
+
+    /**
      * Returns the new instance of {@link ValidationResult} based on
      * {@code validationResult} passed as an argument.
      *
@@ -154,19 +163,28 @@ public final class ValidationResult implements Serializable {
      */
     public boolean hasError() {
 
-        if (!this.validationResult.isEmpty()) {
+        if (!this.isEmpty()) {
             return true;
         }
 
         for (Entry<Class<? extends ValidatableEntity>, List<BusinessError>> businessErrors : this.validationResult
                 .entrySet()) {
             for (BusinessError businessError : businessErrors.getValue()) {
-                if (businessError.hasError()) {
-                    return true;
+                if (businessError.hasNestedError()) {
+                    return businessError.getNestedError().hasError();
                 }
             }
         }
 
         return false;
+    }
+
+    /**
+     * Tests for the presence of a business error in the validation result.
+     *
+     * @return {@code true} if there is a business error, otherwise {@code false}
+     */
+    public boolean isEmpty() {
+        return this.validationResult.isEmpty();
     }
 }

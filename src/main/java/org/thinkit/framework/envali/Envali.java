@@ -131,6 +131,10 @@ public final class Envali {
             }
         }
 
+        if (businessErrors.isEmpty()) {
+            return ValidationResult.none();
+        }
+
         return ValidationResult.of(Map.of(entity.getClass(), businessErrors));
     }
 }
