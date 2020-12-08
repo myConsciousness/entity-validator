@@ -20,6 +20,6 @@ jobs:
       - name: Publish
         env:
           GITHUB_PACKAGE_USERNAME: myConsciousness
-          GITHUB_PACKAGE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_PACKAGE_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
           GRADLE_PUBLISH_VERSION: ${{ steps.get_version.outputs.VERSION }}
         run: ./gradlew publish
