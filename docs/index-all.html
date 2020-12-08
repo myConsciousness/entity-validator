@@ -218,6 +218,10 @@ loadScripts(document, 'script');</script>
 <div class="block">Refer to the content file mapped to the entity object to be validated and get
  each expected value in <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/Map.html" title="java.util内のクラスまたはインタフェース" class="external-link"><code>Map</code></a> format to be used at validation.</div>
 </dd>
+<dt><span class="member-name-link"><a href="org/thinkit/framework/envali/helper/EnvaliFieldHelper.html#getArray()">getArray()</a></span> - クラス のメソッドorg.thinkit.framework.envali.helper.<a href="org/thinkit/framework/envali/helper/EnvaliFieldHelper.html" title="org.thinkit.framework.envali.helper内のクラス">EnvaliFieldHelper</a></dt>
+<dd>
+<div class="block">Returns an array from a field object.</div>
+</dd>
 <dt><span class="member-name-link"><a href="org/thinkit/framework/envali/helper/EnvaliFieldHelper.html#getByte()">getByte()</a></span> - クラス のメソッドorg.thinkit.framework.envali.helper.<a href="org/thinkit/framework/envali/helper/EnvaliFieldHelper.html" title="org.thinkit.framework.envali.helper内のクラス">EnvaliFieldHelper</a></dt>
 <dd>
 <div class="block">Returns a byte value from a field object.</div>
@@ -252,10 +256,6 @@ loadScripts(document, 'script');</script>
  as an argument.</div>
 </dd>
 <dt><span class="member-name-link"><a href="org/thinkit/framework/envali/context/ErrorContext.html#getErrorType()">getErrorType()</a></span> - クラス のメソッドorg.thinkit.framework.envali.context.<a href="org/thinkit/framework/envali/context/ErrorContext.html" title="org.thinkit.framework.envali.context内のクラス">ErrorContext</a></dt>
-<dd>
-<div class="block">The error type</div>
-</dd>
-<dt><span class="member-name-link"><a href="org/thinkit/framework/envali/result/BusinessError.html#getErrorType()">getErrorType()</a></span> - クラス のメソッドorg.thinkit.framework.envali.result.<a href="org/thinkit/framework/envali/result/BusinessError.html" title="org.thinkit.framework.envali.result内のクラス">BusinessError</a></dt>
 <dd>
 <div class="block">The error type</div>
 </dd>
@@ -328,7 +328,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><span class="member-name-link"><a href="org/thinkit/framework/envali/result/ValidationResult.html#hasError()">hasError()</a></span> - クラス のメソッドorg.thinkit.framework.envali.result.<a href="org/thinkit/framework/envali/result/ValidationResult.html" title="org.thinkit.framework.envali.result内のクラス">ValidationResult</a></dt>
 <dd>
-<div class="block">Tests if there is any error associated with any <a href="org/thinkit/framework/envali/entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a> .</div>
+<div class="block">Tests for the presence of any business error in the validation result.</div>
 </dd>
 <dt><span class="member-name-link"><a href="org/thinkit/framework/envali/context/ErrorContext.html#hashCode()">hashCode()</a></span> - クラス のメソッドorg.thinkit.framework.envali.context.<a href="org/thinkit/framework/envali/context/ErrorContext.html" title="org.thinkit.framework.envali.context内のクラス">ErrorContext</a></dt>
 <dd>&nbsp;</dd>
@@ -409,6 +409,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Checks if the data type of the field is Map.</div>
 </dd>
+<dt><span class="member-name-link"><a href="org/thinkit/framework/envali/result/BusinessError.html#isRecoverable()">isRecoverable()</a></span> - クラス のメソッドorg.thinkit.framework.envali.result.<a href="org/thinkit/framework/envali/result/BusinessError.html" title="org.thinkit.framework.envali.result内のクラス">BusinessError</a></dt>
+<dd>
+<div class="block">Tests if a business error is a recoverable error.</div>
+</dd>
 <dt><span class="member-name-link"><a href="org/thinkit/framework/envali/helper/EnvaliFieldHelper.html#isSet()">isSet()</a></span> - クラス のメソッドorg.thinkit.framework.envali.helper.<a href="org/thinkit/framework/envali/helper/EnvaliFieldHelper.html" title="org.thinkit.framework.envali.helper内のクラス">EnvaliFieldHelper</a></dt>
 <dd>
 <div class="block">Checks if the data type of the field is Set.</div>
@@ -420,6 +424,10 @@ loadScripts(document, 'script');</script>
 <dt><span class="member-name-link"><a href="org/thinkit/framework/envali/helper/EnvaliFieldHelper.html#isString()">isString()</a></span> - クラス のメソッドorg.thinkit.framework.envali.helper.<a href="org/thinkit/framework/envali/helper/EnvaliFieldHelper.html" title="org.thinkit.framework.envali.helper内のクラス">EnvaliFieldHelper</a></dt>
 <dd>
 <div class="block">Checks if the data type of the field is String.</div>
+</dd>
+<dt><span class="member-name-link"><a href="org/thinkit/framework/envali/result/BusinessError.html#isUnrecoverable()">isUnrecoverable()</a></span> - クラス のメソッドorg.thinkit.framework.envali.result.<a href="org/thinkit/framework/envali/result/BusinessError.html" title="org.thinkit.framework.envali.result内のクラス">BusinessError</a></dt>
+<dd>
+<div class="block">Tests if a business error is an unrecoverable error.</div>
 </dd>
 <dt><span class="member-name-link"><a href="org/thinkit/framework/envali/helper/EnvaliFieldHelper.html#isValidatableEntity()">isValidatableEntity()</a></span> - クラス のメソッドorg.thinkit.framework.envali.helper.<a href="org/thinkit/framework/envali/helper/EnvaliFieldHelper.html" title="org.thinkit.framework.envali.helper内のクラス">EnvaliFieldHelper</a></dt>
 <dd>
@@ -503,6 +511,10 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the new instance of <a href="org/thinkit/framework/envali/result/BusinessError.html" title="org.thinkit.framework.envali.result内のクラス"><code>BusinessError</code></a> with the error type
  <a href="org/thinkit/framework/envali/catalog/InternalErrorType.html#NONE"><code>InternalErrorType.NONE</code></a> .</div>
 </dd>
+<dt><span class="member-name-link"><a href="org/thinkit/framework/envali/result/ValidationResult.html#none()">none()</a></span> - クラス のstaticメソッドorg.thinkit.framework.envali.result.<a href="org/thinkit/framework/envali/result/ValidationResult.html" title="org.thinkit.framework.envali.result内のクラス">ValidationResult</a></dt>
+<dd>
+<div class="block">Returns the new instance of empty <a href="org/thinkit/framework/envali/result/ValidationResult.html" title="org.thinkit.framework.envali.result内のクラス"><code>ValidationResult</code></a> .</div>
+</dd>
 <dt><span class="member-name-link"><a href="org/thinkit/framework/envali/catalog/InternalErrorType.html#NONE">NONE</a></span> - org.thinkit.framework.envali.catalog.<a href="org/thinkit/framework/envali/catalog/InternalErrorType.html" title="org.thinkit.framework.envali.catalog内の列挙型">InternalErrorType</a></dt>
 <dd>
 <div class="block">No error</div>
@@ -533,23 +545,48 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the new instance of <code>RequireEndWithStrategy</code> class.</div>
 </dd>
 <dt><a href="org/thinkit/framework/envali/package-summary.html">org.thinkit.framework.envali</a> - パッケージ org.thinkit.framework.envali</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Provides intuitive and productive Entity validation capabilities!</div>
+</dd>
 <dt><a href="org/thinkit/framework/envali/annotation/package-summary.html">org.thinkit.framework.envali.annotation</a> - パッケージ org.thinkit.framework.envali.annotation</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The package manages the annotations supported by Envali framework.</div>
+</dd>
 <dt><a href="org/thinkit/framework/envali/catalog/package-summary.html">org.thinkit.framework.envali.catalog</a> - パッケージ org.thinkit.framework.envali.catalog</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The package manages the catalogs that are summoned internally by the Envali
+ framework and supports catalogs to users.</div>
+</dd>
 <dt><a href="org/thinkit/framework/envali/context/package-summary.html">org.thinkit.framework.envali.context</a> - パッケージ org.thinkit.framework.envali.context</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The package that manages the context classes used in the internal processing
+ of the Envali framework.</div>
+</dd>
 <dt><a href="org/thinkit/framework/envali/entity/package-summary.html">org.thinkit.framework.envali.entity</a> - パッケージ org.thinkit.framework.envali.entity</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The package that manages the marker interface <a href="org/thinkit/framework/envali/entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a> to be
+ specified as targets for validation in the Envali framework.</div>
+</dd>
 <dt><a href="org/thinkit/framework/envali/exception/package-summary.html">org.thinkit.framework.envali.exception</a> - パッケージ org.thinkit.framework.envali.exception</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The package that manages the exception classes used in the internal
+ processing of the Envali framework.</div>
+</dd>
 <dt><a href="org/thinkit/framework/envali/helper/package-summary.html">org.thinkit.framework.envali.helper</a> - パッケージ org.thinkit.framework.envali.helper</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The package that manages the helper classes used in the internal processing
+ of the Envali framework.</div>
+</dd>
 <dt><a href="org/thinkit/framework/envali/result/package-summary.html">org.thinkit.framework.envali.result</a> - パッケージ org.thinkit.framework.envali.result</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The package that manages the classes that represent the results of the
+ validation returned by the Envali framework.</div>
+</dd>
 <dt><a href="org/thinkit/framework/envali/strategy/package-summary.html">org.thinkit.framework.envali.strategy</a> - パッケージ org.thinkit.framework.envali.strategy</dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The package manages the strategy classes used in the internal processing of
+ the Envali framework.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:P">P</h2>
 <dl class="index">
