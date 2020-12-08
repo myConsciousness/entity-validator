@@ -633,4 +633,166 @@ public final class EnvaliTest {
             assertEquals("success", businessErrors.get(0).getMessage());
         }
     }
+
+    @Nested
+    @TestInstance(Lifecycle.PER_CLASS)
+    class TestRecoverableNestedEntity {
+
+        Stream<Arguments> noErrorObjectProvider() {
+            return Stream.of(Arguments.of("test", new String[] { "" }, List.of(""), Map.of("", ""), Set.of("")),
+                    Arguments.of("test", new String[] { "test" }, List.of("test"), Map.of("test", "test"),
+                            Set.of("test")));
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { -1, -2, -10, -100, -1000 })
+        void testWhenNoError(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableNestedEntityForTest(List.of(""), Set.of(""),
+                            new RecoverableRequireNegativeForTest(parameter))));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { -1, -2, -10, -100, -1000 })
+        void testWhenThereIsErrorOfListAtFirstLayer(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableNestedEntityForTest(List.of(), Set.of(""),
+                            new RecoverableRequireNegativeForTest(parameter))));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult.getError(RecoverableNestedEntityForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).isRecoverable());
+            assertEquals("first layer 1", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { -1, -2, -10, -100, -1000 })
+        void testWhenThereIsErrorOfSetAtFirstLayer(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableNestedEntityForTest(List.of(""), Set.of(),
+                            new RecoverableRequireNegativeForTest(parameter))));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult.getError(RecoverableNestedEntityForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).isRecoverable());
+            assertEquals("first layer 2", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { -1, -2, -10, -100, -1000 })
+        void testWhenThereAreErrorsAtFirstLayer(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableNestedEntityForTest(List.of(), Set.of(),
+                            new RecoverableRequireNegativeForTest(parameter))));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult.getError(RecoverableNestedEntityForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 2);
+
+            for (int i = 0, size = businessErrors.size(); i < size; i++) {
+                assertTrue(businessErrors.get(i).isRecoverable());
+                assertEquals(String.format("first layer %s", i + 1), businessErrors.get(i).getMessage());
+            }
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { 0, 1, 10, 100, 1000 })
+        void testWhenThereIsErrorAtSecondLayer(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableNestedEntityForTest(List.of(""), Set.of(""),
+                            new RecoverableRequireNegativeForTest(parameter))));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult.getError(RecoverableNestedEntityForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasNestedError());
+
+            final ValidationResult nestedValidationResult = businessErrors.get(0).getNestedError();
+
+            assertNotNull(nestedValidationResult);
+            assertTrue(!nestedValidationResult.isEmpty());
+            assertTrue(nestedValidationResult.hasError());
+
+            final List<BusinessError> nestedBusinessErrors = nestedValidationResult
+                    .getError(RecoverableRequireNegativeForTest.class);
+
+            assertNotNull(nestedBusinessErrors);
+            assertTrue(!nestedBusinessErrors.isEmpty());
+            assertTrue(nestedBusinessErrors.size() == 1);
+            assertTrue(nestedBusinessErrors.get(0).isRecoverable());
+            assertEquals("success", nestedBusinessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { 0, 1, 10, 100, 1000 })
+        void testWhenThereAreErrorsAtAllLayers(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableNestedEntityForTest(List.of(), Set.of(),
+                            new RecoverableRequireNegativeForTest(parameter))));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult.getError(RecoverableNestedEntityForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 3);
+
+            for (int i = 0, size = businessErrors.size(); i < size; i++) {
+                final BusinessError businessError = businessErrors.get(i);
+
+                if (businessError.hasNestedError()) {
+                    final ValidationResult nestedValidationResult = businessError.getNestedError();
+
+                    assertNotNull(nestedValidationResult);
+                    assertTrue(!nestedValidationResult.isEmpty());
+                    assertTrue(nestedValidationResult.hasError());
+
+                    final List<BusinessError> nestedBusinessErrors = nestedValidationResult
+                            .getError(RecoverableRequireNegativeForTest.class);
+
+                    assertNotNull(nestedBusinessErrors);
+                    assertTrue(!nestedBusinessErrors.isEmpty());
+                    assertTrue(nestedBusinessErrors.size() == 1);
+                    assertTrue(nestedBusinessErrors.get(0).isRecoverable());
+                    assertEquals("success", nestedBusinessErrors.get(0).getMessage());
+                } else {
+                    assertTrue(businessError.isRecoverable());
+                    assertEquals(String.format("first layer %s", i + 1), businessError.getMessage());
+                }
+            }
+        }
+    }
 }
