@@ -58,11 +58,15 @@ import org.thinkit.framework.envali.strategy.AnnotationContext;
  * <pre>
  * Define the entities to be validated:
  * <code>
- * import org.thinkit.framework.envali.ParameterMapping;
- * import org.thinkit.framework.envali.RequireNonNull;
- * import org.thinkit.framework.envali.RequirePositive;
- * import org.thinkit.framework.envali.RangeFromTo;
+ * import org.thinkit.framework.envali.catalog.ErrorType;
+ * import org.thinkit.framework.envali.annotation.ParameterMapping;
+ * import org.thinkit.framework.envali.annotation.RequireNonNull;
+ * import org.thinkit.framework.envali.annotation.RequirePositive;
+ * import org.thinkit.framework.envali.annotation.RangeFromTo;
+ * import org.thinkit.framework.envali.annotation.NestedEntity;
  * import org.thinkit.framework.envali.entity.ValidatableEntity;
+ * import org.thinkit.framework.envali.result.ValidationResult;
+ * import org.thinkit.framework.envali.result.BusinessError;
  *
  * &#64;ParameterMapping(content = "EnvaliContent")
  * public class ConcreteEntity implements ValidatableEntity {
@@ -70,11 +74,14 @@ import org.thinkit.framework.envali.strategy.AnnotationContext;
  *      &#64;RequireNonNull
  *      private String literal;
  *
- *      &#64;RequirePositive
+ *      &#64;RequirePositive( errorType = ErrorType.RECOVERABLE, message = "The number is negative!")
  *      private int positive;
  *
- *      &#64;RequireRangeFromTo
+ *      &#64;RequireRangeFromTo( errorType = ErrorType.UNRECOVERABLE, message = "The number is out of range!")
  *      private int number;
+ *
+ *      &#64;NestedEntity
+ *      private ConcreteNestedEntity concreteNestedEntity;
  * }
  * </code>
  * </pre>
@@ -82,7 +89,25 @@ import org.thinkit.framework.envali.strategy.AnnotationContext;
  * <pre>
  * Then just run the {@link Envali#validate} method:
  * <code>
- * Envali.validate(concreteEntityObject);
+ * ValidationResult validationResult = Envali.validate(concreteEntityObject);
+ *
+ * // Returns true if there is no error, otherwise false
+ * if (validationResult.hasError()) {
+ *
+ *      // Returns the list of business errors associated with specified validatable entity
+ *      // Returns the empty list if there is no error associated with specified validatable entity
+ *      List<BusinessError> businessErrors = validationResult.getError(ConcreteEntity.class);
+ *
+ *      for (BusinessError businessError : businessErrors) {
+ *           if (businessError.isRecoverable()) {
+ *                // do something for recoverable error
+ *                Syetem.out.println(businessError.getMessage());
+ *           } else if (businessError.isUnrecoverable()) {
+ *                // do something for unrecoverable error
+ *                Syetem.out.println(businessError.getMessage());
+ *           }
+ *      }
+ * }
  * </code>
  * </pre>
  *

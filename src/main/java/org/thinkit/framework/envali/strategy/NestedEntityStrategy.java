@@ -78,11 +78,7 @@ final class NestedEntityStrategy extends ValidationStrategy {
 
         final ValidationResult validationResult = Envali.validate(super.getFieldHelper().getValidatableEntity());
 
-        if (validationResult.isEmpty()) {
-            return BusinessError.none();
-        }
-
-        return BusinessError.nestedError(validationResult);
+        return validationResult.hasError() ? BusinessError.nestedError(validationResult) : BusinessError.none();
     }
 
     /**

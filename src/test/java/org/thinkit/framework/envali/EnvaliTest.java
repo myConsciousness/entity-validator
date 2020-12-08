@@ -268,7 +268,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireNonNullForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -278,7 +277,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireNonNullForTest(null)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -303,7 +301,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireNonBlankForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -313,7 +310,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireNonBlankForTest("")));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -354,7 +350,6 @@ public final class EnvaliTest {
                     new RecoverableRequireNonEmptyForTest(literal, literalArray, literalList, literalMap, literalSet)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -366,7 +361,6 @@ public final class EnvaliTest {
                     new RecoverableRequireNonEmptyForTest(literal, literalArray, literalList, literalMap, literalSet)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> buinessErrors = validationResult
@@ -390,7 +384,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireStartWithForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -402,7 +395,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireStartWithForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -427,7 +419,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireEndWithForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -439,7 +430,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireEndWithForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -464,7 +454,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequirePositiveForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -475,7 +464,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequirePositiveForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -500,7 +488,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireNegativeForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -511,7 +498,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireNegativeForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -536,7 +522,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireRangeFromForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -547,7 +532,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireRangeFromForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -572,7 +556,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireRangeToForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -583,7 +566,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireRangeToForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -608,7 +590,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireRangeFromToForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -619,7 +600,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireRangeFromToForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -652,7 +632,6 @@ public final class EnvaliTest {
                             new RecoverableRequireNegativeForTest(parameter))));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -664,7 +643,6 @@ public final class EnvaliTest {
                             new RecoverableRequireNegativeForTest(parameter))));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult.getError(RecoverableNestedEntityForTest.class);
@@ -684,7 +662,6 @@ public final class EnvaliTest {
                             new RecoverableRequireNegativeForTest(parameter))));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult.getError(RecoverableNestedEntityForTest.class);
@@ -704,7 +681,6 @@ public final class EnvaliTest {
                             new RecoverableRequireNegativeForTest(parameter))));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult.getError(RecoverableNestedEntityForTest.class);
@@ -727,7 +703,6 @@ public final class EnvaliTest {
                             new RecoverableRequireNegativeForTest(parameter))));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult.getError(RecoverableNestedEntityForTest.class);
@@ -740,7 +715,6 @@ public final class EnvaliTest {
             final ValidationResult nestedValidationResult = businessErrors.get(0).getNestedError();
 
             assertNotNull(nestedValidationResult);
-            assertTrue(!nestedValidationResult.isEmpty());
             assertTrue(nestedValidationResult.hasError());
 
             final List<BusinessError> nestedBusinessErrors = nestedValidationResult
@@ -761,7 +735,6 @@ public final class EnvaliTest {
                             new RecoverableRequireNegativeForTest(parameter))));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult.getError(RecoverableNestedEntityForTest.class);
@@ -777,7 +750,6 @@ public final class EnvaliTest {
                     final ValidationResult nestedValidationResult = businessError.getNestedError();
 
                     assertNotNull(nestedValidationResult);
-                    assertTrue(!nestedValidationResult.isEmpty());
                     assertTrue(nestedValidationResult.hasError());
 
                     final List<BusinessError> nestedBusinessErrors = nestedValidationResult
@@ -806,7 +778,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequireNonNullForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -816,7 +787,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequireNonNullForTest(null)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -841,7 +811,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequireNonBlankForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -851,7 +820,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequireNonBlankForTest("")));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -893,7 +861,6 @@ public final class EnvaliTest {
                             literalMap, literalSet)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -906,7 +873,6 @@ public final class EnvaliTest {
                             literalMap, literalSet)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> buinessErrors = validationResult
@@ -930,7 +896,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequireStartWithForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -942,7 +907,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequireStartWithForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -967,7 +931,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequireEndWithForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -979,7 +942,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequireEndWithForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -1004,7 +966,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequirePositiveForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -1015,7 +976,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequirePositiveForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -1040,7 +1000,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequireNegativeForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -1051,7 +1010,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequireNegativeForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -1076,7 +1034,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequireRangeFromForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -1087,7 +1044,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequireRangeFromForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -1112,7 +1068,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequireRangeToForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -1123,7 +1078,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequireRangeToForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -1148,7 +1102,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequireRangeFromToForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -1159,7 +1112,6 @@ public final class EnvaliTest {
                     () -> Envali.validate(new UnrecoverableRequireRangeFromToForTest(parameter)));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -1192,7 +1144,6 @@ public final class EnvaliTest {
                             new UnrecoverableRequireNegativeForTest(parameter))));
 
             assertNotNull(validationResult);
-            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -1204,7 +1155,6 @@ public final class EnvaliTest {
                             new UnrecoverableRequireNegativeForTest(parameter))));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -1225,7 +1175,6 @@ public final class EnvaliTest {
                             new UnrecoverableRequireNegativeForTest(parameter))));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -1246,7 +1195,6 @@ public final class EnvaliTest {
                             new UnrecoverableRequireNegativeForTest(parameter))));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -1270,7 +1218,6 @@ public final class EnvaliTest {
                             new UnrecoverableRequireNegativeForTest(parameter))));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -1284,7 +1231,6 @@ public final class EnvaliTest {
             final ValidationResult nestedValidationResult = businessErrors.get(0).getNestedError();
 
             assertNotNull(nestedValidationResult);
-            assertTrue(!nestedValidationResult.isEmpty());
             assertTrue(nestedValidationResult.hasError());
 
             final List<BusinessError> nestedBusinessErrors = nestedValidationResult
@@ -1305,7 +1251,6 @@ public final class EnvaliTest {
                             new UnrecoverableRequireNegativeForTest(parameter))));
 
             assertNotNull(validationResult);
-            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -1322,7 +1267,6 @@ public final class EnvaliTest {
                     final ValidationResult nestedValidationResult = businessError.getNestedError();
 
                     assertNotNull(nestedValidationResult);
-                    assertTrue(!nestedValidationResult.isEmpty());
                     assertTrue(nestedValidationResult.hasError());
 
                     final List<BusinessError> nestedBusinessErrors = nestedValidationResult

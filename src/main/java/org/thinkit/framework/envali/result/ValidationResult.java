@@ -156,35 +156,11 @@ public final class ValidationResult implements Serializable {
     }
 
     /**
-     * Tests if there is any error associated with any {@link ValidatableEntity} .
+     * Tests for the presence of any business error in the validation result.
      *
-     * @return {@code true} if there is any error associated with any
-     *         {@link ValidatableEntity} , otherwise {@code false}
+     * @return {@code true} if there is any business error, otherwise {@code false}
      */
     public boolean hasError() {
-
-        if (!this.isEmpty()) {
-            return true;
-        }
-
-        for (Entry<Class<? extends ValidatableEntity>, List<BusinessError>> businessErrors : this.validationResult
-                .entrySet()) {
-            for (BusinessError businessError : businessErrors.getValue()) {
-                if (businessError.hasNestedError()) {
-                    return businessError.getNestedError().hasError();
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Tests for the presence of a business error in the validation result.
-     *
-     * @return {@code true} if there is a business error, otherwise {@code false}
-     */
-    public boolean isEmpty() {
-        return this.validationResult.isEmpty();
+        return !this.validationResult.isEmpty();
     }
 }
