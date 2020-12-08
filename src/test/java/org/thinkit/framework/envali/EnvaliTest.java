@@ -268,6 +268,7 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireNonNullForTest(parameter)));
 
             assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -277,6 +278,7 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireNonNullForTest(null)));
 
             assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -301,6 +303,7 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireNonBlankForTest(parameter)));
 
             assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -310,6 +313,7 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireNonBlankForTest("")));
 
             assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -325,6 +329,58 @@ public final class EnvaliTest {
     }
 
     @Nested
+    @TestInstance(Lifecycle.PER_CLASS)
+    class TestRecoverableRequireNonEmpty {
+
+        Stream<Arguments> nonEmptyObjectProvider() {
+            return Stream.of(Arguments.of("test", new String[] { "" }, List.of(""), Map.of("", ""), Set.of("")),
+                    Arguments.of("test", new String[] { "test" }, List.of("test"), Map.of("test", "test"),
+                            Set.of("test")));
+        }
+
+        Stream<Arguments> emptyObjectProvider() {
+            return Stream.of(Arguments.of("", new String[] { "" }, List.of(""), Map.of("", ""), Set.of("")),
+                    Arguments.of("test", new String[] {}, List.of(""), Map.of("", ""), Set.of("")),
+                    Arguments.of("test", new String[] { "" }, List.of(), Map.of("", ""), Set.of("")),
+                    Arguments.of("test", new String[] { "" }, List.of(""), Map.of(), Set.of("")),
+                    Arguments.of("test", new String[] { "" }, List.of(""), Map.of("", ""), Set.of()));
+        }
+
+        @ParameterizedTest
+        @MethodSource("nonEmptyObjectProvider")
+        void testWhenObjectIsNotEmpty(final String literal, final String[] literalArray, final List<String> literalList,
+                final Map<String, String> literalMap, final Set<String> literalSet) {
+            final ValidationResult validationResult = assertDoesNotThrow(() -> Envali.validate(
+                    new RecoverableRequireNonEmptyForTest(literal, literalArray, literalList, literalMap, literalSet)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @MethodSource("emptyObjectProvider")
+        void testWhenObjectIsEmpty(final String literal, final String[] literalArray, final List<String> literalList,
+                final Map<String, String> literalMap, final Set<String> literalSet) {
+            final ValidationResult validationResult = assertDoesNotThrow(() -> Envali.validate(
+                    new RecoverableRequireNonEmptyForTest(literal, literalArray, literalList, literalMap, literalSet)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> buinessErrors = validationResult
+                    .getError(RecoverableRequireNonEmptyForTest.class);
+
+            assertNotNull(buinessErrors);
+            assertTrue(!buinessErrors.isEmpty());
+            assertTrue(buinessErrors.size() == 1);
+            assertTrue(buinessErrors.get(0).isRecoverable());
+            assertEquals("success", buinessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
     class TestRecoverableRequireStartWith {
 
         @ParameterizedTest
@@ -334,6 +390,7 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireStartWithForTest(parameter)));
 
             assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -345,6 +402,7 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireStartWithForTest(parameter)));
 
             assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
@@ -369,6 +427,7 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireEndWithForTest(parameter)));
 
             assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
             assertTrue(!validationResult.hasError());
         }
 
@@ -380,10 +439,83 @@ public final class EnvaliTest {
                     () -> Envali.validate(new RecoverableRequireEndWithForTest(parameter)));
 
             assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
             assertTrue(validationResult.hasError());
 
             final List<BusinessError> businessErrors = validationResult
                     .getError(RecoverableRequireEndWithForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isRecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
+    class TestRecoverableRequirePositive {
+
+        @ParameterizedTest
+        @ValueSource(ints = { 0, 1, 10, 100, 1000 })
+        void testPositiveCases(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequirePositiveForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { -1, -2, -10, -100, -1000 })
+        void testNegativeCases(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequirePositiveForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(RecoverableRequirePositiveForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isRecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
+    class TestRecoverableRequireNegative {
+
+        @ParameterizedTest
+        @ValueSource(ints = { -1, -2, -10, -100, -1000 })
+        void testNegativeCases(int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequireNegativeForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { 0, 1, 10, 100, 1000 })
+        void testPositiveCases(int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequireNegativeForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(RecoverableRequireNegativeForTest.class);
 
             assertNotNull(businessErrors);
             assertTrue(!businessErrors.isEmpty());
