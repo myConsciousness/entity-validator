@@ -28,12 +28,30 @@ import org.thinkit.framework.envali.catalog.ErrorType;
  * with a specific string as follows.
  *
  * <pre>
+ * Specify the expected value for Content Framework:
  * <code>
  * &#64;ParameterMapping( content = "Parameter" )
- * public class ConcreteEntity implements ValidatableEntity, Serializable {
+ * public class ConcreteEntity implements ValidatableEntity {
  *
  *      &#64;RequireStartWith
  *      private String literal;
+ *
+ *      &#64;RequireStartWith( errorType = ErrorType.RECOVERABLE, message = "failed!" )
+ *      private String recoverableLiteral;
+ * }
+ * </code>
+ * </pre>
+ *
+ * <pre>
+ * Specify the expected value for the annotation:
+ * <code>
+ * public class ConcreteEntity implements ValidatableEntity {
+ *
+ *      &#64;RequireStartWith( prefix = "something" )
+ *      private String literal;
+ *
+ *      &#64;RequireStartWith( prefix = "something", errorType = ErrorType.UNRECOVERABLE, message = "failed!" )
+ *      private String unrecoverableLiteral;
  * }
  * </code>
  * </pre>
@@ -50,6 +68,8 @@ public @interface RequireStartWith {
      * {@link ErrorType#RUNTIME} is set as the default.
      *
      * @return The error type based on the {@link ErrorType}
+     *
+     * @since 1.0.1
      */
     public ErrorType errorType() default ErrorType.RUNTIME;
 
@@ -58,6 +78,17 @@ public @interface RequireStartWith {
      * set as the default.
      *
      * @return The message
+     *
+     * @since 1.0.1
      */
     public String message() default "";
+
+    /**
+     * Returns the expected prefix of String.
+     *
+     * @return The expected prefix
+     *
+     * @since 1.0.2
+     */
+    public String prefix() default "";
 }
