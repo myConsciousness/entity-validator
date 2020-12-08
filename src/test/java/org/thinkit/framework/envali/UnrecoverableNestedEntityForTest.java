@@ -24,36 +24,37 @@ import org.thinkit.framework.envali.entity.ValidatableEntity;
 
 /**
  * The entity class that defines fields to be used when testing the
- * {@link Envali} interface and the recoverable {@link NestedEntity} annotation.
+ * {@link Envali} interface and the unrecoverable {@link NestedEntity}
+ * annotation.
  *
  * @author Kato Shinya
  * @since 1.0.1
  */
-final class RecoverableNestedEntityForTest implements ValidatableEntity {
+final class UnrecoverableNestedEntityForTest implements ValidatableEntity {
 
     /**
      * The non empty list
      */
-    @RequireNonEmpty(errorType = ErrorType.RECOVERABLE, message = "first layer 1")
+    @RequireNonEmpty(errorType = ErrorType.UNRECOVERABLE, message = "first layer 1")
     private List<String> literalList;
 
     /**
      * The non empty set
      */
-    @RequireNonEmpty(errorType = ErrorType.RECOVERABLE, message = "first layer 2")
+    @RequireNonEmpty(errorType = ErrorType.UNRECOVERABLE, message = "first layer 2")
     private Set<String> literalSet;
 
     /**
-     * The nested entity of {@link RecoverableRequireNegativeForTest}
+     * The nested entity of {@link RequireNegativeForTest}
      */
     @NestedEntity
-    private RecoverableRequireNegativeForTest recoverableRequireNegativeForTest;
+    private UnrecoverableRequireNegativeForTest unrecoverableRequireNegativeForTest;
 
     /**
      * Default constructor
      */
     @SuppressWarnings("unused")
-    private RecoverableNestedEntityForTest() {
+    private UnrecoverableNestedEntityForTest() {
     }
 
     /**
@@ -63,10 +64,10 @@ final class RecoverableNestedEntityForTest implements ValidatableEntity {
      * @param literalSet                        The literal set
      * @param recoverableRequireNegativeForTest The nested entity
      */
-    public RecoverableNestedEntityForTest(List<String> literalList, Set<String> literalSet,
-            RecoverableRequireNegativeForTest recoverableRequireNegativeForTest) {
+    public UnrecoverableNestedEntityForTest(List<String> literalList, Set<String> literalSet,
+            UnrecoverableRequireNegativeForTest unrecoverableRequireNegativeForTest) {
         this.literalSet = literalSet;
         this.literalList = literalList;
-        this.recoverableRequireNegativeForTest = recoverableRequireNegativeForTest;
+        this.unrecoverableRequireNegativeForTest = unrecoverableRequireNegativeForTest;
     }
 }

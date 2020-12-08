@@ -795,4 +795,549 @@ public final class EnvaliTest {
             }
         }
     }
+
+    @Nested
+    class TestUnrecoverableRequireNonNull {
+
+        @ParameterizedTest
+        @ValueSource(strings = { "", " ", "　", "test", "t" })
+        void testWhenLiteralIsNotNull(final String parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireNonNullForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @Test
+        void testWhenLiteralIsNull() {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireNonNullForTest(null)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireNonNullForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
+    class TestUnrecoverableRequireNonBlank {
+
+        @ParameterizedTest
+        @ValueSource(strings = { " ", "　", "test", "t" })
+        void testWhenLiteralIsNotBlank(final String parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireNonBlankForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @Test
+        void testWhenLiteralIsBlank() {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireNonBlankForTest("")));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireNonBlankForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
+    @TestInstance(Lifecycle.PER_CLASS)
+    class TestUnrecoverableRequireNonEmpty {
+
+        Stream<Arguments> nonEmptyObjectProvider() {
+            return Stream.of(Arguments.of("test", new String[] { "" }, List.of(""), Map.of("", ""), Set.of("")),
+                    Arguments.of("test", new String[] { "test" }, List.of("test"), Map.of("test", "test"),
+                            Set.of("test")));
+        }
+
+        Stream<Arguments> emptyObjectProvider() {
+            return Stream.of(Arguments.of("", new String[] { "" }, List.of(""), Map.of("", ""), Set.of("")),
+                    Arguments.of("test", new String[] {}, List.of(""), Map.of("", ""), Set.of("")),
+                    Arguments.of("test", new String[] { "" }, List.of(), Map.of("", ""), Set.of("")),
+                    Arguments.of("test", new String[] { "" }, List.of(""), Map.of(), Set.of("")),
+                    Arguments.of("test", new String[] { "" }, List.of(""), Map.of("", ""), Set.of()));
+        }
+
+        @ParameterizedTest
+        @MethodSource("nonEmptyObjectProvider")
+        void testWhenObjectIsNotEmpty(final String literal, final String[] literalArray, final List<String> literalList,
+                final Map<String, String> literalMap, final Set<String> literalSet) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireNonEmptyForTest(literal, literalArray, literalList,
+                            literalMap, literalSet)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @MethodSource("emptyObjectProvider")
+        void testWhenObjectIsEmpty(final String literal, final String[] literalArray, final List<String> literalList,
+                final Map<String, String> literalMap, final Set<String> literalSet) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireNonEmptyForTest(literal, literalArray, literalList,
+                            literalMap, literalSet)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> buinessErrors = validationResult
+                    .getError(UnrecoverableRequireNonEmptyForTest.class);
+
+            assertNotNull(buinessErrors);
+            assertTrue(!buinessErrors.isEmpty());
+            assertTrue(buinessErrors.size() == 1);
+            assertTrue(buinessErrors.get(0).isUnrecoverable());
+            assertEquals("success", buinessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
+    class TestUnrecoverableRequireStartWith {
+
+        @ParameterizedTest
+        @ValueSource(strings = { "start something", "startsomething", "start" })
+        void testWhenLiteralStartsWithSpecifiedPrefix(final String parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireStartWithForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = { "", " ", "star", "tart", "something start", "something start something", "aaastartaaa",
+                "somethingstart" })
+        void testWhenLiteralDoesNotStartWithSpecifiedPrefix(final String parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireStartWithForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireStartWithForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
+    class TestUnrecoverableRequireEndWith {
+
+        @ParameterizedTest
+        @ValueSource(strings = { "something end", "somethingend", "end" })
+        void testWhenLiteralEndsWithSpecifiedSuffix(final String parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireEndWithForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = { "", " ", "nd", "en", "endsomething", "something end something", "aaaendaaa",
+                "endsomething" })
+        void testWhenLiteralDoesNotEndWithSpecifiedSuffix(final String parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireEndWithForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireEndWithForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
+    class TestUnrecoverableRequirePositive {
+
+        @ParameterizedTest
+        @ValueSource(ints = { 0, 1, 10, 100, 1000 })
+        void testPositiveCases(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequirePositiveForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { -1, -2, -10, -100, -1000 })
+        void testNegativeCases(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequirePositiveForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequirePositiveForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
+    class TestUnrecoverableRequireNegative {
+
+        @ParameterizedTest
+        @ValueSource(ints = { -1, -2, -10, -100, -1000 })
+        void testNegativeCases(int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireNegativeForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { 0, 1, 10, 100, 1000 })
+        void testPositiveCases(int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireNegativeForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireNegativeForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
+    class TestUnrecoverableRequireRangeFrom {
+
+        @ParameterizedTest
+        @ValueSource(ints = { 0, 1, 2, 9, 10, 11 })
+        void testWithinTheLimitsCases(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireRangeFromForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { -10, -9, -2, -1 })
+        void testNotWithinTheLimitsCases(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireRangeFromForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeFromForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
+    class TestUnrecoverableRequireRangeTo {
+
+        @ParameterizedTest
+        @ValueSource(ints = { -10, -1, 0, 1, 9, 10 })
+        void testWithinTheLimitsCases(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireRangeToForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { 11, 12, 100, 1000 })
+        void testNotWithinTheLimitsCases(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireRangeToForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeToForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
+    class TestUnrecoverableRequireRangeFromTo {
+
+        @ParameterizedTest
+        @ValueSource(ints = { -10, -1, 0, 1, 9, 10 })
+        void testWithinTheLimitsFromToCases(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireRangeFromToForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { -100, -12, -11, 11, 12, 100, 1000 })
+        void testNotWithinTheLimitsFromToCases(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableRequireRangeFromToForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeFromToForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
+    @TestInstance(Lifecycle.PER_CLASS)
+    class TestUnrecoverableNestedEntity {
+
+        Stream<Arguments> noErrorObjectProvider() {
+            return Stream.of(Arguments.of("test", new String[] { "" }, List.of(""), Map.of("", ""), Set.of("")),
+                    Arguments.of("test", new String[] { "test" }, List.of("test"), Map.of("test", "test"),
+                            Set.of("test")));
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { -1, -2, -10, -100, -1000 })
+        void testWhenNoError(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableNestedEntityForTest(List.of(""), Set.of(""),
+                            new UnrecoverableRequireNegativeForTest(parameter))));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { -1, -2, -10, -100, -1000 })
+        void testWhenThereIsErrorOfListAtFirstLayer(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableNestedEntityForTest(List.of(), Set.of(""),
+                            new UnrecoverableRequireNegativeForTest(parameter))));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableNestedEntityForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("first layer 1", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { -1, -2, -10, -100, -1000 })
+        void testWhenThereIsErrorOfSetAtFirstLayer(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableNestedEntityForTest(List.of(""), Set.of(),
+                            new UnrecoverableRequireNegativeForTest(parameter))));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableNestedEntityForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("first layer 2", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { -1, -2, -10, -100, -1000 })
+        void testWhenThereAreErrorsAtFirstLayer(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableNestedEntityForTest(List.of(), Set.of(),
+                            new UnrecoverableRequireNegativeForTest(parameter))));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableNestedEntityForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 2);
+
+            for (int i = 0, size = businessErrors.size(); i < size; i++) {
+                assertTrue(businessErrors.get(i).isUnrecoverable());
+                assertEquals(String.format("first layer %s", i + 1), businessErrors.get(i).getMessage());
+            }
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { 0, 1, 10, 100, 1000 })
+        void testWhenThereIsErrorAtSecondLayer(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableNestedEntityForTest(List.of(""), Set.of(""),
+                            new UnrecoverableRequireNegativeForTest(parameter))));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableNestedEntityForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasNestedError());
+
+            final ValidationResult nestedValidationResult = businessErrors.get(0).getNestedError();
+
+            assertNotNull(nestedValidationResult);
+            assertTrue(!nestedValidationResult.isEmpty());
+            assertTrue(nestedValidationResult.hasError());
+
+            final List<BusinessError> nestedBusinessErrors = nestedValidationResult
+                    .getError(UnrecoverableRequireNegativeForTest.class);
+
+            assertNotNull(nestedBusinessErrors);
+            assertTrue(!nestedBusinessErrors.isEmpty());
+            assertTrue(nestedBusinessErrors.size() == 1);
+            assertTrue(nestedBusinessErrors.get(0).isUnrecoverable());
+            assertEquals("success", nestedBusinessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { 0, 1, 10, 100, 1000 })
+        void testWhenThereAreErrorsAtAllLayers(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new UnrecoverableNestedEntityForTest(List.of(), Set.of(),
+                            new UnrecoverableRequireNegativeForTest(parameter))));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableNestedEntityForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 3);
+
+            for (int i = 0, size = businessErrors.size(); i < size; i++) {
+                final BusinessError businessError = businessErrors.get(i);
+
+                if (businessError.hasNestedError()) {
+                    final ValidationResult nestedValidationResult = businessError.getNestedError();
+
+                    assertNotNull(nestedValidationResult);
+                    assertTrue(!nestedValidationResult.isEmpty());
+                    assertTrue(nestedValidationResult.hasError());
+
+                    final List<BusinessError> nestedBusinessErrors = nestedValidationResult
+                            .getError(UnrecoverableRequireNegativeForTest.class);
+
+                    assertNotNull(nestedBusinessErrors);
+                    assertTrue(!nestedBusinessErrors.isEmpty());
+                    assertTrue(nestedBusinessErrors.size() == 1);
+                    assertTrue(nestedBusinessErrors.get(0).isUnrecoverable());
+                    assertEquals("success", nestedBusinessErrors.get(0).getMessage());
+                } else {
+                    assertTrue(businessError.isUnrecoverable());
+                    assertEquals(String.format("first layer %s", i + 1), businessError.getMessage());
+                }
+            }
+        }
+    }
 }
