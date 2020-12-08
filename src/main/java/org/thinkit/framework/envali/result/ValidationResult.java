@@ -40,30 +40,19 @@ import lombok.ToString;
  * <pre>
  * Test for the presence of business errors on any entity that implements {@link ValidatableEntity} .
  * <code>
- * final ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
+ * ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
  * // Returns true if there is a error on any {@link ValidatableEntity} , otherwise false
  * validationResult.hasError();
  * </code>
  * </pre>
  *
  * <pre>
- * Test for the presence of business errors on a specified entity that implements {@link ValidatableEntity} .
- * <code>
- * final ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
- * // Returns true if there is a error on ConcreteValidatableEntity, otherwise false
- * validationResult.hasError(ConcreteValidatableEntity.class);
- * </code>
- * </pre>
- *
- * <pre>
  * Get a business error of a specified entity that implements {@link ValidatableEntity} .
  * <code>
- * final ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
+ * ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
  *
- * if (validationResult.hasError(ConcreteValidationResult.class)) {
- *     // Returns List&lt;BusinessError&gt;
- *     validationResult.getError(ConcreteValidatableEntity.class);
- * }
+ * // Returns List&lt;BusinessError&gt;
+ * List<BusinessError> businessErrors = validationResult.getError(ConcreteValidatableEntity.class);
  * </code>
  * </pre>
  *
