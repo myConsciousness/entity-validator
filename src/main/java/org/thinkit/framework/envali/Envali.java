@@ -96,7 +96,7 @@ import org.thinkit.framework.envali.strategy.AnnotationContext;
  *
  *      // Returns the list of business errors associated with specified validatable entity
  *      // Returns the empty list if there is no error associated with specified validatable entity
- *      List<BusinessError> businessErrors = validationResult.getError(ConcreteEntity.class);
+ *      List&lt;BusinessError&gt; businessErrors = validationResult.getError(ConcreteEntity.class);
  *
  *      for (BusinessError businessError : businessErrors) {
  *           if (businessError.isRecoverable()) {
