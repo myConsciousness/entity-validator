@@ -525,4 +525,112 @@ public final class EnvaliTest {
             assertEquals("success", businessErrors.get(0).getMessage());
         }
     }
+
+    @Nested
+    class TestRecoverableRequireRangeFrom {
+
+        @ParameterizedTest
+        @ValueSource(ints = { 0, 1, 2, 9, 10, 11 })
+        void testWithinTheLimitsCases(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequireRangeFromForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { -10, -9, -2, -1 })
+        void testNotWithinTheLimitsCases(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequireRangeFromForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(RecoverableRequireRangeFromForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isRecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
+    class TestRecoverableRequireRangeTo {
+
+        @ParameterizedTest
+        @ValueSource(ints = { -10, -1, 0, 1, 9, 10 })
+        void testWithinTheLimitsCases(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequireRangeToForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { 11, 12, 100, 1000 })
+        void testNotWithinTheLimitsCases(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequireRangeToForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(RecoverableRequireRangeToForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isRecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+    }
+
+    @Nested
+    class TestRecoverableRequireRangeFromTo {
+
+        @ParameterizedTest
+        @ValueSource(ints = { -10, -1, 0, 1, 9, 10 })
+        void testWithinTheLimitsFromToCases(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequireRangeFromToForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.isEmpty());
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = { -100, -12, -11, 11, 12, 100, 1000 })
+        void testNotWithinTheLimitsFromToCases(final int parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(new RecoverableRequireRangeFromToForTest(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.isEmpty());
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(RecoverableRequireRangeFromToForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isRecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+    }
 }
