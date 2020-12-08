@@ -30,7 +30,6 @@ import org.thinkit.framework.envali.annotation.RequireRangeFromTo;
 import org.thinkit.framework.envali.annotation.RequireRangeTo;
 import org.thinkit.framework.envali.annotation.RequireStartWith;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
-import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
 import org.thinkit.framework.envali.result.BusinessError;
 import org.thinkit.framework.envali.result.ValidationResult;
 import org.thinkit.framework.envali.strategy.AnnotationContext;
@@ -132,8 +131,6 @@ public final class Envali {
      *
      * @exception NullPointerException          If {@code null} is passed as an
      *                                          argument
-     * @exception InvalidValueDetectedException If the validation process detects an
-     *                                          invalid value
      * @exception UnsupportedOperationException When an unexpected operation is
      *                                          detected during the reflection
      *                                          process
