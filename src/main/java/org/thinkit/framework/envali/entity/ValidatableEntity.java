@@ -14,6 +14,8 @@
 
 package org.thinkit.framework.envali.entity;
 
+import org.thinkit.framework.envali.annotation.ParameterMapping;
+
 /**
  * A marker interface that indicates that it is a verifiable entity.
  * <p>
@@ -24,4 +26,18 @@ package org.thinkit.framework.envali.entity;
  * @since 1.0.0
  */
 public interface ValidatableEntity {
+
+    /**
+     * Tests whether the {@link ParameterMapping} annotation is specified in the
+     * concrete class that implements {@link ValidatableEntity} .
+     *
+     * @return {@code true} if the {@link ParameterMapping} annotation is specified
+     *         in the concrete class that implements {@link ValidatableEntity} ,
+     *         otherwise {@code false}
+     *
+     * @since 1.0.2
+     */
+    default boolean hasParameterMapping() {
+        return this.getClass().getAnnotation(ParameterMapping.class) != null;
+    }
 }

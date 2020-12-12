@@ -32,7 +32,6 @@ import org.thinkit.framework.envali.annotation.RequireStartWith;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.framework.envali.result.BusinessError;
 import org.thinkit.framework.envali.result.ValidationResult;
-import org.thinkit.framework.envali.strategy.AnnotationContext;
 
 /**
  * {@link Envali} is a powerful validator that provides common and intuitive
@@ -139,13 +138,15 @@ public final class Envali {
         Preconditions.requireNonNull(entity);
 
         final List<BusinessError> businessErrors = new ArrayList<>();
+        final Validation.Builder validationBuilder = entity.hasParameterMapping() ? Validation.builder().contentConfig()
+                : Validation.builder();
 
         for (Field field : Arrays.asList(entity.getClass().getDeclaredFields())) {
             field.setAccessible(true);
 
             for (Annotation annotation : Arrays.asList(field.getAnnotations())) {
-                final BusinessError businessError = AnnotationContext.of(entity, field, annotation.annotationType())
-                        .validate();
+                final BusinessError businessError = validationBuilder.validatableEntity(entity).field(field)
+                        .annotationType(annotation.annotationType()).build().validate();
 
                 if (businessError != null && businessError.hasError()) {
                     businessErrors.add(businessError);

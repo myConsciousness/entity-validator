@@ -33,7 +33,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode
-final class ValidationStrategyContext {
+public final class ValidationStrategyContext {
 
     /**
      * Validation strategy for field
@@ -65,7 +65,7 @@ final class ValidationStrategyContext {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    protected static ValidationStrategyContext of(@NonNull ValidationStrategy validationStrategy) {
+    public static ValidationStrategyContext of(@NonNull ValidationStrategy validationStrategy) {
         return new ValidationStrategyContext(validationStrategy);
     }
 

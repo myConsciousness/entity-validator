@@ -84,4 +84,15 @@ public final class ErrorContext implements Serializable {
     public static ErrorContext of(@NonNull ErrorType errorType, @NonNull String message) {
         return new ErrorContext(errorType, message);
     }
+
+    /**
+     * Returns the new instance of {@link ErrorContext} indicates there is no
+     * context.
+     *
+     * @return The new instance of {@link ErrorContext} indicates there is no
+     *         context
+     */
+    public static ErrorContext none() {
+        return new ErrorContext(ErrorType.RUNTIME, "");
+    }
 }

@@ -12,102 +12,136 @@
  * the License.
  */
 
-package org.thinkit.framework.envali.strategy;
+package org.thinkit.framework.envali;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
-import org.thinkit.framework.envali.annotation.NestedEntity;
-import org.thinkit.framework.envali.annotation.RequireEndWith;
-import org.thinkit.framework.envali.annotation.RequireNegative;
-import org.thinkit.framework.envali.annotation.RequireNonBlank;
-import org.thinkit.framework.envali.annotation.RequireNonEmpty;
-import org.thinkit.framework.envali.annotation.RequireNonNull;
-import org.thinkit.framework.envali.annotation.RequirePositive;
-import org.thinkit.framework.envali.annotation.RequireRangeFrom;
-import org.thinkit.framework.envali.annotation.RequireRangeFromTo;
-import org.thinkit.framework.envali.annotation.RequireRangeTo;
-import org.thinkit.framework.envali.annotation.RequireStartWith;
-import org.thinkit.framework.envali.catalog.ErrorType;
-import org.thinkit.framework.envali.context.ErrorContext;
+import org.thinkit.api.catalog.BiCatalog;
+import org.thinkit.common.base.precondition.Preconditions;
+import org.thinkit.framework.envali.catalog.ParameterConfig;
+import org.thinkit.framework.envali.catalog.ValidationPattern;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
-import org.thinkit.common.base.precondition.exception.PreconditionFailedException;
 import org.thinkit.framework.envali.result.BusinessError;
+import org.thinkit.framework.envali.strategy.ValidationStrategyContext;
+import org.thinkit.framework.envali.strategy.ValidationStrategyFactory;
 
-import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 
 /**
- * Context class to determine the validation strategy based on the annotation
- * data type.
- * <p>
- * create an instance of the class using the
- * {@link #of(ValidatableEntity, Field, Class)} and validate it according to the
- * annotations using the {@link #validate()} method.
+ * The object that represents the validation process.
  *
  * @author Kato Shinya
  * @since 1.0.0
  */
 @ToString
 @EqualsAndHashCode
-public final class AnnotationContext {
+final class Validation {
+
+    /**
+     * The parameter configuration
+     */
+    private ParameterConfig parameterConfig;
 
     /**
      * The entity for validation
      */
-    @Getter(AccessLevel.PRIVATE)
-    private ValidatableEntity entity;
+    private ValidatableEntity validatableEntity;
 
     /**
      * The field for validation
      */
-    @Getter(AccessLevel.PRIVATE)
     private Field field;
 
     /**
      * The annotation type for validation
      */
-    @Getter(AccessLevel.PRIVATE)
     private Class<? extends Annotation> annotationType;
 
     /**
      * Default constructor
      */
-    private AnnotationContext() {
+    private Validation() {
     }
 
     /**
-     * Constructor
+     * Returns the inner builder class for {@link Validation} .
      *
-     * @param entity         The entity for validation
-     * @param field          The field for validation
-     * @param annotationType The annotation type for validation
-     *
-     * @exception NullPointerException If {@code null} is passed as an argument
+     * @return The inner builder class for {@link Validation}
      */
-    private AnnotationContext(@NonNull ValidatableEntity entity, @NonNull Field field,
-            @NonNull Class<? extends Annotation> annotationType) {
-        this.entity = entity;
-        this.field = field;
-        this.annotationType = annotationType;
+    public static Builder builder() {
+        return new Builder();
     }
 
     /**
-     * Returns the new instance of {@link RequireEndWithStrategy} class.
+     * The inner builder class for {@link Validation} .
      *
-     * @param entity         The entity for validation
-     * @param field          The field for validation
-     * @param annotationType The annotation type for validation
-     * @return The new instance of {@link RequireEndWithStrategy} class
-     *
-     * @exception NullPointerException If {@code null} is passed as an argument
+     * @since 1.0.2
      */
-    public static AnnotationContext of(@NonNull ValidatableEntity entity, @NonNull Field field,
-            @NonNull Class<? extends Annotation> annotationType) {
-        return new AnnotationContext(entity, field, annotationType);
+    public static class Builder {
+
+        /**
+         * Default constructor
+         */
+        private Builder() {
+        }
+
+        /**
+         * The parameter configuration
+         */
+        private ParameterConfig parameterConfig = ParameterConfig.ANNOTATION;
+
+        /**
+         * The entity for validation
+         */
+        private ValidatableEntity validatableEntity;
+
+        /**
+         * The field for validation
+         */
+        private Field field;
+
+        /**
+         * The annotation type for validation
+         */
+        private Class<? extends Annotation> annotationType;
+
+        public Builder contentConfig() {
+            this.parameterConfig = ParameterConfig.CONTENT;
+            return this;
+        }
+
+        public Builder validatableEntity(@NonNull ValidatableEntity validatableEntity) {
+            this.validatableEntity = validatableEntity;
+            return this;
+        }
+
+        public Builder field(@NonNull Field field) {
+            this.field = field;
+            return this;
+        }
+
+        public Builder annotationType(@NonNull Class<? extends Annotation> annotationType) {
+            this.annotationType = annotationType;
+            return this;
+        }
+
+        public Validation build() {
+            Preconditions.requireNonNull(this.parameterConfig, new IllegalStateException());
+            Preconditions.requireNonNull(this.validatableEntity, new IllegalStateException());
+            Preconditions.requireNonNull(this.field, new IllegalStateException());
+            Preconditions.requireNonNull(this.annotationType, new IllegalStateException());
+
+            final Validation Validation = new Validation();
+            Validation.parameterConfig = this.parameterConfig;
+            Validation.validatableEntity = this.validatableEntity;
+            Validation.field = this.field;
+            Validation.annotationType = this.annotationType;
+
+            return Validation;
+        }
     }
 
     /**
@@ -116,80 +150,17 @@ public final class AnnotationContext {
      * Returns {@code null} if annotation is not supported by Envali framework.
      *
      * @return The business error detected in the validate process
-     *
-     * @exception PreconditionFailedException If the validation process detects an
-     *                                        invalid value
      */
     public BusinessError validate() {
 
-        final Class<? extends Annotation> annotationType = this.getAnnotationType();
+        final ValidationPattern validationPattern = BiCatalog.getEnumByTag(ValidationPattern.class,
+                this.annotationType);
 
-        if (annotationType.equals(RequireNonNull.class)) {
-            final RequireNonNull annotation = this.field.getAnnotation(RequireNonNull.class);
-            return ValidationStrategyContext
-                    .of(RequireNonNullStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
-                            this.getEntity(), this.getField()))
-                    .validate();
-        } else if (annotationType.equals(RequireNonBlank.class)) {
-            final RequireNonBlank annotation = this.field.getAnnotation(RequireNonBlank.class);
-            return ValidationStrategyContext
-                    .of(RequireNonBlankStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
-                            this.getEntity(), this.getField()))
-                    .validate();
-        } else if (annotationType.equals(RequirePositive.class)) {
-            final RequirePositive annotation = this.field.getAnnotation(RequirePositive.class);
-            return ValidationStrategyContext
-                    .of(RequirePositiveStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
-                            this.getEntity(), this.getField()))
-                    .validate();
-        } else if (annotationType.equals(RequireNegative.class)) {
-            final RequireNegative annotation = this.field.getAnnotation(RequireNegative.class);
-            return ValidationStrategyContext
-                    .of(RequireNegativeStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
-                            this.getEntity(), this.getField()))
-                    .validate();
-        } else if (annotationType.equals(RequireRangeFrom.class)) {
-            final RequireRangeFrom annotation = this.field.getAnnotation(RequireRangeFrom.class);
-            return ValidationStrategyContext
-                    .of(RequireRangeFromStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
-                            this.getEntity(), this.getField()))
-                    .validate();
-        } else if (annotationType.equals(RequireRangeTo.class)) {
-            final RequireRangeTo annotation = this.field.getAnnotation(RequireRangeTo.class);
-            return ValidationStrategyContext
-                    .of(RequireRangeToStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
-                            this.getEntity(), this.getField()))
-                    .validate();
-        } else if (annotationType.equals(RequireRangeFromTo.class)) {
-            final RequireRangeFromTo annotation = this.field.getAnnotation(RequireRangeFromTo.class);
-            return ValidationStrategyContext
-                    .of(RequireRangeFromToStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
-                            this.getEntity(), this.getField()))
-                    .validate();
-        } else if (annotationType.equals(RequireStartWith.class)) {
-            final RequireStartWith annotation = this.field.getAnnotation(RequireStartWith.class);
-            return ValidationStrategyContext
-                    .of(RequireStartWithStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
-                            this.getEntity(), this.getField()))
-                    .validate();
-        } else if (annotationType.equals(RequireEndWith.class)) {
-            final RequireEndWith annotation = this.field.getAnnotation(RequireEndWith.class);
-            return ValidationStrategyContext
-                    .of(RequireEndWithStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
-                            this.getEntity(), this.getField()))
-                    .validate();
-        } else if (annotationType.equals(RequireNonEmpty.class)) {
-            final RequireNonEmpty annotation = this.field.getAnnotation(RequireNonEmpty.class);
-            return ValidationStrategyContext
-                    .of(RequireNonEmptyStrategy.of(ErrorContext.of(annotation.errorType(), annotation.message()),
-                            this.getEntity(), this.getField()))
-                    .validate();
-        } else if (annotationType.equals(NestedEntity.class)) {
-            return ValidationStrategyContext.of(
-                    NestedEntityStrategy.of(ErrorContext.of(ErrorType.RUNTIME, ""), this.getEntity(), this.getField()))
-                    .validate();
+        if (validationPattern == null) {
+            return null;
         }
 
-        return null;
+        return ValidationStrategyContext.of(ValidationStrategyFactory.of(this.validatableEntity, this.field)
+                .createValidationStrategy(validationPattern)).validate();
     }
 }
