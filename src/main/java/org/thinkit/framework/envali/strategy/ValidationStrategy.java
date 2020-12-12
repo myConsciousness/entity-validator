@@ -16,6 +16,7 @@ package org.thinkit.framework.envali.strategy;
 
 import java.lang.reflect.Field;
 
+import org.thinkit.framework.envali.catalog.ParameterConfig;
 import org.thinkit.framework.envali.context.ErrorContext;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.framework.envali.helper.EnvaliContentHelper;
@@ -76,7 +77,10 @@ abstract class ValidationStrategy {
             @NonNull Field field) {
         this.errorContext = errorContext;
         this.fieldHelper = EnvaliFieldHelper.of(entity, field);
-        this.contentHelper = EnvaliContentHelper.of(entity, field);
+
+        if (errorContext.getParameterConfig() == ParameterConfig.CONTENT) {
+            this.contentHelper = EnvaliContentHelper.of(entity, field);
+        }
     }
 
     /**
