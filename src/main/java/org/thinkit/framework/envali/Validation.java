@@ -97,21 +97,63 @@ final class Validation {
          */
         private Class<? extends Annotation> annotationType;
 
+        /**
+         * Sets the {@link ValidatableEntity} passed as an argument.
+         *
+         * @param validatableEntity The validatable entity to be validated
+         * @return This {@link Builder} instance
+         *
+         * @exception NullPointerException If {@code null} is passed as an argument
+         */
         public Builder validatableEntity(@NonNull ValidatableEntity validatableEntity) {
             this.validatableEntity = validatableEntity;
             return this;
         }
 
+        /**
+         * Sets the field passed as an argument.
+         *
+         * @param field The field to be validated
+         * @return This {@link Builder} instance
+         *
+         * @exception NullPointerException If {@code null} is passed as an argument
+         */
         public Builder field(@NonNull Field field) {
             this.field = field;
             return this;
         }
 
+        /**
+         * Sets the annotation type passed as an argument.
+         *
+         * @param annotationType The annotation type to be validated
+         * @return This {@link Builder} instance
+         *
+         * @exception NullPointerException If {@code null} is passed as an argument
+         */
         public Builder annotationType(@NonNull Class<? extends Annotation> annotationType) {
             this.annotationType = annotationType;
             return this;
         }
 
+        /**
+         * Returns the new instance of {@link Validation} based on the object or value
+         * set by {@link #validatableEntity(ValidatableEntity)} , {@link #field(Field)}
+         * and {@link #annotationType(Class)} methods.
+         * <p>
+         * {@link #validatableEntity(ValidatableEntity)} , {@link #field(Field)} and
+         * {@link #annotationType(Class)} must be called and set to a valid non
+         * {@code null} value, otherwise {@link IllegalStateException} is thrown at
+         * runtime when {@link #build()} is called.
+         *
+         * @return The new instance of {@link Validation} based on the object and value
+         *         set by {@link #validatableEntity(ValidatableEntity)} ,
+         *         {@link #field(Field)} and {@link #annotationType(Class)} methods
+         *
+         * @exception IllegalStateException If no valid object or value is set by the
+         *                                  various setter methods when {@link #build()}
+         *                                  is called
+         */
         public Validation build() {
             Preconditions.requireNonNull(this.validatableEntity, new IllegalStateException());
             Preconditions.requireNonNull(this.field, new IllegalStateException());
