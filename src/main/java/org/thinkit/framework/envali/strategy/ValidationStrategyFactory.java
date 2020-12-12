@@ -14,6 +14,7 @@
 
 package org.thinkit.framework.envali.strategy;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 import org.thinkit.framework.envali.annotation.RequireEndWith;
@@ -92,66 +93,57 @@ public final class ValidationStrategyFactory implements StrategyFactory {
     }
 
     @Override
-    public ValidationStrategy createValidationStrategy(@NonNull ValidationPattern validationPattern) {
+    public ValidationStrategy<? extends Annotation> createValidationStrategy(
+            @NonNull ValidationPattern validationPattern) {
         return switch (validationPattern) {
             case REQUIRE_NON_NULL -> {
-                final RequireNonNull annotation = field.getAnnotation(RequireNonNull.class);
                 yield RequireNonNullStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        annotation.errorType(), annotation.message()), this.validatableEntity, this.field);
+                        field.getAnnotation(RequireNonNull.class)), this.validatableEntity, this.field);
             }
 
             case REQUIRE_NON_BLANK -> {
-                final RequireNonBlank annotation = field.getAnnotation(RequireNonBlank.class);
                 yield RequireNonBlankStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        annotation.errorType(), annotation.message()), this.validatableEntity, this.field);
+                        field.getAnnotation(RequireNonBlank.class)), this.validatableEntity, this.field);
             }
 
             case REQUIRE_POSITIVE -> {
-                final RequirePositive annotation = field.getAnnotation(RequirePositive.class);
                 yield RequirePositiveStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        annotation.errorType(), annotation.message()), this.validatableEntity, this.field);
+                        field.getAnnotation(RequirePositive.class)), this.validatableEntity, this.field);
             }
 
             case REQUIRE_NEGATIVE -> {
-                final RequireNegative annotation = field.getAnnotation(RequireNegative.class);
                 yield RequireNegativeStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        annotation.errorType(), annotation.message()), this.validatableEntity, this.field);
+                        field.getAnnotation(RequireNegative.class)), this.validatableEntity, this.field);
             }
 
             case REQUIRE_RANGE_FROM -> {
-                final RequireRangeFrom annotation = field.getAnnotation(RequireRangeFrom.class);
                 yield RequireRangeFromStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        annotation.errorType(), annotation.message()), this.validatableEntity, this.field);
+                        field.getAnnotation(RequireRangeFrom.class)), this.validatableEntity, this.field);
             }
 
             case REQUIRE_RANGE_TO -> {
-                final RequireRangeTo annotation = field.getAnnotation(RequireRangeTo.class);
                 yield RequireRangeToStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        annotation.errorType(), annotation.message()), this.validatableEntity, this.field);
+                        field.getAnnotation(RequireRangeTo.class)), this.validatableEntity, this.field);
             }
 
             case REQUIRE_RANGE_FROM_TO -> {
-                final RequireRangeFromTo annotation = field.getAnnotation(RequireRangeFromTo.class);
                 yield RequireRangeFromToStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        annotation.errorType(), annotation.message()), this.validatableEntity, this.field);
+                        field.getAnnotation(RequireRangeFromTo.class)), this.validatableEntity, this.field);
             }
 
             case REQUIRE_START_WITH -> {
-                final RequireStartWith annotation = field.getAnnotation(RequireStartWith.class);
                 yield RequireStartWithStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        annotation.errorType(), annotation.message()), this.validatableEntity, this.field);
+                        field.getAnnotation(RequireStartWith.class)), this.validatableEntity, this.field);
             }
 
             case REQUIRE_END_WITH -> {
-                final RequireEndWith annotation = field.getAnnotation(RequireEndWith.class);
                 yield RequireEndWithStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        annotation.errorType(), annotation.message()), this.validatableEntity, this.field);
+                        field.getAnnotation(RequireEndWith.class)), this.validatableEntity, this.field);
             }
 
             case REQUIRE_NON_EMPTY -> {
-                final RequireNonEmpty annotation = field.getAnnotation(RequireNonEmpty.class);
                 yield RequireNonEmptyStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        annotation.errorType(), annotation.message()), this.validatableEntity, this.field);
+                        field.getAnnotation(RequireNonEmpty.class)), this.validatableEntity, this.field);
             }
 
             case NESTED_ENTITY -> {

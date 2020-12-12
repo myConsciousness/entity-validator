@@ -14,6 +14,7 @@
 
 package org.thinkit.framework.envali.strategy;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 import org.thinkit.framework.envali.catalog.ParameterConfig;
@@ -37,13 +38,13 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode
-abstract class ValidationStrategy {
+abstract class ValidationStrategy<T extends Annotation> {
 
     /**
      * The error context
      */
     @Getter(AccessLevel.PROTECTED)
-    private ErrorContext errorContext;
+    private ErrorContext<T> errorContext;
 
     /**
      * The field helper
@@ -73,7 +74,7 @@ abstract class ValidationStrategy {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    protected ValidationStrategy(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
+    protected ValidationStrategy(@NonNull ErrorContext<T> errorContext, @NonNull ValidatableEntity entity,
             @NonNull Field field) {
         this.errorContext = errorContext;
         this.fieldHelper = EnvaliFieldHelper.of(entity, field);
@@ -90,4 +91,16 @@ abstract class ValidationStrategy {
      * @return The business error detected in the validate process
      */
     public abstract BusinessError validate();
+
+    /**
+     * Tests if the error context has {@link ParameterConfig#CONTENT} .
+     *
+     * @return {@code true} if the error context has {@link ParameterConfig#CONTENT}
+     *         , otherwise {@code false}
+     *
+     * @since 1.0.2
+     */
+    protected boolean isContentConfig() {
+        return this.errorContext.getParameterConfig() == ParameterConfig.CONTENT;
+    }
 }

@@ -37,7 +37,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode(callSuper = false)
-final class RequireEndWithStrategy extends ValidationStrategy {
+final class RequireEndWithStrategy extends ValidationStrategy<RequireEndWith> {
 
     /**
      * Constructor
@@ -48,8 +48,8 @@ final class RequireEndWithStrategy extends ValidationStrategy {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    private RequireEndWithStrategy(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
-            @NonNull Field field) {
+    private RequireEndWithStrategy(@NonNull ErrorContext<RequireEndWith> errorContext,
+            @NonNull ValidatableEntity entity, @NonNull Field field) {
         super(errorContext, entity, field);
     }
 
@@ -63,25 +63,31 @@ final class RequireEndWithStrategy extends ValidationStrategy {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    protected static ValidationStrategy of(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
-            @NonNull Field field) {
+    protected static ValidationStrategy<RequireEndWith> of(@NonNull ErrorContext<RequireEndWith> errorContext,
+            @NonNull ValidatableEntity entity, @NonNull Field field) {
         return new RequireEndWithStrategy(errorContext, entity, field);
     }
 
     @Override
     public BusinessError validate() {
 
-        final ErrorContext errorContext = super.getErrorContext();
+        final ErrorContext<RequireEndWith> errorContext = super.getErrorContext();
+        final RequireEndWith annotation = errorContext.getAnnotation();
 
-        return switch (errorContext.getErrorType()) {
+        return switch (annotation.errorType()) {
             case RECOVERABLE -> {
                 try {
-                    Preconditions.requireEndWith(super.getFieldHelper().getString(),
-                            super.getContentHelper().get(EnvaliContentAttribute.END_WITH),
-                            new InvalidValueDetectedException());
+                    if (super.isContentConfig()) {
+                        Preconditions.requireEndWith(super.getFieldHelper().getString(),
+                                super.getContentHelper().get(EnvaliContentAttribute.END_WITH),
+                                new InvalidValueDetectedException());
+                    } else {
+
+                    }
+
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
-                    yield BusinessError.recoverable(errorContext.getMessage());
+                    yield BusinessError.recoverable(annotation.message());
                 }
             }
 
@@ -92,7 +98,7 @@ final class RequireEndWithStrategy extends ValidationStrategy {
                             new InvalidValueDetectedException());
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
-                    yield BusinessError.unrecoverable(errorContext.getMessage());
+                    yield BusinessError.unrecoverable(annotation.message());
                 }
             }
 

@@ -14,6 +14,8 @@
 
 package org.thinkit.framework.envali.strategy;
 
+import java.lang.annotation.Annotation;
+
 import org.thinkit.common.base.precondition.exception.PreconditionFailedException;
 import org.thinkit.framework.envali.result.BusinessError;
 
@@ -38,7 +40,7 @@ public final class ValidationStrategyContext {
     /**
      * Validation strategy for field
      */
-    private ValidationStrategy validationStrategy;
+    private ValidationStrategy<? extends Annotation> validationStrategy;
 
     /**
      * Default constructor
@@ -53,7 +55,7 @@ public final class ValidationStrategyContext {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    private ValidationStrategyContext(@NonNull ValidationStrategy validationStrategy) {
+    private ValidationStrategyContext(@NonNull ValidationStrategy<? extends Annotation> validationStrategy) {
         this.validationStrategy = validationStrategy;
     }
 
@@ -65,7 +67,7 @@ public final class ValidationStrategyContext {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    public static ValidationStrategyContext of(@NonNull ValidationStrategy validationStrategy) {
+    public static ValidationStrategyContext of(@NonNull ValidationStrategy<? extends Annotation> validationStrategy) {
         return new ValidationStrategyContext(validationStrategy);
     }
 

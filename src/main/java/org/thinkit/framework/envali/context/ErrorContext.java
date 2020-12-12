@@ -15,6 +15,7 @@
 package org.thinkit.framework.envali.context;
 
 import java.io.Serializable;
+import java.lang.annotation.Annotation;
 
 import org.thinkit.framework.envali.catalog.ErrorType;
 import org.thinkit.framework.envali.catalog.ParameterConfig;
@@ -33,7 +34,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode
-public final class ErrorContext implements Serializable {
+public final class ErrorContext<T extends Annotation> implements Serializable {
 
     /**
      * The serial version UID
@@ -47,16 +48,10 @@ public final class ErrorContext implements Serializable {
     private ParameterConfig parameterConfig;
 
     /**
-     * The error type
+     * The envali anotation
      */
     @Getter
-    private ErrorType errorType;
-
-    /**
-     * The message
-     */
-    @Getter
-    private String message;
+    private T annotation;
 
     /**
      * Default constructor
@@ -69,16 +64,13 @@ public final class ErrorContext implements Serializable {
      *
      * @param parameterConfig The parameter configuration based on
      *                        {@link ParameterConfig}
-     * @param errorType       The error type based on {@link ErrorType}
-     * @param message         The message
+     * @param annotation      The envali annotation
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    private ErrorContext(@NonNull ParameterConfig parameterConfig, @NonNull ErrorType errorType,
-            @NonNull String message) {
+    private ErrorContext(@NonNull ParameterConfig parameterConfig, @NonNull T annotation) {
         this.parameterConfig = parameterConfig;
-        this.errorType = errorType;
-        this.message = message;
+        this.annotation = annotation;
     }
 
     /**
@@ -94,9 +86,9 @@ public final class ErrorContext implements Serializable {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    public static ErrorContext of(@NonNull ParameterConfig parameterConfig, @NonNull ErrorType errorType,
-            @NonNull String message) {
-        return new ErrorContext(parameterConfig, errorType, message);
+    public static <T extends Annotation> ErrorContext<T> of(@NonNull ParameterConfig parameterConfig,
+            @NonNull T annotation) {
+        return new ErrorContext<>(parameterConfig, annotation);
     }
 
     /**
@@ -106,7 +98,7 @@ public final class ErrorContext implements Serializable {
      * @return The new instance of {@link ErrorContext} indicates there is no
      *         context
      */
-    public static ErrorContext none() {
-        return new ErrorContext();
+    public static <T extends Annotation> ErrorContext<T> none() {
+        return new ErrorContext<>();
     }
 }

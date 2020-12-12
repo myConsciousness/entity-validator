@@ -37,7 +37,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode(callSuper = false)
-final class NestedEntityStrategy extends ValidationStrategy {
+final class NestedEntityStrategy extends ValidationStrategy<NestedEntity> {
 
     /**
      * Constructor
@@ -48,7 +48,7 @@ final class NestedEntityStrategy extends ValidationStrategy {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    private NestedEntityStrategy(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
+    private NestedEntityStrategy(@NonNull ErrorContext<NestedEntity> errorContext, @NonNull ValidatableEntity entity,
             @NonNull Field field) {
         super(errorContext, entity, field);
     }
@@ -63,8 +63,8 @@ final class NestedEntityStrategy extends ValidationStrategy {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    protected static ValidationStrategy of(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
-            @NonNull Field field) {
+    protected static ValidationStrategy<NestedEntity> of(@NonNull ErrorContext<NestedEntity> errorContext,
+            @NonNull ValidatableEntity entity, @NonNull Field field) {
         return new NestedEntityStrategy(errorContext, entity, field);
     }
 

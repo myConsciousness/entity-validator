@@ -39,7 +39,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode(callSuper = false)
-final class RequireRangeToStrategy extends ValidationStrategy {
+final class RequireRangeToStrategy extends ValidationStrategy<RequireRangeTo> {
 
     /**
      * Constructor
@@ -50,8 +50,8 @@ final class RequireRangeToStrategy extends ValidationStrategy {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    private RequireRangeToStrategy(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
-            @NonNull Field field) {
+    private RequireRangeToStrategy(@NonNull ErrorContext<RequireRangeTo> errorContext,
+            @NonNull ValidatableEntity entity, @NonNull Field field) {
         super(errorContext, entity, field);
     }
 
@@ -65,23 +65,24 @@ final class RequireRangeToStrategy extends ValidationStrategy {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    protected static ValidationStrategy of(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
-            @NonNull Field field) {
+    protected static ValidationStrategy<RequireRangeTo> of(@NonNull ErrorContext<RequireRangeTo> errorContext,
+            @NonNull ValidatableEntity entity, @NonNull Field field) {
         return new RequireRangeToStrategy(errorContext, entity, field);
     }
 
     @Override
     public BusinessError validate() {
 
-        final ErrorContext errorContext = super.getErrorContext();
+        final ErrorContext<RequireRangeTo> errorContext = super.getErrorContext();
+        final RequireRangeTo annotation = errorContext.getAnnotation();
 
-        return switch (errorContext.getErrorType()) {
+        return switch (annotation.errorType()) {
             case RECOVERABLE -> {
                 try {
                     this.validate(super.getFieldHelper(), new InvalidValueDetectedException());
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
-                    yield BusinessError.recoverable(errorContext.getMessage());
+                    yield BusinessError.recoverable(annotation.message());
                 }
             }
 
@@ -90,7 +91,7 @@ final class RequireRangeToStrategy extends ValidationStrategy {
                     this.validate(super.getFieldHelper(), new InvalidValueDetectedException());
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
-                    yield BusinessError.unrecoverable(errorContext.getMessage());
+                    yield BusinessError.unrecoverable(annotation.message());
                 }
             }
 

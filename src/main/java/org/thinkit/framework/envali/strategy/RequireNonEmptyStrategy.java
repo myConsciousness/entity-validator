@@ -38,7 +38,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode(callSuper = false)
-final class RequireNonEmptyStrategy extends ValidationStrategy {
+final class RequireNonEmptyStrategy extends ValidationStrategy<RequireNonEmpty> {
 
     /**
      * Constructor
@@ -49,8 +49,8 @@ final class RequireNonEmptyStrategy extends ValidationStrategy {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    private RequireNonEmptyStrategy(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
-            @NonNull Field field) {
+    private RequireNonEmptyStrategy(@NonNull ErrorContext<RequireNonEmpty> errorContext,
+            @NonNull ValidatableEntity entity, @NonNull Field field) {
         super(errorContext, entity, field);
     }
 
@@ -64,23 +64,24 @@ final class RequireNonEmptyStrategy extends ValidationStrategy {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    protected static ValidationStrategy of(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
-            @NonNull Field field) {
+    protected static ValidationStrategy<RequireNonEmpty> of(@NonNull ErrorContext<RequireNonEmpty> errorContext,
+            @NonNull ValidatableEntity entity, @NonNull Field field) {
         return new RequireNonEmptyStrategy(errorContext, entity, field);
     }
 
     @Override
     public BusinessError validate() {
 
-        final ErrorContext errorContext = super.getErrorContext();
+        final ErrorContext<RequireNonEmpty> errorContext = super.getErrorContext();
+        final RequireNonEmpty annotation = errorContext.getAnnotation();
 
-        return switch (errorContext.getErrorType()) {
+        return switch (annotation.errorType()) {
             case RECOVERABLE -> {
                 try {
                     this.validate(super.getFieldHelper(), new InvalidValueDetectedException());
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
-                    yield BusinessError.recoverable(errorContext.getMessage());
+                    yield BusinessError.recoverable(annotation.message());
                 }
             }
 
@@ -89,7 +90,7 @@ final class RequireNonEmptyStrategy extends ValidationStrategy {
                     this.validate(super.getFieldHelper(), new InvalidValueDetectedException());
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
-                    yield BusinessError.unrecoverable(errorContext.getMessage());
+                    yield BusinessError.unrecoverable(annotation.message());
                 }
             }
 

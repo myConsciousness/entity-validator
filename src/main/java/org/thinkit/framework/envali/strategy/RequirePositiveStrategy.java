@@ -36,7 +36,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode(callSuper = false)
-final class RequirePositiveStrategy extends ValidationStrategy {
+final class RequirePositiveStrategy extends ValidationStrategy<RequirePositive> {
 
     /**
      * Constructor
@@ -47,8 +47,8 @@ final class RequirePositiveStrategy extends ValidationStrategy {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    private RequirePositiveStrategy(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
-            @NonNull Field field) {
+    private RequirePositiveStrategy(@NonNull ErrorContext<RequirePositive> errorContext,
+            @NonNull ValidatableEntity entity, @NonNull Field field) {
         super(errorContext, entity, field);
     }
 
@@ -62,23 +62,24 @@ final class RequirePositiveStrategy extends ValidationStrategy {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    protected static ValidationStrategy of(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
-            @NonNull Field field) {
+    protected static ValidationStrategy<RequirePositive> of(@NonNull ErrorContext<RequirePositive> errorContext,
+            @NonNull ValidatableEntity entity, @NonNull Field field) {
         return new RequirePositiveStrategy(errorContext, entity, field);
     }
 
     @Override
     public BusinessError validate() {
 
-        final ErrorContext errorContext = super.getErrorContext();
+        final ErrorContext<RequirePositive> errorContext = super.getErrorContext();
+        final RequirePositive annotation = errorContext.getAnnotation();
 
-        return switch (errorContext.getErrorType()) {
+        return switch (annotation.errorType()) {
             case RECOVERABLE -> {
                 try {
                     Preconditions.requirePositive(super.getFieldHelper().getInt(), new InvalidValueDetectedException());
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
-                    yield BusinessError.recoverable(errorContext.getMessage());
+                    yield BusinessError.recoverable(annotation.message());
                 }
             }
 
@@ -87,7 +88,7 @@ final class RequirePositiveStrategy extends ValidationStrategy {
                     Preconditions.requirePositive(super.getFieldHelper().getInt(), new InvalidValueDetectedException());
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
-                    yield BusinessError.unrecoverable(errorContext.getMessage());
+                    yield BusinessError.unrecoverable(annotation.message());
                 }
             }
 

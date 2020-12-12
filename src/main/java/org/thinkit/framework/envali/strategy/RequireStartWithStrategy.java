@@ -37,7 +37,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode(callSuper = false)
-final class RequireStartWithStrategy extends ValidationStrategy {
+final class RequireStartWithStrategy extends ValidationStrategy<RequireStartWith> {
 
     /**
      * Constructor
@@ -48,8 +48,8 @@ final class RequireStartWithStrategy extends ValidationStrategy {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    private RequireStartWithStrategy(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
-            @NonNull Field field) {
+    private RequireStartWithStrategy(@NonNull ErrorContext<RequireStartWith> errorContext,
+            @NonNull ValidatableEntity entity, @NonNull Field field) {
         super(errorContext, entity, field);
     }
 
@@ -63,17 +63,18 @@ final class RequireStartWithStrategy extends ValidationStrategy {
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    protected static ValidationStrategy of(@NonNull ErrorContext errorContext, @NonNull ValidatableEntity entity,
-            @NonNull Field field) {
+    protected static ValidationStrategy<RequireStartWith> of(@NonNull ErrorContext<RequireStartWith> errorContext,
+            @NonNull ValidatableEntity entity, @NonNull Field field) {
         return new RequireStartWithStrategy(errorContext, entity, field);
     }
 
     @Override
     public BusinessError validate() {
 
-        final ErrorContext errorContext = super.getErrorContext();
+        final ErrorContext<RequireStartWith> errorContext = super.getErrorContext();
+        final RequireStartWith annotation = errorContext.getAnnotation();
 
-        return switch (errorContext.getErrorType()) {
+        return switch (annotation.errorType()) {
             case RECOVERABLE -> {
                 try {
                     Preconditions.requireStartWith(super.getFieldHelper().getString(),
@@ -81,7 +82,7 @@ final class RequireStartWithStrategy extends ValidationStrategy {
                             new InvalidValueDetectedException());
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
-                    yield BusinessError.recoverable(errorContext.getMessage());
+                    yield BusinessError.recoverable(annotation.message());
                 }
             }
 
@@ -92,7 +93,7 @@ final class RequireStartWithStrategy extends ValidationStrategy {
                             new InvalidValueDetectedException());
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
-                    yield BusinessError.unrecoverable(errorContext.getMessage());
+                    yield BusinessError.unrecoverable(annotation.message());
                 }
             }
 

@@ -14,6 +14,7 @@
 
 package org.thinkit.framework.envali.strategy;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 import org.thinkit.framework.envali.catalog.ValidationPattern;
@@ -53,5 +54,6 @@ public interface StrategyFactory {
      * @return The validation strategy corresponding to the pattern based on the
      *         {@link ValidationPattern} passed as an argument
      */
-    public ValidationStrategy createValidationStrategy(@NonNull ValidationPattern validationPattern);
+    public ValidationStrategy<? extends Annotation> createValidationStrategy(
+            @NonNull ValidationPattern validationPattern);
 }
