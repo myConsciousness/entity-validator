@@ -79,7 +79,7 @@ final class RequireRangeToStrategy extends ValidationStrategy<RequireRangeTo> {
         return switch (annotation.errorType()) {
             case RECOVERABLE -> {
                 try {
-                    this.validate(super.getFieldHelper(), new InvalidValueDetectedException());
+                    this.validate(annotation, super.getFieldHelper(), new InvalidValueDetectedException());
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
                     yield BusinessError.recoverable(annotation.message());
@@ -88,7 +88,7 @@ final class RequireRangeToStrategy extends ValidationStrategy<RequireRangeTo> {
 
             case UNRECOVERABLE -> {
                 try {
-                    this.validate(super.getFieldHelper(), new InvalidValueDetectedException());
+                    this.validate(annotation, super.getFieldHelper(), new InvalidValueDetectedException());
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
                     yield BusinessError.unrecoverable(annotation.message());
@@ -96,7 +96,7 @@ final class RequireRangeToStrategy extends ValidationStrategy<RequireRangeTo> {
             }
 
             case RUNTIME -> {
-                this.validate(super.getFieldHelper());
+                this.validate(annotation, super.getFieldHelper());
                 yield BusinessError.none();
             }
         };
@@ -106,42 +106,63 @@ final class RequireRangeToStrategy extends ValidationStrategy<RequireRangeTo> {
      * Validates the field value and object based on the {@code field} passed as
      * arguments.
      *
-     * @param field The field to be validated
+     * @param annotation The annotation of {@link RequireRangeTo}
+     * @param field      The field to be validated
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    private void validate(@NonNull EnvaliFieldHelper field) {
-        this.validate(field, new PreconditionFailedException());
+    private void validate(@NonNull RequireRangeTo annotation, @NonNull EnvaliFieldHelper field) {
+        this.validate(annotation, field, new PreconditionFailedException());
     }
 
     /**
      * Validates the field value and object based on the {@code field} passed as
      * arguments.
      *
-     * @param field     The field to be validated
-     * @param exception The exception to be thrown when there is a error
+     * @param annotation The annotation of {@link RequireRangeTo}
+     * @param field      The field to be validated
+     * @param exception  The exception to be thrown when there is a error
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    private void validate(@NonNull EnvaliFieldHelper field, @NonNull RuntimeException exception) {
+    private void validate(@NonNull RequireRangeTo annotation, @NonNull EnvaliFieldHelper field,
+            @NonNull RuntimeException exception) {
         if (field.isInteger()) {
             Preconditions.requireRangeTo(field.getInt(),
-                    Integer.parseInt(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)), exception);
+                    super.isContentConfig()
+                            ? Integer.parseInt(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO))
+                            : annotation.intTo(),
+                    exception);
         } else if (field.isLong()) {
             Preconditions.requireRangeTo(field.getLong(),
-                    Long.parseLong(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)), exception);
+                    super.isContentConfig()
+                            ? Long.parseLong(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO))
+                            : annotation.longTo(),
+                    exception);
         } else if (field.isShort()) {
             Preconditions.requireRangeTo(field.getShort(),
-                    Short.parseShort(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)), exception);
+                    super.isContentConfig()
+                            ? Short.parseShort(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO))
+                            : annotation.shortTo(),
+                    exception);
         } else if (field.isByte()) {
             Preconditions.requireRangeTo(field.getByte(),
-                    Byte.parseByte(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)), exception);
+                    super.isContentConfig()
+                            ? Byte.parseByte(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO))
+                            : annotation.byteTo(),
+                    exception);
         } else if (field.isFloat()) {
             Preconditions.requireRangeTo(field.getFloat(),
-                    Float.parseFloat(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)), exception);
+                    super.isContentConfig()
+                            ? Float.parseFloat(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO))
+                            : annotation.floatTo(),
+                    exception);
         } else if (field.isDouble()) {
             Preconditions.requireRangeTo(field.getDouble(),
-                    Double.parseDouble(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)), exception);
+                    super.isContentConfig()
+                            ? Double.parseDouble(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO))
+                            : annotation.doubleTo(),
+                    exception);
         }
     }
 }

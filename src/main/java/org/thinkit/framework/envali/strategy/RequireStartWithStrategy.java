@@ -77,15 +77,10 @@ final class RequireStartWithStrategy extends ValidationStrategy<RequireStartWith
         return switch (annotation.errorType()) {
             case RECOVERABLE -> {
                 try {
-                    if (super.isContentConfig()) {
-                        Preconditions.requireStartWith(super.getFieldHelper().getString(),
-                                super.getContentHelper().get(EnvaliContentAttribute.START_WITH),
-                                new InvalidValueDetectedException());
-                    } else {
-                        Preconditions.requireStartWith(super.getFieldHelper().getString(), annotation.prefix(),
-                                new InvalidValueDetectedException());
-                    }
-
+                    Preconditions.requireStartWith(super.getFieldHelper().getString(),
+                            super.isContentConfig() ? super.getContentHelper().get(EnvaliContentAttribute.START_WITH)
+                                    : annotation.prefix(),
+                            new InvalidValueDetectedException());
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
                     yield BusinessError.recoverable(annotation.message());
@@ -94,15 +89,10 @@ final class RequireStartWithStrategy extends ValidationStrategy<RequireStartWith
 
             case UNRECOVERABLE -> {
                 try {
-                    if (super.isContentConfig()) {
-                        Preconditions.requireStartWith(super.getFieldHelper().getString(),
-                                super.getContentHelper().get(EnvaliContentAttribute.START_WITH),
-                                new InvalidValueDetectedException());
-                    } else {
-                        Preconditions.requireStartWith(super.getFieldHelper().getString(), annotation.prefix(),
-                                new InvalidValueDetectedException());
-                    }
-
+                    Preconditions.requireStartWith(super.getFieldHelper().getString(),
+                            super.isContentConfig() ? super.getContentHelper().get(EnvaliContentAttribute.START_WITH)
+                                    : annotation.prefix(),
+                            new InvalidValueDetectedException());
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
                     yield BusinessError.unrecoverable(annotation.message());
@@ -111,7 +101,8 @@ final class RequireStartWithStrategy extends ValidationStrategy<RequireStartWith
 
             case RUNTIME -> {
                 Preconditions.requireStartWith(super.getFieldHelper().getString(),
-                        super.getContentHelper().get(EnvaliContentAttribute.START_WITH));
+                        super.isContentConfig() ? super.getContentHelper().get(EnvaliContentAttribute.START_WITH)
+                                : annotation.prefix());
                 yield BusinessError.none();
             }
         };

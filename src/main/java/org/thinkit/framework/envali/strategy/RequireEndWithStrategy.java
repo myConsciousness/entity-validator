@@ -77,15 +77,10 @@ final class RequireEndWithStrategy extends ValidationStrategy<RequireEndWith> {
         return switch (annotation.errorType()) {
             case RECOVERABLE -> {
                 try {
-                    if (super.isContentConfig()) {
-                        Preconditions.requireEndWith(super.getFieldHelper().getString(),
-                                super.getContentHelper().get(EnvaliContentAttribute.END_WITH),
-                                new InvalidValueDetectedException());
-                    } else {
-                        Preconditions.requireEndWith(super.getFieldHelper().getString(), annotation.suffix(),
-                                new InvalidValueDetectedException());
-                    }
-
+                    Preconditions.requireEndWith(super.getFieldHelper().getString(),
+                            super.isContentConfig() ? super.getContentHelper().get(EnvaliContentAttribute.END_WITH)
+                                    : annotation.suffix(),
+                            new InvalidValueDetectedException());
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
                     yield BusinessError.recoverable(annotation.message());
@@ -94,15 +89,10 @@ final class RequireEndWithStrategy extends ValidationStrategy<RequireEndWith> {
 
             case UNRECOVERABLE -> {
                 try {
-                    if (super.isContentConfig()) {
-                        Preconditions.requireEndWith(super.getFieldHelper().getString(),
-                                super.getContentHelper().get(EnvaliContentAttribute.END_WITH),
-                                new InvalidValueDetectedException());
-                    } else {
-                        Preconditions.requireEndWith(super.getFieldHelper().getString(), annotation.suffix(),
-                                new InvalidValueDetectedException());
-                    }
-
+                    Preconditions.requireEndWith(super.getFieldHelper().getString(),
+                            super.isContentConfig() ? super.getContentHelper().get(EnvaliContentAttribute.END_WITH)
+                                    : annotation.suffix(),
+                            new InvalidValueDetectedException());
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
                     yield BusinessError.unrecoverable(annotation.message());
@@ -111,7 +101,8 @@ final class RequireEndWithStrategy extends ValidationStrategy<RequireEndWith> {
 
             case RUNTIME -> {
                 Preconditions.requireEndWith(super.getFieldHelper().getString(),
-                        super.getContentHelper().get(EnvaliContentAttribute.END_WITH));
+                        super.isContentConfig() ? super.getContentHelper().get(EnvaliContentAttribute.END_WITH)
+                                : annotation.suffix());
                 yield BusinessError.none();
             }
         };
