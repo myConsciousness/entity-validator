@@ -14,6 +14,7 @@
 
 package org.thinkit.framework.envali.annotation;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -59,6 +60,7 @@ import org.thinkit.framework.envali.catalog.ErrorType;
  * @author Kato Shinya
  * @since 1.0.0
  */
+@Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RequireEndWith {
