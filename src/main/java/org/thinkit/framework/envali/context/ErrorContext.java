@@ -17,6 +17,7 @@ package org.thinkit.framework.envali.context;
 import java.io.Serializable;
 
 import org.thinkit.framework.envali.catalog.ErrorType;
+import org.thinkit.framework.envali.catalog.ParameterConfig;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -40,6 +41,12 @@ public final class ErrorContext implements Serializable {
     private static final long serialVersionUID = 4230489225683277809L;
 
     /**
+     * The parameter configuration
+     */
+    @Getter
+    private ParameterConfig parameterConfig;
+
+    /**
      * The error type
      */
     @Getter
@@ -60,12 +67,16 @@ public final class ErrorContext implements Serializable {
     /**
      * Constructor
      *
-     * @param errorType The error type based on {@link ErrorType}
-     * @param message   The message
+     * @param parameterConfig The parameter configuration based on
+     *                        {@link ParameterConfig}
+     * @param errorType       The error type based on {@link ErrorType}
+     * @param message         The message
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    private ErrorContext(@NonNull ErrorType errorType, @NonNull String message) {
+    private ErrorContext(@NonNull ParameterConfig parameterConfig, @NonNull ErrorType errorType,
+            @NonNull String message) {
+        this.parameterConfig = parameterConfig;
         this.errorType = errorType;
         this.message = message;
     }
@@ -74,15 +85,18 @@ public final class ErrorContext implements Serializable {
      * Returns the new instance of {@link ErrorContext} based on the data passed as
      * argument.
      *
-     * @param errorType The error type based on {@link ErrorType}
-     * @param message   The message
+     * @param parameterConfig The parameter configuration based on
+     *                        {@link ParameterConfig}
+     * @param errorType       The error type based on {@link ErrorType}
+     * @param message         The message
      * @return The new instance of {@link ErrorContext} based on the data passed as
      *         argument
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      */
-    public static ErrorContext of(@NonNull ErrorType errorType, @NonNull String message) {
-        return new ErrorContext(errorType, message);
+    public static ErrorContext of(@NonNull ParameterConfig parameterConfig, @NonNull ErrorType errorType,
+            @NonNull String message) {
+        return new ErrorContext(parameterConfig, errorType, message);
     }
 
     /**
@@ -93,6 +107,6 @@ public final class ErrorContext implements Serializable {
      *         context
      */
     public static ErrorContext none() {
-        return new ErrorContext(ErrorType.RUNTIME, "");
+        return new ErrorContext();
     }
 }

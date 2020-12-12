@@ -19,7 +19,6 @@ import java.lang.reflect.Field;
 
 import org.thinkit.api.catalog.BiCatalog;
 import org.thinkit.common.base.precondition.Preconditions;
-import org.thinkit.framework.envali.catalog.ParameterConfig;
 import org.thinkit.framework.envali.catalog.ValidationPattern;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.framework.envali.result.BusinessError;
@@ -39,11 +38,6 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 final class Validation {
-
-    /**
-     * The parameter configuration
-     */
-    private ParameterConfig parameterConfig;
 
     /**
      * The entity for validation
@@ -89,11 +83,6 @@ final class Validation {
         }
 
         /**
-         * The parameter configuration
-         */
-        private ParameterConfig parameterConfig = ParameterConfig.ANNOTATION;
-
-        /**
          * The entity for validation
          */
         private ValidatableEntity validatableEntity;
@@ -107,11 +96,6 @@ final class Validation {
          * The annotation type for validation
          */
         private Class<? extends Annotation> annotationType;
-
-        public Builder contentConfig() {
-            this.parameterConfig = ParameterConfig.CONTENT;
-            return this;
-        }
 
         public Builder validatableEntity(@NonNull ValidatableEntity validatableEntity) {
             this.validatableEntity = validatableEntity;
@@ -129,13 +113,11 @@ final class Validation {
         }
 
         public Validation build() {
-            Preconditions.requireNonNull(this.parameterConfig, new IllegalStateException());
             Preconditions.requireNonNull(this.validatableEntity, new IllegalStateException());
             Preconditions.requireNonNull(this.field, new IllegalStateException());
             Preconditions.requireNonNull(this.annotationType, new IllegalStateException());
 
             final Validation Validation = new Validation();
-            Validation.parameterConfig = this.parameterConfig;
             Validation.validatableEntity = this.validatableEntity;
             Validation.field = this.field;
             Validation.annotationType = this.annotationType;

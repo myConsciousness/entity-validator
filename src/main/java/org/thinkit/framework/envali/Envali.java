@@ -138,15 +138,15 @@ public final class Envali {
         Preconditions.requireNonNull(entity);
 
         final List<BusinessError> businessErrors = new ArrayList<>();
-        final Validation.Builder validationBuilder = entity.hasParameterMapping() ? Validation.builder().contentConfig()
-                : Validation.builder();
+        final Validation.Builder validationBuilder = Validation.builder().validatableEntity(entity);
 
         for (Field field : Arrays.asList(entity.getClass().getDeclaredFields())) {
             field.setAccessible(true);
+            validationBuilder.field(field);
 
             for (Annotation annotation : Arrays.asList(field.getAnnotations())) {
-                final BusinessError businessError = validationBuilder.validatableEntity(entity).field(field)
-                        .annotationType(annotation.annotationType()).build().validate();
+                final BusinessError businessError = validationBuilder.annotationType(annotation.annotationType())
+                        .build().validate();
 
                 if (businessError != null && businessError.hasError()) {
                     businessErrors.add(businessError);
