@@ -63,4 +63,100 @@ public @interface RequireRangeFromTo {
      * @return The message
      */
     public String message() default "";
+
+    /**
+     * Returns the lower limit of int type. The default value is
+     * {@link Integer#MIN_VALUE} .
+     *
+     * @return The lower limit of int type.
+     */
+    public int intFrom() default Integer.MIN_VALUE;
+
+    /**
+     * Returns the lower limit of long type. The default value is
+     * {@link Long#MIN_VALUE} .
+     *
+     * @return The lower limit of long type.
+     */
+    public long longFrom() default Long.MIN_VALUE;
+
+    /**
+     * Returns the lower limit of float type. The default value is
+     * {@link Float#MIN_VALUE} .
+     *
+     * @return The lower limit of float type.
+     */
+    public float floatFrom() default Float.MIN_VALUE;
+
+    /**
+     * Returns the lower limit of double type. The default value is
+     * {@link Double#MIN_VALUE} .
+     *
+     * @return The lower limit of double type.
+     */
+    public double doubleFrom() default Double.MIN_VALUE;
+
+    /**
+     * Returns the lower limit of short type. The default value is
+     * {@link Short#MIN_VALUE} .
+     *
+     * @return The lower limit of short type.
+     */
+    public short shortFrom() default Short.MIN_VALUE;
+
+    /**
+     * Returns the lower limit of byte type. The default value is
+     * {@link Byte#MIN_VALUE} .
+     *
+     * @return The lower limit of byte type.
+     */
+    public byte byteFrom() default Byte.MIN_VALUE;
+
+    /**
+     * Returns the upper limit of int type. The default value is
+     * {@link Integer#MAX_VALUE} .
+     *
+     * @return The upper limit of int type.
+     */
+    public int intTo() default Integer.MAX_VALUE;
+
+    /**
+     * Returns the upper limit of long type. The default value is
+     * {@link Long#MAX_VALUE} .
+     *
+     * @return The upper limit of long type.
+     */
+    public long longTo() default Long.MAX_VALUE;
+
+    /**
+     * Returns the upper limit of float type. The default value is
+     * {@link Float#MAX_VALUE} .
+     *
+     * @return The upper limit of float type.
+     */
+    public float floatTo() default Float.MAX_VALUE;
+
+    /**
+     * Returns the upper limit of double type. The default value is
+     * {@link Double#MAX_VALUE} .
+     *
+     * @return The upper limit of double type.
+     */
+    public double doubleTo() default Double.MAX_VALUE;
+
+    /**
+     * Returns the upper limit of short type. The default value is
+     * {@link Short#MAX_VALUE} .
+     *
+     * @return The upper limit of short type.
+     */
+    public short shortTo() default Short.MAX_VALUE;
+
+    /**
+     * Returns the upper limit of byte type. The default value is
+     * {@link Byte#MAX_VALUE} .
+     *
+     * @return The upper limit of byte type.
+     */
+    public byte byteTo() default Byte.MAX_VALUE;
 }
