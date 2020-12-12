@@ -68,7 +68,9 @@ public @interface RequireRangeFromTo {
      * Returns the lower limit of int type. The default value is
      * {@link Integer#MIN_VALUE} .
      *
-     * @return The lower limit of int type.
+     * @return The lower limit of int type
+     *
+     * @since 1.0.2
      */
     public int intFrom() default Integer.MIN_VALUE;
 
@@ -76,7 +78,9 @@ public @interface RequireRangeFromTo {
      * Returns the lower limit of long type. The default value is
      * {@link Long#MIN_VALUE} .
      *
-     * @return The lower limit of long type.
+     * @return The lower limit of long type
+     *
+     * @since 1.0.2
      */
     public long longFrom() default Long.MIN_VALUE;
 
@@ -84,7 +88,9 @@ public @interface RequireRangeFromTo {
      * Returns the lower limit of float type. The default value is
      * {@link Float#MIN_VALUE} .
      *
-     * @return The lower limit of float type.
+     * @return The lower limit of float type
+     *
+     * @since 1.0.2
      */
     public float floatFrom() default Float.MIN_VALUE;
 
@@ -92,7 +98,9 @@ public @interface RequireRangeFromTo {
      * Returns the lower limit of double type. The default value is
      * {@link Double#MIN_VALUE} .
      *
-     * @return The lower limit of double type.
+     * @return The lower limit of double type
+     *
+     * @since 1.0.2
      */
     public double doubleFrom() default Double.MIN_VALUE;
 
@@ -100,7 +108,9 @@ public @interface RequireRangeFromTo {
      * Returns the lower limit of short type. The default value is
      * {@link Short#MIN_VALUE} .
      *
-     * @return The lower limit of short type.
+     * @return The lower limit of short type
+     *
+     * @since 1.0.2
      */
     public short shortFrom() default Short.MIN_VALUE;
 
@@ -108,7 +118,9 @@ public @interface RequireRangeFromTo {
      * Returns the lower limit of byte type. The default value is
      * {@link Byte#MIN_VALUE} .
      *
-     * @return The lower limit of byte type.
+     * @return The lower limit of byte type
+     *
+     * @since 1.0.2
      */
     public byte byteFrom() default Byte.MIN_VALUE;
 
@@ -116,7 +128,9 @@ public @interface RequireRangeFromTo {
      * Returns the upper limit of int type. The default value is
      * {@link Integer#MAX_VALUE} .
      *
-     * @return The upper limit of int type.
+     * @return The upper limit of int type
+     *
+     * @since 1.0.2
      */
     public int intTo() default Integer.MAX_VALUE;
 
@@ -124,7 +138,9 @@ public @interface RequireRangeFromTo {
      * Returns the upper limit of long type. The default value is
      * {@link Long#MAX_VALUE} .
      *
-     * @return The upper limit of long type.
+     * @return The upper limit of long type
+     *
+     * @since 1.0.2
      */
     public long longTo() default Long.MAX_VALUE;
 
@@ -132,7 +148,9 @@ public @interface RequireRangeFromTo {
      * Returns the upper limit of float type. The default value is
      * {@link Float#MAX_VALUE} .
      *
-     * @return The upper limit of float type.
+     * @return The upper limit of float type
+     *
+     * @since 1.0.2
      */
     public float floatTo() default Float.MAX_VALUE;
 
@@ -140,7 +158,9 @@ public @interface RequireRangeFromTo {
      * Returns the upper limit of double type. The default value is
      * {@link Double#MAX_VALUE} .
      *
-     * @return The upper limit of double type.
+     * @return The upper limit of double type
+     *
+     * @since 1.0.2
      */
     public double doubleTo() default Double.MAX_VALUE;
 
@@ -148,7 +168,9 @@ public @interface RequireRangeFromTo {
      * Returns the upper limit of short type. The default value is
      * {@link Short#MAX_VALUE} .
      *
-     * @return The upper limit of short type.
+     * @return The upper limit of short type
+     *
+     * @since 1.0.2
      */
     public short shortTo() default Short.MAX_VALUE;
 
@@ -156,7 +178,9 @@ public @interface RequireRangeFromTo {
      * Returns the upper limit of byte type. The default value is
      * {@link Byte#MAX_VALUE} .
      *
-     * @return The upper limit of byte type.
+     * @return The upper limit of byte type
+     *
+     * @since 1.0.2
      */
     public byte byteTo() default Byte.MAX_VALUE;
 }

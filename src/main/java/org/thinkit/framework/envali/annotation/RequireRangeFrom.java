@@ -67,7 +67,9 @@ public @interface RequireRangeFrom {
      * Returns the lower limit of int type. The default value is
      * {@link Integer#MIN_VALUE} .
      *
-     * @return The lower limit of int type.
+     * @return The lower limit of int type
+     *
+     * @since 1.0.2
      */
     public int intFrom() default Integer.MIN_VALUE;
 
@@ -75,7 +77,9 @@ public @interface RequireRangeFrom {
      * Returns the lower limit of long type. The default value is
      * {@link Long#MIN_VALUE} .
      *
-     * @return The lower limit of long type.
+     * @return The lower limit of long type
+     *
+     * @since 1.0.2
      */
     public long longFrom() default Long.MIN_VALUE;
 
@@ -83,7 +87,9 @@ public @interface RequireRangeFrom {
      * Returns the lower limit of float type. The default value is
      * {@link Float#MIN_VALUE} .
      *
-     * @return The lower limit of float type.
+     * @return The lower limit of float type
+     *
+     * @since 1.0.2
      */
     public float floatFrom() default Float.MIN_VALUE;
 
@@ -91,7 +97,9 @@ public @interface RequireRangeFrom {
      * Returns the lower limit of double type. The default value is
      * {@link Double#MIN_VALUE} .
      *
-     * @return The lower limit of double type.
+     * @return The lower limit of double type
+     *
+     * @since 1.0.2
      */
     public double doubleFrom() default Double.MIN_VALUE;
 
@@ -99,7 +107,9 @@ public @interface RequireRangeFrom {
      * Returns the lower limit of short type. The default value is
      * {@link Short#MIN_VALUE} .
      *
-     * @return The lower limit of short type.
+     * @return The lower limit of short type
+     *
+     * @since 1.0.2
      */
     public short shortFrom() default Short.MIN_VALUE;
 
@@ -107,7 +117,9 @@ public @interface RequireRangeFrom {
      * Returns the lower limit of byte type. The default value is
      * {@link Byte#MIN_VALUE} .
      *
-     * @return The lower limit of byte type.
+     * @return The lower limit of byte type
+     *
+     * @since 1.0.2
      */
     public byte byteFrom() default Byte.MIN_VALUE;
 }
