@@ -34,7 +34,7 @@ final class RecoverableRequireRangeToForTest implements ValidatableEntity {
      * The number within the limits
      */
     @RequireRangeTo(errorType = ErrorType.RECOVERABLE, message = "success")
-    private int number;
+    private int intTo;
 
     /**
      * Default constructor
@@ -46,9 +46,9 @@ final class RecoverableRequireRangeToForTest implements ValidatableEntity {
     /**
      * Constructor
      *
-     * @param number The number within the limits (expected)
+     * @param intTo The number within the limits (expected)
      */
-    public RecoverableRequireRangeToForTest(int number) {
-        this.number = number;
+    public RecoverableRequireRangeToForTest(int intTo) {
+        this.intTo = intTo;
     }
 }

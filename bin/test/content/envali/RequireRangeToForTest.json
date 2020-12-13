@@ -16,6 +16,56 @@
         "startWith": "",
         "endWith": ""
       }
+    },
+
+    {
+      "node": {
+        "conditionId": "1",
+        "rangeFrom": "",
+        "rangeTo": "10",
+        "startWith": "",
+        "endWith": ""
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "2",
+        "rangeFrom": "",
+        "rangeTo": "10",
+        "startWith": "",
+        "endWith": ""
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "3",
+        "rangeFrom": "",
+        "rangeTo": "10",
+        "startWith": "",
+        "endWith": ""
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "4",
+        "rangeFrom": "",
+        "rangeTo": "10.0",
+        "startWith": "",
+        "endWith": ""
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "5",
+        "rangeFrom": "",
+        "rangeTo": "10.0",
+        "startWith": "",
+        "endWith": ""
+      }
     }
   ],
 
@@ -28,7 +78,77 @@
           {
             "keyName": "variableName",
             "operator": "=",
-            "operand": "number"
+            "operand": "intTo"
+          }
+        ]
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "1",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "variableName",
+            "operator": "=",
+            "operand": "longTo"
+          }
+        ]
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "2",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "variableName",
+            "operator": "=",
+            "operand": "shortTo"
+          }
+        ]
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "3",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "variableName",
+            "operator": "=",
+            "operand": "byteTo"
+          }
+        ]
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "4",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "variableName",
+            "operator": "=",
+            "operand": "floatTo"
+          }
+        ]
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "5",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "variableName",
+            "operator": "=",
+            "operand": "doubleTo"
           }
         ]
       }
