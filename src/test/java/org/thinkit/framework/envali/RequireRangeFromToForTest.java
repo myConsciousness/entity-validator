@@ -29,24 +29,146 @@ import org.thinkit.framework.envali.entity.ValidatableEntity;
 final class RequireRangeFromToForTest implements ValidatableEntity {
 
     /**
-     * The number within the limits from specific number
+     * The int number within the limits
      */
     @RequireRangeFromTo
-    private int number;
+    private int intFromTo;
+
+    /**
+     * The long number within the limits
+     */
+    @RequireRangeFromTo
+    private long longFromTo;
+
+    /**
+     * The short number within the limits
+     */
+    @RequireRangeFromTo
+    private short shortFromTo;
+
+    /**
+     * The byte number within the limits
+     */
+    @RequireRangeFromTo
+    private byte byteFromTo;
+
+    /**
+     * The float number within the limits
+     */
+    @RequireRangeFromTo
+    private float floatFromTo;
+
+    /**
+     * The double number within the limits
+     */
+    @RequireRangeFromTo
+    private double doubleFromTo;
 
     /**
      * Default constructor
      */
-    @SuppressWarnings("unused")
     private RequireRangeFromToForTest() {
     }
 
     /**
      * Constructor
      *
-     * @param number The number within the limits from specific number (expected)
+     * @param intFromTo    The int number within the limits (expected)
+     * @param longFromTo   The long number within the limits (expected)
+     * @param shortFromTo  The short number within the limits (expected)
+     * @param byteFromTo   The byte number within the limits (expected)
+     * @param floatFromTo  The float number within the limits (expected)
+     * @param doubleFromTo The double number within the limits (expected)
      */
-    public RequireRangeFromToForTest(int number) {
-        this.number = number;
+    private RequireRangeFromToForTest(int intFromTo, long longFromTo, short shortFromTo, byte byteFromTo,
+            float floatFromTo, double doubleFromTo) {
+        this.intFromTo = intFromTo;
+        this.longFromTo = longFromTo;
+        this.shortFromTo = shortFromTo;
+        this.byteFromTo = byteFromTo;
+        this.floatFromTo = floatFromTo;
+        this.doubleFromTo = doubleFromTo;
+    }
+
+    /**
+     * Returns the new instance of {@link RequireRangeFromToForTest} with int test
+     * value.
+     *
+     * @param intFromTo The int value to be tested
+     * @return The new instance of {@link RequireRangeFromToForTest} with int test
+     *         value
+     */
+    public static RequireRangeFromToForTest ofInt(int intFromTo) {
+        short shortNumber = 1;
+        byte byteNumber = 1;
+        return new RequireRangeFromToForTest(intFromTo, 1l, shortNumber, byteNumber, 0.1f, 0.1d);
+    }
+
+    /**
+     * Returns the new instance of {@link RequireRangeFromToForTest} with long test
+     * value.
+     *
+     * @param longFromTo The long value to be tested
+     * @return The new instance of {@link RequireRangeFromToForTest} with long test
+     *         value
+     */
+    public static RequireRangeFromToForTest ofLong(long longFromTo) {
+        short shortNumber = 1;
+        byte byteNumber = 1;
+        return new RequireRangeFromToForTest(1, longFromTo, shortNumber, byteNumber, 0.1f, 0.1d);
+    }
+
+    /**
+     * Returns the new instance of {@link RequireRangeFromToForTest} with short test
+     * value.
+     *
+     * @param shortFromTo The short value to be tested
+     * @return The new instance of {@link RequireRangeFromToForTest} with short test
+     *         value
+     */
+    public static RequireRangeFromToForTest ofShort(short shortFromTo) {
+        byte byteNumber = 1;
+        return new RequireRangeFromToForTest(1, 1l, shortFromTo, byteNumber, 0.1f, 0.1d);
+    }
+
+    /**
+     * Returns the new instance of {@link RequireRangeFromToForTest} with byte test
+     * value.
+     *
+     * @param byteFromTo The byte value to be tested
+     * @return The new instance of {@link RequireRangeFromToForTest} with byte test
+     *         value
+     */
+    public static RequireRangeFromToForTest ofByte(byte byteFromTo) {
+        short shortNumber = 1;
+        return new RequireRangeFromToForTest(1, 1l, shortNumber, byteFromTo, 0.1f, 0.1d);
+    }
+
+    /**
+     * Returns the new instance of {@link RequireRangeFromToForTest} with float test
+     * value.
+     *
+     * @param floatFromTo The float value to be tested
+     * @return The new instance of {@link RequireRangeFromToForTest} with float test
+     *         value
+     */
+    public static RequireRangeFromToForTest ofFloat(float floatFromTo) {
+        short shortNumber = 1;
+        byte byteNumber = 1;
+        return new RequireRangeFromToForTest(1, 1l, shortNumber, byteNumber, floatFromTo, 0.1d);
+    }
+
+    /**
+     * Returns the new instance of {@link RequireRangeFromToForTest} with double
+     * test value.
+     *
+     * @param doubleFromTo The double value to be tested
+     * @return The new instance of {@link RequireRangeFromToForTest} with double
+     *         test value
+     */
+    public static RequireRangeFromToForTest ofDouble(double doubleFromTo) {
+        short shortNumber = 1;
+        byte byteNumber = 1;
+        return new RequireRangeFromToForTest(1, 1l, shortNumber, byteNumber, 0.1f, doubleFromTo);
     }
 }

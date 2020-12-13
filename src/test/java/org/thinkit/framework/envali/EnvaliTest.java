@@ -280,14 +280,81 @@ public final class EnvaliTest {
         @ParameterizedTest
         @ValueSource(ints = { -10, -1, 0, 1, 9, 10 })
         void testWithinTheLimitsFromToCases(final int parameter) {
-            assertDoesNotThrow(() -> Envali.validate(new RequireRangeFromToForTest(parameter)));
+            assertDoesNotThrow(() -> Envali.validate(RequireRangeFromToForTest.ofInt(parameter)));
         }
 
         @ParameterizedTest
         @ValueSource(ints = { -100, -12, -11, 11, 12, 100, 1000 })
         void testNotWithinTheLimitsFromToCases(final int parameter) {
             assertThrows(PreconditionFailedException.class,
-                    () -> Envali.validate(new RequireRangeFromToForTest(parameter)));
+                    () -> Envali.validate(RequireRangeFromToForTest.ofInt(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(longs = { -10l, -1l, 0l, 1l, 9l, 10l })
+        void testLongWithinTheLimitsFromToCases(final long parameter) {
+            assertDoesNotThrow(() -> Envali.validate(RequireRangeFromToForTest.ofLong(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(longs = { Long.MIN_VALUE, -100l, -12l, -11l, 11l, 12l, 100l, 1000l, Long.MAX_VALUE })
+        void testLongNotWithinTheLimitsFromToCases(final long parameter) {
+            assertThrows(PreconditionFailedException.class,
+                    () -> Envali.validate(RequireRangeFromToForTest.ofLong(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(shorts = { -10, -1, 0, 1, 9, 10 })
+        void testShortWithinTheLimitsFromToCases(final short parameter) {
+            assertDoesNotThrow(() -> Envali.validate(RequireRangeFromToForTest.ofShort(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(shorts = { Short.MIN_VALUE, -100, -12, -11, 11, 12, 100, 1000, Short.MAX_VALUE })
+        void testShortNotWithinTheLimitsFromToCases(final short parameter) {
+            assertThrows(PreconditionFailedException.class,
+                    () -> Envali.validate(RequireRangeFromToForTest.ofShort(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(bytes = { -10, -1, 0, 1, 9, 10 })
+        void testByteWithinTheLimitsFromToCases(final byte parameter) {
+            assertDoesNotThrow(() -> Envali.validate(RequireRangeFromToForTest.ofByte(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(bytes = { Byte.MIN_VALUE, -100, -12, -11, 11, 12, 100, Byte.MAX_VALUE })
+        void testByteNotWithinTheLimitsFromToCases(final byte parameter) {
+            assertThrows(PreconditionFailedException.class,
+                    () -> Envali.validate(RequireRangeFromToForTest.ofByte(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(floats = { -10.0f, -1.0f, -0.1f, 0.0f, 0.1f, 1.0f, 9.0f, 10.0f })
+        void testFloatWithinTheLimitsFromToCases(final float parameter) {
+            assertDoesNotThrow(() -> Envali.validate(RequireRangeFromToForTest.ofFloat(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(floats = { -Float.MAX_VALUE, -100.0f, -12.0f, -11.0f, 11.0f, 12.0f, 100.0f, 1000.0f,
+                Float.MAX_VALUE })
+        void testFloatNotWithinTheLimitsFromToCases(final float parameter) {
+            assertThrows(PreconditionFailedException.class,
+                    () -> Envali.validate(RequireRangeFromToForTest.ofFloat(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(doubles = { -10.0d, -1.0d, -0.1d, 0.0d, 0.1d, 1.0d, 9.0d, 10.0d })
+        void testDoubleWithinTheLimitsFromToCases(final double parameter) {
+            assertDoesNotThrow(() -> Envali.validate(RequireRangeFromToForTest.ofDouble(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(doubles = { -Double.MAX_VALUE, -100.0d, -12.0d, -11.0d, 11.0d, 12.0d, 100.0d, 1000.0d,
+                Double.MAX_VALUE })
+        void testDoubleNotWithinTheLimitsFromToCases(final double parameter) {
+            assertThrows(PreconditionFailedException.class,
+                    () -> Envali.validate(RequireRangeFromToForTest.ofDouble(parameter)));
         }
     }
 
@@ -646,20 +713,170 @@ public final class EnvaliTest {
     class TestRecoverableRequireRangeFrom {
 
         @ParameterizedTest
-        @ValueSource(ints = { 0, 1, 2, 9, 10, 11 })
+        @ValueSource(ints = { 0, 1, 2, 9, 10, 11, Integer.MAX_VALUE })
         void testWithinTheLimitsCases(final int parameter) {
             final ValidationResult validationResult = assertDoesNotThrow(
-                    () -> Envali.validate(new RecoverableRequireRangeFromForTest(parameter)));
+                    () -> Envali.validate(RecoverableRequireRangeFromForTest.ofInt(parameter)));
 
             assertNotNull(validationResult);
             assertTrue(!validationResult.hasError());
         }
 
         @ParameterizedTest
-        @ValueSource(ints = { -10, -9, -2, -1 })
+        @ValueSource(ints = { Integer.MIN_VALUE, -10, -9, -2, -1 })
         void testNotWithinTheLimitsCases(final int parameter) {
             final ValidationResult validationResult = assertDoesNotThrow(
-                    () -> Envali.validate(new RecoverableRequireRangeFromForTest(parameter)));
+                    () -> Envali.validate(RecoverableRequireRangeFromForTest.ofInt(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(RecoverableRequireRangeFromForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isRecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(longs = { 0l, 1l, 2l, 9l, 10l, 11l, Long.MAX_VALUE })
+        void testLongWithinTheLimitsCases(final long parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(RecoverableRequireRangeFromForTest.ofLong(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(longs = { Long.MIN_VALUE, -10l, -9l, -2l, -1l })
+        void testLongNotWithinTheLimitsCases(final long parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(RecoverableRequireRangeFromForTest.ofLong(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(RecoverableRequireRangeFromForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isRecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(shorts = { 0, 1, 2, 9, 10, 11, Short.MAX_VALUE })
+        void testShortWithinTheLimitsCases(final short parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(RecoverableRequireRangeFromForTest.ofShort(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(shorts = { Short.MIN_VALUE, -10, -9, -2, -1 })
+        void testShortNotWithinTheLimitsCases(final short parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(RecoverableRequireRangeFromForTest.ofShort(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(RecoverableRequireRangeFromForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isRecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(bytes = { 0, 1, 2, 9, 10, 11, Byte.MAX_VALUE })
+        void testByteWithinTheLimitsCases(final byte parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(RecoverableRequireRangeFromForTest.ofByte(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(bytes = { Byte.MIN_VALUE, -10, -9, -2, -1 })
+        void testByteNotWithinTheLimitsCases(final byte parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(RecoverableRequireRangeFromForTest.ofByte(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(RecoverableRequireRangeFromForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isRecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(floats = { 0.0f, 0.1f, 1.0f, 0f, 2.0f, 9.0f, 10.0f, 11.0f, Float.MAX_VALUE })
+        void testFloatWithinTheLimitsCases(final float parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(RecoverableRequireRangeFromForTest.ofFloat(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(floats = { -Float.MAX_VALUE, -10.0f, -9.0f, -2.0f, -1.0f, -0.1f })
+        void testFloatNotWithinTheLimitsCases(final float parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(RecoverableRequireRangeFromForTest.ofFloat(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(RecoverableRequireRangeFromForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isRecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(doubles = { 0.0d, 0.1d, 1.0d, 0d, 2.0d, 9.0d, 10.0d, 11.0d, Double.MAX_VALUE })
+        void testDoubleWithinTheLimitsCases(final double parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(RecoverableRequireRangeFromForTest.ofDouble(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(doubles = { -Double.MAX_VALUE, -10.0d, -9.0d, -2.0d, -1.0d, -0.1d })
+        void testDoubleNotWithinTheLimitsCases(final double parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(RecoverableRequireRangeFromForTest.ofDouble(parameter)));
 
             assertNotNull(validationResult);
             assertTrue(validationResult.hasError());

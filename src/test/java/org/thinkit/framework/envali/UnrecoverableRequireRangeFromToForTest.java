@@ -34,7 +34,7 @@ final class UnrecoverableRequireRangeFromToForTest implements ValidatableEntity 
      * The number within the limits from specific number
      */
     @RequireRangeFromTo(errorType = ErrorType.UNRECOVERABLE, message = "success")
-    private int number;
+    private int intFromTo;
 
     /**
      * Default constructor
@@ -46,9 +46,9 @@ final class UnrecoverableRequireRangeFromToForTest implements ValidatableEntity 
     /**
      * Constructor
      *
-     * @param number The number within the limits from specific number (expected)
+     * @param intFromTo The number within the limits from specific number (expected)
      */
-    public UnrecoverableRequireRangeFromToForTest(int number) {
-        this.number = number;
+    public UnrecoverableRequireRangeFromToForTest(int intFromTo) {
+        this.intFromTo = intFromTo;
     }
 }

@@ -37,18 +37,140 @@ final class RecoverableRequireRangeFromForTest implements ValidatableEntity {
     private int intFrom;
 
     /**
+     * The long number within the limits
+     */
+    @RequireRangeFrom(errorType = ErrorType.RECOVERABLE, message = "success")
+    private long longFrom;
+
+    /**
+     * The short number within the limits
+     */
+    @RequireRangeFrom(errorType = ErrorType.RECOVERABLE, message = "success")
+    private short shortFrom;
+
+    /**
+     * The byte number within the limits
+     */
+    @RequireRangeFrom(errorType = ErrorType.RECOVERABLE, message = "success")
+    private byte byteFrom;
+
+    /**
+     * The float number within the limits
+     */
+    @RequireRangeFrom(errorType = ErrorType.RECOVERABLE, message = "success")
+    private float floatFrom;
+
+    /**
+     * The double number within the limits
+     */
+    @RequireRangeFrom(errorType = ErrorType.RECOVERABLE, message = "success")
+    private double doubleFrom;
+
+    /**
      * Default constructor
      */
-    @SuppressWarnings("unused")
     private RecoverableRequireRangeFromForTest() {
     }
 
     /**
      * Constructor
      *
-     * @param intFrom The number within the limits (expected)
+     * @param intFrom    The int number within the limits (expected)
+     * @param longFrom   The long number within the limits (expected)
+     * @param shortFrom  The short number within the limits (expected)
+     * @param byteFrom   The byte number within the limits (expected)
+     * @param floatFrom  The float number within the limits (expected)
+     * @param doubleFrom The double number within the limits (expected)
      */
-    public RecoverableRequireRangeFromForTest(int intFrom) {
+    private RecoverableRequireRangeFromForTest(int intFrom, long longFrom, short shortFrom, byte byteFrom,
+            float floatFrom, double doubleFrom) {
         this.intFrom = intFrom;
+        this.longFrom = longFrom;
+        this.shortFrom = shortFrom;
+        this.byteFrom = byteFrom;
+        this.floatFrom = floatFrom;
+        this.doubleFrom = doubleFrom;
+    }
+
+    /**
+     * Returns the new instance of {@link RecoverableRequireRangeFromForTest} with
+     * int test value.
+     *
+     * @param intFrom The int value to be tested
+     * @return The new instance of {@link RecoverableRequireRangeFromForTest} with
+     *         int test value
+     */
+    public static RecoverableRequireRangeFromForTest ofInt(int intFrom) {
+        short shortNumber = 1;
+        byte byteNumber = 1;
+        return new RecoverableRequireRangeFromForTest(intFrom, 1l, shortNumber, byteNumber, 0.1f, 0.1d);
+    }
+
+    /**
+     * Returns the new instance of {@link RecoverableRequireRangeFromForTest} with
+     * long test value.
+     *
+     * @param longFrom The long value to be tested
+     * @return The new instance of {@link RecoverableRequireRangeFromForTest} with
+     *         long test value
+     */
+    public static RecoverableRequireRangeFromForTest ofLong(long longFrom) {
+        short shortNumber = 1;
+        byte byteNumber = 1;
+        return new RecoverableRequireRangeFromForTest(1, longFrom, shortNumber, byteNumber, 0.1f, 0.1d);
+    }
+
+    /**
+     * Returns the new instance of {@link RecoverableRequireRangeFromForTest} with
+     * short test value.
+     *
+     * @param shortFrom The short value to be tested
+     * @return The new instance of {@link RecoverableRequireRangeFromForTest} with
+     *         short test value
+     */
+    public static RecoverableRequireRangeFromForTest ofShort(short shortFrom) {
+        byte byteNumber = 1;
+        return new RecoverableRequireRangeFromForTest(1, 1l, shortFrom, byteNumber, 0.1f, 0.1d);
+    }
+
+    /**
+     * Returns the new instance of {@link RecoverableRequireRangeFromForTest} with
+     * byte test value.
+     *
+     * @param byteFrom The byte value to be tested
+     * @return The new instance of {@link RecoverableRequireRangeFromForTest} with
+     *         byte test value
+     */
+    public static RecoverableRequireRangeFromForTest ofByte(byte byteFrom) {
+        short shortNumber = 1;
+        return new RecoverableRequireRangeFromForTest(1, 1l, shortNumber, byteFrom, 0.1f, 0.1d);
+    }
+
+    /**
+     * Returns the new instance of {@link RecoverableRequireRangeFromForTest} with
+     * float test value.
+     *
+     * @param floatFrom The float value to be tested
+     * @return The new instance of {@link RecoverableRequireRangeFromForTest} with
+     *         float test value
+     */
+    public static RecoverableRequireRangeFromForTest ofFloat(float floatFrom) {
+        short shortNumber = 1;
+        byte byteNumber = 1;
+        return new RecoverableRequireRangeFromForTest(1, 1l, shortNumber, byteNumber, floatFrom, 0.1d);
+    }
+
+    /**
+     * Returns the new instance of {@link RecoverableRequireRangeFromForTest} with
+     * double test value.
+     *
+     * @param doubleFrom The double value to be tested
+     * @return The new instance of {@link RecoverableRequireRangeFromForTest} with
+     *         double test value
+     */
+    public static RecoverableRequireRangeFromForTest ofDouble(double doubleFrom) {
+        short shortNumber = 1;
+        byte byteNumber = 1;
+        return new RecoverableRequireRangeFromForTest(1, 1l, shortNumber, byteNumber, 0.1f, doubleFrom);
     }
 }
