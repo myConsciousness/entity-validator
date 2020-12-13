@@ -114,16 +114,81 @@ public final class EnvaliTest {
     class TestRequireRangeFrom {
 
         @ParameterizedTest
-        @ValueSource(ints = { 0, 1, 2, 9, 10, 11 })
+        @ValueSource(ints = { 0, 1, 2, 9, 10, 11, Integer.MAX_VALUE })
         void testWithinTheLimitsCases(final int parameter) {
-            assertDoesNotThrow(() -> Envali.validate(new RequireRangeFromForTest(parameter)));
+            assertDoesNotThrow(() -> Envali.validate(RequireRangeFromForTest.ofInt(parameter)));
         }
 
         @ParameterizedTest
-        @ValueSource(ints = { -10, -9, -2, -1 })
+        @ValueSource(ints = { Integer.MIN_VALUE, -10, -9, -2, -1 })
         void testNotWithinTheLimitsCases(final int parameter) {
             assertThrows(PreconditionFailedException.class,
-                    () -> Envali.validate(new RequireRangeFromForTest(parameter)));
+                    () -> Envali.validate(RequireRangeFromForTest.ofInt(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(longs = { 0l, 1l, 2l, 9l, 10l, 11l, Long.MAX_VALUE })
+        void testLongWithinTheLimitsCases(final long parameter) {
+            assertDoesNotThrow(() -> Envali.validate(RequireRangeFromForTest.ofLong(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(longs = { Long.MIN_VALUE, -10l, -9l, -2l, -1l })
+        void testLongNotWithinTheLimitsCases(final long parameter) {
+            assertThrows(PreconditionFailedException.class,
+                    () -> Envali.validate(RequireRangeFromForTest.ofLong(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(shorts = { 0, 1, 2, 9, 10, 11, Short.MAX_VALUE })
+        void testShortWithinTheLimitsCases(final short parameter) {
+            assertDoesNotThrow(() -> Envali.validate(RequireRangeFromForTest.ofShort(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(shorts = { Short.MIN_VALUE, -10, -9, -2, -1 })
+        void testShortNotWithinTheLimitsCases(final short parameter) {
+            assertThrows(PreconditionFailedException.class,
+                    () -> Envali.validate(RequireRangeFromForTest.ofShort(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(bytes = { 0, 1, 2, 9, 10, 11, Byte.MAX_VALUE })
+        void testByteWithinTheLimitsCases(final byte parameter) {
+            assertDoesNotThrow(() -> Envali.validate(RequireRangeFromForTest.ofByte(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(bytes = { Byte.MIN_VALUE, -10, -9, -2, -1 })
+        void testByteNotWithinTheLimitsCases(final byte parameter) {
+            assertThrows(PreconditionFailedException.class,
+                    () -> Envali.validate(RequireRangeFromForTest.ofByte(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(floats = { 0.0f, 0.01f, 0.1f, 1.0f, 2.0f, 9.0f, 10.0f, 11.0f, Float.MAX_VALUE })
+        void testFloatWithinTheLimitsCases(final float parameter) {
+            assertDoesNotThrow(() -> Envali.validate(RequireRangeFromForTest.ofFloat(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(floats = { -Float.MAX_VALUE, -10.0f, -9.0f, -2.0f, -1.0f, -0.1f, -0.01f })
+        void testFloatNotWithinTheLimitsCases(final float parameter) {
+            assertThrows(PreconditionFailedException.class,
+                    () -> Envali.validate(RequireRangeFromForTest.ofFloat(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(doubles = { 0.0d, 0.01d, 0.1d, 1.0d, 2.0d, 9.0d, 10.0d, 11.0d, Double.MAX_VALUE })
+        void testDoubleWithinTheLimitsCases(final double parameter) {
+            assertDoesNotThrow(() -> Envali.validate(RequireRangeFromForTest.ofDouble(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(doubles = { -Double.MAX_VALUE, -10.0d, -9.0d, -2.0d, -1.0d, -0.1d, -0.01d })
+        void testDoubleNotWithinTheLimitsCases(final double parameter) {
+            assertThrows(PreconditionFailedException.class,
+                    () -> Envali.validate(RequireRangeFromForTest.ofDouble(parameter)));
         }
     }
 

@@ -16,6 +16,56 @@
         "startWith": "",
         "endWith": ""
       }
+    },
+
+    {
+      "node": {
+        "conditionId": "1",
+        "rangeFrom": "0",
+        "rangeTo": "",
+        "startWith": "",
+        "endWith": ""
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "2",
+        "rangeFrom": "0.0",
+        "rangeTo": "",
+        "startWith": "",
+        "endWith": ""
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "3",
+        "rangeFrom": "0.0",
+        "rangeTo": "",
+        "startWith": "",
+        "endWith": ""
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "4",
+        "rangeFrom": "0",
+        "rangeTo": "",
+        "startWith": "",
+        "endWith": ""
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "5",
+        "rangeFrom": "0",
+        "rangeTo": "",
+        "startWith": "",
+        "endWith": ""
+      }
     }
   ],
 
@@ -28,7 +78,77 @@
           {
             "keyName": "variableName",
             "operator": "=",
-            "operand": "number"
+            "operand": "intFrom"
+          }
+        ]
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "1",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "variableName",
+            "operator": "=",
+            "operand": "longFrom"
+          }
+        ]
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "2",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "variableName",
+            "operator": "=",
+            "operand": "floatFrom"
+          }
+        ]
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "3",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "variableName",
+            "operator": "=",
+            "operand": "doubleFrom"
+          }
+        ]
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "4",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "variableName",
+            "operator": "=",
+            "operand": "shortFrom"
+          }
+        ]
+      }
+    },
+
+    {
+      "node": {
+        "conditionId": "5",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "variableName",
+            "operator": "=",
+            "operand": "byteFrom"
           }
         ]
       }
