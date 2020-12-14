@@ -31,7 +31,7 @@ import lombok.NonNull;
 public enum AnnotationRequirement {
 
     /**
-     * The requirement for {@link RequireNonNull}
+     * The requirement for RequireNonNull
      */
     REQUIRE_NON_NULL {
         @Override
@@ -41,21 +41,21 @@ public enum AnnotationRequirement {
     },
 
     /**
-     * The requirement for {@link RequireNonBlank}
+     * The requirement for RequireNonBlank
      */
     REQUIRE_NON_BLANK {
         @Override
         public void requireSupportedDataType(@NonNull EnvaliFieldHelper field) {
             if (!field.isString()) {
-                String.format(
+                throw new UnsupportedOperationException(String.format(
                         "The org.thinkit.framework.envali.annotation.RequireNonBlank annotation supports String type, but was specified for the variable %s#%s of type %s.",
-                        field.getEntityName(), field.getName(), field.getType().getName());
+                        field.getEntityName(), field.getName(), field.getType().getName()));
             }
         }
     },
 
     /**
-     * The requirement for {@link RequirePositive}
+     * The requirement for RequirePositive
      */
     REQUIRE_POSITIVE {
         @Override
@@ -69,7 +69,7 @@ public enum AnnotationRequirement {
     },
 
     /**
-     * The requirement for {@link RequireNegative}
+     * The requirement for RequireNegative
      */
     REQUIRE_NEGATIVE {
         @Override
@@ -83,7 +83,7 @@ public enum AnnotationRequirement {
     },
 
     /**
-     * The requirement for {@link RequireRangeFrom}
+     * The requirement for RequireRangeFrom
      */
     REQUIRE_RANGE_FROM {
         @Override
@@ -98,7 +98,7 @@ public enum AnnotationRequirement {
     },
 
     /**
-     * The requirement for {@link RequireRangeTo}
+     * The requirement for RequireRangeTo
      */
     REQUIRE_RANGE_TO {
         @Override
@@ -113,7 +113,7 @@ public enum AnnotationRequirement {
     },
 
     /**
-     * The requirement for {@link RequireRangeFromTo}
+     * The requirement for RequireRangeFromTo
      */
     REQUIRE_RANGE_FROM_TO {
         @Override
@@ -128,7 +128,7 @@ public enum AnnotationRequirement {
     },
 
     /**
-     * The requirement for {@link RequireStartWith}
+     * The requirement for RequireStartWith
      */
     REQUIRE_START_WITH {
         @Override
@@ -142,7 +142,7 @@ public enum AnnotationRequirement {
     },
 
     /**
-     * The requirement for {@link RequireEndWith}
+     * The requirement for RequireEndWith
      */
     REQUIRE_END_WITH {
         @Override
@@ -156,7 +156,7 @@ public enum AnnotationRequirement {
     },
 
     /**
-     * The requirement for {@link RequireNonEmpty}
+     * The requirement for RequireNonEmpty
      */
     REQUIRE_NON_EMPTY {
         @Override
@@ -170,7 +170,7 @@ public enum AnnotationRequirement {
     },
 
     /**
-     * The requirement for {@link NestedEntity}
+     * The requirement for NestedEntity
      */
     NESTED_ENTITY {
         @Override
@@ -183,11 +183,11 @@ public enum AnnotationRequirement {
         }
 
         /**
-         * Tests if a field object annotated with {@link NestedEntity} implements the
+         * Tests if a field object annotated with NestedEntity implements the
          * {@link ValidatableEntity} interface.
          *
-         * @return {@code true} if a field object implemets the the
-         *         {@link ValidatableEntity} , or {@code false}
+         * @return {@code true} if a field object implemets the the ValidatableEntity} ,
+         *         or {@code false}
          */
         private boolean isValidatableEntity(@NonNull EnvaliFieldHelper field) {
 

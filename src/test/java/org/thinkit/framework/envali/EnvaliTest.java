@@ -74,6 +74,17 @@ public final class EnvaliTest {
         void testWhenStringIsBlank() {
             assertThrows(PreconditionFailedException.class, () -> Envali.validate(new RequireNonBlankForTest("")));
         }
+
+        @Test
+        void testWhenDataTypeIsNotSupported() {
+            final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
+                    () -> Envali.validate(new UnsupportedRequireNonBlankForTest(0)));
+
+            assertNotNull(exception);
+            assertEquals(
+                    "The org.thinkit.framework.envali.annotation.RequireNonBlank annotation supports String type, but was specified for the variable org.thinkit.framework.envali.UnsupportedRequireNonBlankForTest#number of type int.",
+                    exception.getMessage());
+        }
     }
 
     @Nested
@@ -91,6 +102,16 @@ public final class EnvaliTest {
             assertThrows(PreconditionFailedException.class,
                     () -> Envali.validate(new RequirePositiveForTest(parameter)));
         }
+
+        @Test
+        void testWhenDataTypeIsNotSupported() {
+            final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
+                    () -> Envali.validate(new UnsupportedRequirePositiveForTest("")));
+            assertNotNull(exception);
+            assertEquals(
+                    "The org.thinkit.framework.envali.annotation.RequirePositive annotation supports Integer type, but was specified for the variable org.thinkit.framework.envali.UnsupportedRequirePositiveForTest#literal of type java.lang.String.",
+                    exception.getMessage());
+        }
     }
 
     @Nested
@@ -107,6 +128,17 @@ public final class EnvaliTest {
         void testPositiveCases(int parameter) {
             assertThrows(PreconditionFailedException.class,
                     () -> Envali.validate(new RequireNegativeForTest(parameter)));
+        }
+
+        @Test
+        void testWhenDataTypeIsNotSupported() {
+            final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
+                    () -> Envali.validate(new UnsupportedRequireNegativeForTest("")));
+
+            assertNotNull(exception);
+            assertEquals(
+                    "The org.thinkit.framework.envali.annotation.RequireNegative annotation supports Integer type, but was specified for the variable org.thinkit.framework.envali.UnsupportedRequireNegativeForTest#literal of type java.lang.String.",
+                    exception.getMessage());
         }
     }
 
@@ -190,6 +222,17 @@ public final class EnvaliTest {
             assertThrows(PreconditionFailedException.class,
                     () -> Envali.validate(RequireRangeFromForTest.ofDouble(parameter)));
         }
+
+        @Test
+        void testWhenDataTypeIsNotSupported() {
+            final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
+                    () -> Envali.validate(new UnsupportedRequireRangeFromForTest("")));
+
+            assertNotNull(exception);
+            assertEquals(
+                    "The org.thinkit.framework.envali.annotation.RequireRangeFrom annotation supports Integer, Long, Short, Byte, Float, Double type, but was specified for the variable org.thinkit.framework.envali.UnsupportedRequireRangeFromForTest#literal of type java.lang.String.",
+                    exception.getMessage());
+        }
     }
 
     @Nested
@@ -271,6 +314,17 @@ public final class EnvaliTest {
         void testDoubleNotWithinTheLimitsCases(final double parameter) {
             assertThrows(PreconditionFailedException.class,
                     () -> Envali.validate(RequireRangeToForTest.ofDouble(parameter)));
+        }
+
+        @Test
+        void testWhenDataTypeIsNotSupported() {
+            final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
+                    () -> Envali.validate(new UnsupportedRequireRangeToForTest(new StringBuilder())));
+
+            assertNotNull(exception);
+            assertEquals(
+                    "The org.thinkit.framework.envali.annotation.RequireRangeTo annotation supports Integer, Long, Short, Byte, Float, Double type, but was specified for the variable org.thinkit.framework.envali.UnsupportedRequireRangeToForTest#sb of type java.lang.StringBuilder.",
+                    exception.getMessage());
         }
     }
 
@@ -355,6 +409,17 @@ public final class EnvaliTest {
         void testDoubleNotWithinTheLimitsFromToCases(final double parameter) {
             assertThrows(PreconditionFailedException.class,
                     () -> Envali.validate(RequireRangeFromToForTest.ofDouble(parameter)));
+        }
+
+        @Test
+        void testWhenDataTypeIsNotSupported() {
+            final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
+                    () -> Envali.validate(new UnsupportedRequireRangeFromToForTest(new Object())));
+
+            assertNotNull(exception);
+            assertEquals(
+                    "The org.thinkit.framework.envali.annotation.RequireRangeFromTo annotation supports Integer, Long, Short, Byte, Float, Double type, but was specified for the variable org.thinkit.framework.envali.UnsupportedRequireRangeFromToForTest#object of type java.lang.Object.",
+                    exception.getMessage());
         }
     }
 
@@ -448,6 +513,17 @@ public final class EnvaliTest {
                 final Map<String, String> literalMap, final Set<String> literalSet) {
             assertThrows(PreconditionFailedException.class, () -> Envali
                     .validate(new RequireNonEmptyForTest(literal, literalArray, literalList, literalMap, literalSet)));
+        }
+
+        @Test
+        void testWhenDataTypeIsNotSupported() {
+            final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
+                    () -> Envali.validate(new UnsupportedRequireNonEmptyForTest(new StringBuilder())));
+
+            assertNotNull(exception);
+            assertEquals(
+                    "The org.thinkit.framework.envali.annotation.RequireNonEmpty annotation supports String, Array, List, Map, Set type, but was specified for the variable org.thinkit.framework.envali.UnsupportedRequireNonEmptyForTest#sb of type java.lang.StringBuilder.",
+                    exception.getMessage());
         }
     }
 
