@@ -104,6 +104,42 @@ public final class EnvaliFieldHelper {
     }
 
     /**
+     * Returns the name of validatable entity.
+     *
+     * @return The field type
+     */
+    public String getEntityName() {
+        return this.validatableEntity.getClass().getName();
+    }
+
+    /**
+     * Returns the simple name of validatable entity.
+     *
+     * @return The field type
+     */
+    public String getEntitySimpleName() {
+        return this.validatableEntity.getClass().getSimpleName();
+    }
+
+    /**
+     * Returns the field type.
+     *
+     * @return The field type
+     */
+    public Class<?> getType() {
+        return this.field.getType();
+    }
+
+    /**
+     * Returns the field name.
+     *
+     * @return The field name
+     */
+    public String getName() {
+        return this.field.getName();
+    }
+
+    /**
      * Returns a string value from a field object.
      *
      * @return A string field value

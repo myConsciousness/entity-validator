@@ -374,6 +374,17 @@ public final class EnvaliTest {
             assertThrows(PreconditionFailedException.class,
                     () -> Envali.validate(new RequireStartWithForTest(parameter)));
         }
+
+        @Test
+        void testWhenDataTypeIsNotSupported() {
+            final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
+                    () -> Envali.validate(new UnsupportedRequireStartWithForTest(new StringBuilder())));
+
+            assertNotNull(exception);
+            assertEquals(
+                    "The org.thinkit.framework.envali.annotation.RequireStartWith annotation supports String type, but was specified for the variable org.thinkit.framework.envali.UnsupportedRequireStartWithForTest#sb of type java.lang.StringBuilder.",
+                    exception.getMessage());
+        }
     }
 
     @Nested
@@ -391,6 +402,17 @@ public final class EnvaliTest {
         void testWhenLiteralDoesNotEndWithSpecifiedPrefix(final String parameter) {
             assertThrows(PreconditionFailedException.class,
                     () -> Envali.validate(new RequireEndWithForTest(parameter)));
+        }
+
+        @Test
+        void testWhenDataTypeIsNotSupported() {
+            final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
+                    () -> Envali.validate(new UnsupportedRequireEndWithForTest(new StringBuilder())));
+
+            assertNotNull(exception);
+            assertEquals(
+                    "The org.thinkit.framework.envali.annotation.RequireEndWith annotation supports String type, but was specified for the variable org.thinkit.framework.envali.UnsupportedRequireEndWithForTest#sb of type java.lang.StringBuilder.",
+                    exception.getMessage());
         }
     }
 
@@ -450,7 +472,8 @@ public final class EnvaliTest {
             final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
                     () -> Envali.validate(new NestedEntityWithNotValidatableEntityForTest(List.of())));
 
-            assertEquals("Any object with NestedEntity annotation must implement ValidatableEntity interface",
+            assertEquals(
+                    "The java.util.ImmutableCollections$ListN does not implement the org.thinkit.framework.envali.entity.ValidatableEntity interface.",
                     exception.getMessage());
         }
     }

@@ -22,6 +22,7 @@ import org.thinkit.framework.envali.catalog.EnvaliContentAttribute;
 import org.thinkit.framework.envali.context.ErrorContext;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
+import org.thinkit.framework.envali.helper.EnvaliFieldHelper;
 import org.thinkit.framework.envali.result.BusinessError;
 
 import lombok.EqualsAndHashCode;
@@ -71,13 +72,21 @@ final class RequireStartWithStrategy extends ValidationStrategy<RequireStartWith
     @Override
     public BusinessError validate() {
 
+        final EnvaliFieldHelper field = super.getFieldHelper();
+
+        if (!field.isString()) {
+            throw new UnsupportedOperationException(String.format(
+                    "The org.thinkit.framework.envali.annotation.RequireStartWith annotation supports String type, but was specified for the variable %s#%s of type %s.",
+                    field.getEntityName(), field.getName(), field.getType().getName()));
+        }
+
         final ErrorContext<RequireStartWith> errorContext = super.getErrorContext();
         final RequireStartWith annotation = errorContext.getAnnotation();
 
         return switch (annotation.errorType()) {
             case RECOVERABLE -> {
                 try {
-                    Preconditions.requireStartWith(super.getFieldHelper().getString(),
+                    Preconditions.requireStartWith(field.getString(),
                             super.isContentConfig() ? super.getContentHelper().get(EnvaliContentAttribute.START_WITH)
                                     : annotation.prefix(),
                             new InvalidValueDetectedException());
@@ -89,7 +98,7 @@ final class RequireStartWithStrategy extends ValidationStrategy<RequireStartWith
 
             case UNRECOVERABLE -> {
                 try {
-                    Preconditions.requireStartWith(super.getFieldHelper().getString(),
+                    Preconditions.requireStartWith(field.getString(),
                             super.isContentConfig() ? super.getContentHelper().get(EnvaliContentAttribute.START_WITH)
                                     : annotation.prefix(),
                             new InvalidValueDetectedException());
@@ -100,7 +109,7 @@ final class RequireStartWithStrategy extends ValidationStrategy<RequireStartWith
             }
 
             case RUNTIME -> {
-                Preconditions.requireStartWith(super.getFieldHelper().getString(),
+                Preconditions.requireStartWith(field.getString(),
                         super.isContentConfig() ? super.getContentHelper().get(EnvaliContentAttribute.START_WITH)
                                 : annotation.prefix());
                 yield BusinessError.none();

@@ -72,8 +72,9 @@ final class NestedEntityStrategy extends ValidationStrategy<NestedEntity> {
     public BusinessError validate() {
 
         if (!this.isValidatableEntity()) {
-            throw new UnsupportedOperationException(
-                    "Any object with NestedEntity annotation must implement ValidatableEntity interface");
+            throw new UnsupportedOperationException(String.format(
+                    "The %s does not implement the org.thinkit.framework.envali.entity.ValidatableEntity interface.",
+                    super.getFieldHelper().get().getClass().getName()));
         }
 
         final ValidationResult validationResult = Envali.validate(super.getFieldHelper().getValidatableEntity());
