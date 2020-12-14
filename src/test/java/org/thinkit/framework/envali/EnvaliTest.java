@@ -1091,7 +1091,7 @@ public final class EnvaliTest {
         }
 
         @ParameterizedTest
-        @ValueSource(ints = {Integer.MIN_VALUE, -100, -12, -11, 11, 12, 100, 1000 , Integer.MAX_VALUE})
+        @ValueSource(ints = { Integer.MIN_VALUE, -100, -12, -11, 11, 12, 100, 1000, Integer.MAX_VALUE })
         void testNotWithinTheLimitsFromToCases(final int parameter) {
             final ValidationResult validationResult = assertDoesNotThrow(
                     () -> Envali.validate(RecoverableRequireRangeFromToForTest.ofInt(parameter)));
@@ -1121,7 +1121,7 @@ public final class EnvaliTest {
         }
 
         @ParameterizedTest
-        @ValueSource(longs = {Long.MIN_VALUE, -100l, -12l, -11l, 11l, 12l, 100l, 1000l , Long.MAX_VALUE})
+        @ValueSource(longs = { Long.MIN_VALUE, -100l, -12l, -11l, 11l, 12l, 100l, 1000l, Long.MAX_VALUE })
         void testLongNotWithinTheLimitsFromToCases(final long parameter) {
             final ValidationResult validationResult = assertDoesNotThrow(
                     () -> Envali.validate(RecoverableRequireRangeFromToForTest.ofLong(parameter)));
@@ -1151,7 +1151,7 @@ public final class EnvaliTest {
         }
 
         @ParameterizedTest
-        @ValueSource(shorts = {Short.MIN_VALUE, -100, -12, -11, 11, 12, 100, 1000 , Short.MAX_VALUE})
+        @ValueSource(shorts = { Short.MIN_VALUE, -100, -12, -11, 11, 12, 100, 1000, Short.MAX_VALUE })
         void testShortNotWithinTheLimitsFromToCases(final short parameter) {
             final ValidationResult validationResult = assertDoesNotThrow(
                     () -> Envali.validate(RecoverableRequireRangeFromToForTest.ofShort(parameter)));
@@ -1181,7 +1181,7 @@ public final class EnvaliTest {
         }
 
         @ParameterizedTest
-        @ValueSource(bytes = {Byte.MIN_VALUE, -100, -12, -11, 11, 12, 100 , Byte.MAX_VALUE})
+        @ValueSource(bytes = { Byte.MIN_VALUE, -100, -12, -11, 11, 12, 100, Byte.MAX_VALUE })
         void testByteNotWithinTheLimitsFromToCases(final byte parameter) {
             final ValidationResult validationResult = assertDoesNotThrow(
                     () -> Envali.validate(RecoverableRequireRangeFromToForTest.ofByte(parameter)));
@@ -1201,7 +1201,7 @@ public final class EnvaliTest {
         }
 
         @ParameterizedTest
-        @ValueSource(floats = { -10.0f, -1.0f,-0.1f, 0.0f,0.1f, 1.0f, 9.0f, 10.0f })
+        @ValueSource(floats = { -10.0f, -1.0f, -0.1f, 0.0f, 0.1f, 1.0f, 9.0f, 10.0f })
         void testFloatWithinTheLimitsFromToCases(final float parameter) {
             final ValidationResult validationResult = assertDoesNotThrow(
                     () -> Envali.validate(RecoverableRequireRangeFromToForTest.ofFloat(parameter)));
@@ -1211,7 +1211,8 @@ public final class EnvaliTest {
         }
 
         @ParameterizedTest
-        @ValueSource(floats = {-Float.MAX_VALUE, -100.0f, -12.0f, -11.0f,-10.1f, 10.1f, 11.0f, 12.0f, 100.0f , Float.MAX_VALUE})
+        @ValueSource(floats = { -Float.MAX_VALUE, -100.0f, -12.0f, -11.0f, -10.1f, 10.1f, 11.0f, 12.0f, 100.0f,
+                Float.MAX_VALUE })
         void testFloatNotWithinTheLimitsFromToCases(final float parameter) {
             final ValidationResult validationResult = assertDoesNotThrow(
                     () -> Envali.validate(RecoverableRequireRangeFromToForTest.ofFloat(parameter)));
@@ -1231,7 +1232,7 @@ public final class EnvaliTest {
         }
 
         @ParameterizedTest
-        @ValueSource(doubles = { -10.0d, -1.0d,-0.1d, 0.0d,0.1d, 1.0d, 9.0d, 10.0d })
+        @ValueSource(doubles = { -10.0d, -1.0d, -0.1d, 0.0d, 0.1d, 1.0d, 9.0d, 10.0d })
         void testDoubleWithinTheLimitsFromToCases(final double parameter) {
             final ValidationResult validationResult = assertDoesNotThrow(
                     () -> Envali.validate(RecoverableRequireRangeFromToForTest.ofDouble(parameter)));
@@ -1241,7 +1242,8 @@ public final class EnvaliTest {
         }
 
         @ParameterizedTest
-        @ValueSource(doubles = {-Double.MAX_VALUE, -100.0d, -12.0d, -11.0d,-10.1d, 10.1d, 11.0d, 12.0d, 100.0d , Double.MAX_VALUE})
+        @ValueSource(doubles = { -Double.MAX_VALUE, -100.0d, -12.0d, -11.0d, -10.1d, 10.1d, 11.0d, 12.0d, 100.0d,
+                Double.MAX_VALUE })
         void testDoubleNotWithinTheLimitsFromToCases(final double parameter) {
             final ValidationResult validationResult = assertDoesNotThrow(
                     () -> Envali.validate(RecoverableRequireRangeFromToForTest.ofDouble(parameter)));
@@ -1675,20 +1677,170 @@ public final class EnvaliTest {
     class TestUnrecoverableRequireRangeFrom {
 
         @ParameterizedTest
-        @ValueSource(ints = { 0, 1, 2, 9, 10, 11 })
+        @ValueSource(ints = { 0, 1, 2, 9, 10, 11, Integer.MAX_VALUE })
         void testWithinTheLimitsCases(final int parameter) {
             final ValidationResult validationResult = assertDoesNotThrow(
-                    () -> Envali.validate(new UnrecoverableRequireRangeFromForTest(parameter)));
+                    () -> Envali.validate(UnrecoverableRequireRangeFromForTest.ofInt(parameter)));
 
             assertNotNull(validationResult);
             assertTrue(!validationResult.hasError());
         }
 
         @ParameterizedTest
-        @ValueSource(ints = { -10, -9, -2, -1 })
+        @ValueSource(ints = { Integer.MIN_VALUE, -10, -9, -2, -1 })
         void testNotWithinTheLimitsCases(final int parameter) {
             final ValidationResult validationResult = assertDoesNotThrow(
-                    () -> Envali.validate(new UnrecoverableRequireRangeFromForTest(parameter)));
+                    () -> Envali.validate(UnrecoverableRequireRangeFromForTest.ofInt(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeFromForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(longs = { 0l, 1l, 2l, 9l, 10l, 11l, Long.MAX_VALUE })
+        void testLongWithinTheLimitsCases(final long parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromForTest.ofLong(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(longs = { Long.MIN_VALUE, -10l, -9l, -2l, -1l })
+        void testLongNotWithinTheLimitsCases(final long parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromForTest.ofLong(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeFromForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(shorts = { 0, 1, 2, 9, 10, 11, Short.MAX_VALUE })
+        void testShortWithinTheLimitsCases(final short parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromForTest.ofShort(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(shorts = { Short.MIN_VALUE, -10, -9, -2, -1 })
+        void testShortNotWithinTheLimitsCases(final short parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromForTest.ofShort(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeFromForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(bytes = { 0, 1, 2, 9, 10, 11, Byte.MAX_VALUE })
+        void testByteWithinTheLimitsCases(final byte parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromForTest.ofByte(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(bytes = { Byte.MIN_VALUE, -10, -9, -2, -1 })
+        void testByteNotWithinTheLimitsCases(final byte parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromForTest.ofByte(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeFromForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(floats = { 0.0f, 0.1f, 1.0f, 0f, 2.0f, 9.0f, 10.0f, 11.0f, Float.MAX_VALUE })
+        void testFloatWithinTheLimitsCases(final float parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromForTest.ofFloat(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(floats = { -Float.MAX_VALUE, -10.0f, -9.0f, -2.0f, -1.0f, -0.1f })
+        void testFloatNotWithinTheLimitsCases(final float parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromForTest.ofFloat(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeFromForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(doubles = { 0.0d, 0.1d, 1.0d, 0d, 2.0d, 9.0d, 10.0d, 11.0d, Double.MAX_VALUE })
+        void testDoubleWithinTheLimitsCases(final double parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromForTest.ofDouble(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(doubles = { -Double.MAX_VALUE, -10.0d, -9.0d, -2.0d, -1.0d, -0.1d })
+        void testDoubleNotWithinTheLimitsCases(final double parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromForTest.ofDouble(parameter)));
 
             assertNotNull(validationResult);
             assertTrue(validationResult.hasError());
@@ -1709,20 +1861,170 @@ public final class EnvaliTest {
     class TestUnrecoverableRequireRangeTo {
 
         @ParameterizedTest
-        @ValueSource(ints = { -10, -1, 0, 1, 9, 10 })
+        @ValueSource(ints = { Integer.MIN_VALUE, -10, -1, 0, 1, 9, 10 })
         void testWithinTheLimitsCases(final int parameter) {
             final ValidationResult validationResult = assertDoesNotThrow(
-                    () -> Envali.validate(new UnrecoverableRequireRangeToForTest(parameter)));
+                    () -> Envali.validate(UnrecoverableRequireRangeToForTest.ofInt(parameter)));
 
             assertNotNull(validationResult);
             assertTrue(!validationResult.hasError());
         }
 
         @ParameterizedTest
-        @ValueSource(ints = { 11, 12, 100, 1000 })
+        @ValueSource(ints = { 11, 12, 100, 1000, Integer.MAX_VALUE })
         void testNotWithinTheLimitsCases(final int parameter) {
             final ValidationResult validationResult = assertDoesNotThrow(
-                    () -> Envali.validate(new UnrecoverableRequireRangeToForTest(parameter)));
+                    () -> Envali.validate(UnrecoverableRequireRangeToForTest.ofInt(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeToForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(longs = { Long.MIN_VALUE, -10l, -1l, 0l, 1l, 9l, 10l })
+        void testLongWithinTheLimitsCases(final long parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeToForTest.ofLong(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(longs = { 11l, 12l, 100l, 1000l, Long.MAX_VALUE })
+        void testLongNotWithinTheLimitsCases(final long parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeToForTest.ofLong(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeToForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(shorts = { Short.MIN_VALUE, -10, -1, 0, 1, 9, 10 })
+        void testShortWithinTheLimitsCases(final short parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeToForTest.ofShort(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(shorts = { 11, 12, 100, 1000, Short.MAX_VALUE })
+        void testShortNotWithinTheLimitsCases(final short parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeToForTest.ofShort(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeToForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(bytes = { Byte.MIN_VALUE, -10, -1, 0, 1, 9, 10 })
+        void testByteWithinTheLimitsCases(final byte parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeToForTest.ofByte(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(bytes = { 11, 12, 100, Byte.MAX_VALUE })
+        void testByteNotWithinTheLimitsCases(final byte parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeToForTest.ofByte(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeToForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(floats = { -Float.MAX_VALUE, -10.0f, -1.0f, -0.1f, 0.0f, 0.1f, 1.0f, 9.0f, 10.0f })
+        void testFloatWithinTheLimitsCases(final float parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeToForTest.ofFloat(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(floats = { 10.1f, 10.2f, 11.0f, 12.0f, 100.0f, Float.MAX_VALUE })
+        void testFloatNotWithinTheLimitsCases(final float parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeToForTest.ofFloat(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeToForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(doubles = { -Double.MAX_VALUE, -10.0d, -1.0d, -0.1d, 0.0d, 0.1d, 1.0d, 9.0d, 10.0d })
+        void testDoubleWithinTheLimitsCases(final double parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeToForTest.ofDouble(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(doubles = { 10.1d, 10.2d, 11.0d, 12.0d, 100.0d, Double.MAX_VALUE })
+        void testDoubleNotWithinTheLimitsCases(final double parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeToForTest.ofDouble(parameter)));
 
             assertNotNull(validationResult);
             assertTrue(validationResult.hasError());
@@ -1746,17 +2048,169 @@ public final class EnvaliTest {
         @ValueSource(ints = { -10, -1, 0, 1, 9, 10 })
         void testWithinTheLimitsFromToCases(final int parameter) {
             final ValidationResult validationResult = assertDoesNotThrow(
-                    () -> Envali.validate(new UnrecoverableRequireRangeFromToForTest(parameter)));
+                    () -> Envali.validate(UnrecoverableRequireRangeFromToForTest.ofInt(parameter)));
 
             assertNotNull(validationResult);
             assertTrue(!validationResult.hasError());
         }
 
         @ParameterizedTest
-        @ValueSource(ints = { -100, -12, -11, 11, 12, 100, 1000 })
+        @ValueSource(ints = { Integer.MIN_VALUE, -100, -12, -11, 11, 12, 100, 1000, Integer.MAX_VALUE })
         void testNotWithinTheLimitsFromToCases(final int parameter) {
             final ValidationResult validationResult = assertDoesNotThrow(
-                    () -> Envali.validate(new UnrecoverableRequireRangeFromToForTest(parameter)));
+                    () -> Envali.validate(UnrecoverableRequireRangeFromToForTest.ofInt(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeFromToForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(longs = { -10l, -1l, 0l, 1l, 9l, 10l })
+        void testLongWithinTheLimitsFromToCases(final long parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromToForTest.ofLong(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(longs = { Long.MIN_VALUE, -100l, -12l, -11l, 11l, 12l, 100l, 1000l, Long.MAX_VALUE })
+        void testLongNotWithinTheLimitsFromToCases(final long parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromToForTest.ofLong(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeFromToForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(shorts = { -10, -1, 0, 1, 9, 10 })
+        void testShortWithinTheLimitsFromToCases(final short parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromToForTest.ofShort(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(shorts = { Short.MIN_VALUE, -100, -12, -11, 11, 12, 100, 1000, Short.MAX_VALUE })
+        void testShortNotWithinTheLimitsFromToCases(final short parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromToForTest.ofShort(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeFromToForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(bytes = { -10, -1, 0, 1, 9, 10 })
+        void testByteWithinTheLimitsFromToCases(final byte parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromToForTest.ofByte(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(bytes = { Byte.MIN_VALUE, -100, -12, -11, 11, 12, 100, Byte.MAX_VALUE })
+        void testByteNotWithinTheLimitsFromToCases(final byte parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromToForTest.ofByte(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeFromToForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(floats = { -10.0f, -1.0f, -0.1f, 0.0f, 0.1f, 1.0f, 9.0f, 10.0f })
+        void testFloatWithinTheLimitsFromToCases(final float parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromToForTest.ofFloat(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(floats = { -Float.MAX_VALUE, -100.0f, -12.0f, -11.0f, -10.1f, 10.1f, 11.0f, 12.0f, 100.0f,
+                Float.MAX_VALUE })
+        void testFloatNotWithinTheLimitsFromToCases(final float parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromToForTest.ofFloat(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(UnrecoverableRequireRangeFromToForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(!businessErrors.isEmpty());
+            assertTrue(businessErrors.size() == 1);
+            assertTrue(businessErrors.get(0).hasError());
+            assertTrue(businessErrors.get(0).isUnrecoverable());
+            assertEquals("success", businessErrors.get(0).getMessage());
+        }
+
+        @ParameterizedTest
+        @ValueSource(doubles = { -10.0d, -1.0d, -0.1d, 0.0d, 0.1d, 1.0d, 9.0d, 10.0d })
+        void testDoubleWithinTheLimitsFromToCases(final double parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromToForTest.ofDouble(parameter)));
+
+            assertNotNull(validationResult);
+            assertTrue(!validationResult.hasError());
+        }
+
+        @ParameterizedTest
+        @ValueSource(doubles = { -Double.MAX_VALUE, -100.0d, -12.0d, -11.0d, -10.1d, 10.1d, 11.0d, 12.0d, 100.0d,
+                Double.MAX_VALUE })
+        void testDoubleNotWithinTheLimitsFromToCases(final double parameter) {
+            final ValidationResult validationResult = assertDoesNotThrow(
+                    () -> Envali.validate(UnrecoverableRequireRangeFromToForTest.ofDouble(parameter)));
 
             assertNotNull(validationResult);
             assertTrue(validationResult.hasError());

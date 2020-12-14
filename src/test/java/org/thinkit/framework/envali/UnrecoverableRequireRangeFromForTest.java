@@ -36,19 +36,141 @@ final class UnrecoverableRequireRangeFromForTest implements ValidatableEntity {
     @RequireRangeFrom(errorType = ErrorType.UNRECOVERABLE, message = "success")
     private int intFrom;
 
+     /**
+     * The long number within the limits
+     */
+    @RequireRangeFrom(errorType = ErrorType.UNRECOVERABLE, message = "success")
+    private long longFrom;
+
+    /**
+     * The short number within the limits
+     */
+    @RequireRangeFrom(errorType = ErrorType.UNRECOVERABLE, message = "success")
+    private short shortFrom;
+
+    /**
+     * The byte number within the limits
+     */
+    @RequireRangeFrom(errorType = ErrorType.UNRECOVERABLE, message = "success")
+    private byte byteFrom;
+
+    /**
+     * The float number within the limits
+     */
+    @RequireRangeFrom(errorType = ErrorType.UNRECOVERABLE, message = "success")
+    private float floatFrom;
+
+    /**
+     * The double number within the limits
+     */
+    @RequireRangeFrom(errorType = ErrorType.UNRECOVERABLE, message = "success")
+    private double doubleFrom;
+
     /**
      * Default constructor
      */
-    @SuppressWarnings("unused")
     private UnrecoverableRequireRangeFromForTest() {
     }
 
     /**
      * Constructor
      *
-     * @param intFrom The number within the limits (expected)
+     * @param intFrom    The int number within the limits (expected)
+     * @param longFrom   The long number within the limits (expected)
+     * @param shortFrom  The short number within the limits (expected)
+     * @param byteFrom   The byte number within the limits (expected)
+     * @param floatFrom  The float number within the limits (expected)
+     * @param doubleFrom The double number within the limits (expected)
      */
-    public UnrecoverableRequireRangeFromForTest(int intFrom) {
+    private UnrecoverableRequireRangeFromForTest(int intFrom, long longFrom, short shortFrom, byte byteFrom, float floatFrom,
+            double doubleFrom) {
         this.intFrom = intFrom;
+        this.longFrom = longFrom;
+        this.shortFrom = shortFrom;
+        this.byteFrom = byteFrom;
+        this.floatFrom = floatFrom;
+        this.doubleFrom = doubleFrom;
+    }
+
+    /**
+     * Returns the new instance of {@link UnrecoverableRequireRangeFromForTest} with int test
+     * value.
+     *
+     * @param intFrom The int value to be tested
+     * @return The new instance of {@link UnrecoverableRequireRangeFromForTest} with int test
+     *         value
+     */
+    public static UnrecoverableRequireRangeFromForTest ofInt(int intFrom) {
+        short shortNumber = 1;
+        byte byteNumber = 1;
+        return new UnrecoverableRequireRangeFromForTest(intFrom, 1l, shortNumber, byteNumber, 0.1f, 0.1d);
+    }
+
+    /**
+     * Returns the new instance of {@link UnrecoverableRequireRangeFromForTest} with long test
+     * value.
+     *
+     * @param longFrom The long value to be tested
+     * @return The new instance of {@link UnrecoverableRequireRangeFromForTest} with long test
+     *         value
+     */
+    public static UnrecoverableRequireRangeFromForTest ofLong(long longFrom) {
+        short shortNumber = 1;
+        byte byteNumber = 1;
+        return new UnrecoverableRequireRangeFromForTest(1, longFrom, shortNumber, byteNumber, 0.1f, 0.1d);
+    }
+
+    /**
+     * Returns the new instance of {@link UnrecoverableRequireRangeFromForTest} with short test
+     * value.
+     *
+     * @param shortFrom The short value to be tested
+     * @return The new instance of {@link UnrecoverableRequireRangeFromForTest} with short test
+     *         value
+     */
+    public static UnrecoverableRequireRangeFromForTest ofShort(short shortFrom) {
+        byte byteNumber = 1;
+        return new UnrecoverableRequireRangeFromForTest(1, 1l, shortFrom, byteNumber, 0.1f, 0.1d);
+    }
+
+    /**
+     * Returns the new instance of {@link UnrecoverableRequireRangeFromForTest} with byte test
+     * value.
+     *
+     * @param byteFrom The byte value to be tested
+     * @return The new instance of {@link UnrecoverableRequireRangeFromForTest} with byte test
+     *         value
+     */
+    public static UnrecoverableRequireRangeFromForTest ofByte(byte byteFrom) {
+        short shortNumber = 1;
+        return new UnrecoverableRequireRangeFromForTest(1, 1l, shortNumber, byteFrom, 0.1f, 0.1d);
+    }
+
+    /**
+     * Returns the new instance of {@link UnrecoverableRequireRangeFromForTest} with float test
+     * value.
+     *
+     * @param floatFrom The float value to be tested
+     * @return The new instance of {@link UnrecoverableRequireRangeFromForTest} with float test
+     *         value
+     */
+    public static UnrecoverableRequireRangeFromForTest ofFloat(float floatFrom) {
+        short shortNumber = 1;
+        byte byteNumber = 1;
+        return new UnrecoverableRequireRangeFromForTest(1, 1l, shortNumber, byteNumber, floatFrom, 0.1d);
+    }
+
+    /**
+     * Returns the new instance of {@link UnrecoverableRequireRangeFromForTest} with double test
+     * value.
+     *
+     * @param doubleFrom The double value to be tested
+     * @return The new instance of {@link UnrecoverableRequireRangeFromForTest} with double test
+     *         value
+     */
+    public static UnrecoverableRequireRangeFromForTest ofDouble(double doubleFrom) {
+        short shortNumber = 1;
+        byte byteNumber =1;
+        return new UnrecoverableRequireRangeFromForTest(1, 1l, shortNumber, byteNumber, 0.1f, doubleFrom);
     }
 }
