@@ -42,13 +42,13 @@ import org.thinkit.framework.envali.catalog.ErrorType;
  *      private String[] literals;
  *
  *      &#64;RequireNonEmpty( ErrorType = ErrorType.RECOVERABLE, message = "failed!" )
- *      private List<String> literalList;
+ *      private List&lt;String&gt; literalList;
  *
  *      &#64;RequireNonEmpty( ErrorType = ErrorType.UNRECOVERABLE, message = "failed!" )
- *      private Map<String, String> literalMap;
+ *      private Map&lt;String, String&gt; literalMap;
  *
  *      &#64;RequireNonEmpty( ErrorType = ErrorType.UNRECOVERABLE, message = "failed!" )
- *      private Set<String> literalSet;
+ *      private Set&lt;String&gt; literalSet;
  * }
  * </code>
  * </pre>

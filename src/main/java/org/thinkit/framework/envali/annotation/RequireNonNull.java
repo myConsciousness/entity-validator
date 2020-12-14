@@ -37,10 +37,10 @@ import org.thinkit.framework.envali.catalog.ErrorType;
  *      private String literal;
  *
  *      &#64;RequireNonNull( ErrorType = ErrorType.RECOVERABLE, message = "failed!" )
- *      private List<String> literalList;
+ *      private List&lt;String&gt; literalList;
  *
  *      &#64;RequireNonNull( ErrorType = ErrorType.UNRECOVERABLE, message = "failed!" )
- *      private Map<String, String> literalMap;
+ *      private Map&lt;String, String&gt; literalMap;
  * }
  * </code>
  * </pre>
