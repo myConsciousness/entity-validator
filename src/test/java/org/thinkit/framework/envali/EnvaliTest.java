@@ -2385,4 +2385,40 @@ public final class EnvaliTest {
             }
         }
     }
+
+    @Nested
+    class TestAnnotationParamRequireStartWith {
+
+        @ParameterizedTest
+        @ValueSource(strings = { "test something", "testsomething", "test" })
+        void testWhenLiteralStartsWithSpecifiedPrefix(final String parameter) {
+            assertDoesNotThrow(() -> Envali.validate(new AnnotationParamRequireStartWithForTest(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = { "", " ", "tes", "est", "something test", "something test something", "aaatestaaa",
+                "somethingstart" })
+        void testWhenLiteralDoesNotStartWithSpecifiedPrefix(final String parameter) {
+            assertThrows(PreconditionFailedException.class,
+                    () -> Envali.validate(new AnnotationParamRequireStartWithForTest(parameter)));
+        }
+    }
+
+    @Nested
+    class TestAnnotationParamRequireEndWith {
+
+        @ParameterizedTest
+        @ValueSource(strings = { "something test", "somethingtest", "test" })
+        void testWhenLiteralEndsWithSpecifiedPrefix(final String parameter) {
+            assertDoesNotThrow(() -> Envali.validate(new AnnotationParamRequireEndWithForTest(parameter)));
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = { "", " ", "est", "tes", "testsomething", "something test something", "aaatestaaa",
+                "endsomething" })
+        void testWhenLiteralDoesNotEndWithSpecifiedPrefix(final String parameter) {
+            assertThrows(PreconditionFailedException.class,
+                    () -> Envali.validate(new AnnotationParamRequireEndWithForTest(parameter)));
+        }
+    }
 }
