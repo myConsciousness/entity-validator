@@ -69,7 +69,8 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="description">
 <hr>
-<pre><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/annotation/Target.html" title="java.lang.annotation内のクラスまたはインタフェース" class="external-link">@Target</a>(<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/annotation/ElementType.html#FIELD" title="java.lang.annotation内のクラスまたはインタフェース" class="external-link">FIELD</a>)
+<pre><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/annotation/Documented.html" title="java.lang.annotation内のクラスまたはインタフェース" class="external-link">@Documented</a>
+<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/annotation/Target.html" title="java.lang.annotation内のクラスまたはインタフェース" class="external-link">@Target</a>(<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/annotation/ElementType.html#FIELD" title="java.lang.annotation内のクラスまたはインタフェース" class="external-link">FIELD</a>)
 <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/annotation/Retention.html" title="java.lang.annotation内のクラスまたはインタフェース" class="external-link">@Retention</a>(<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/annotation/RetentionPolicy.html#RUNTIME" title="java.lang.annotation内のクラスまたはインタフェース" class="external-link">RUNTIME</a>)
 public @interface <span class="type-name-label">RequireEndWith</span></pre>
 <div class="block">An annotation indicating that the string ends with a specific string.
@@ -78,12 +79,30 @@ public @interface <span class="type-name-label">RequireEndWith</span></pre>
  with a specific string as follows.
 
  <pre>
+ Specify the expected value for Content Framework:
  <code>
  &#64;ParameterMapping( content = "Parameter" )
- public class ConcreteEntity implements ValidatableEntity, Serializable {
+ public class ConcreteEntity implements ValidatableEntity {
 
       &#64;RequireEndWith
       private String literal;
+
+      &#64;RequireEndWith( errorType = ErrorType.RECOVERABLE, message = "failed!" )
+      private String recoverableLiteral;
+ }
+ </code>
+ </pre>
+
+ <pre>
+ Specify the expected value for the annotation:
+ <code>
+ public class ConcreteEntity implements ValidatableEntity {
+
+      &#64;RequireEndWith( suffix = "something" )
+      private String literal;
+
+      &#64;RequireEndWith( suffix = "something", errorType = ErrorType.UNRECOVERABLE, message = "failed!" )
+      private String unrecoverableLiteral;
  }
  </code>
  </pre></div>
@@ -125,6 +144,13 @@ public @interface <span class="type-name-label">RequireEndWith</span></pre>
  set as the default.</div>
 </td>
 </tr>
+<tr class="alt-color">
+<td class="col-first"><code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a></code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#suffix()">suffix</a></span></code></th>
+<td class="col-last">
+<div class="block">Returns the expected suffix of String.</div>
+</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -148,6 +174,8 @@ public @interface <span class="type-name-label">RequireEndWith</span></pre>
 <dl class="notes">
 <dt>戻り値:</dt>
 <dd>The error type based on the <a href="../catalog/ErrorType.html" title="org.thinkit.framework.envali.catalog内の列挙型"><code>ErrorType</code></a></dd>
+<dt>導入されたバージョン:</dt>
+<dd>1.0.1</dd>
 </dl>
 <dl class="notes">
 <dt>デフォルト:</dt>
@@ -164,6 +192,25 @@ public @interface <span class="type-name-label">RequireEndWith</span></pre>
 <dl class="notes">
 <dt>戻り値:</dt>
 <dd>The message</dd>
+<dt>導入されたバージョン:</dt>
+<dd>1.0.1</dd>
+</dl>
+<dl class="notes">
+<dt>デフォルト:</dt>
+<dd>""</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="suffix()">
+<h3>suffix</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a></span>&nbsp;<span class="member-name">suffix</span></div>
+<div class="block">Returns the expected suffix of String.</div>
+<dl class="notes">
+<dt>戻り値:</dt>
+<dd>The expected suffix</dd>
+<dt>導入されたバージョン:</dt>
+<dd>1.0.2</dd>
 </dl>
 <dl class="notes">
 <dt>デフォルト:</dt>

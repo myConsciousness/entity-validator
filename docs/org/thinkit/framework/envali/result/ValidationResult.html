@@ -99,30 +99,19 @@ implements <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base
  <pre>
  Test for the presence of business errors on any entity that implements <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a> .
  <code>
- final ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
- // Returns true if there is a error on any <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a> , otherwise false
+ ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
+ * // Returns true if there is a error on any <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a> , otherwise false
  validationResult.hasError();
- </code>
- </pre>
-
- <pre>
- Test for the presence of business errors on a specified entity that implements <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a> .
- <code>
- final ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
- // Returns true if there is a error on ConcreteValidatableEntity, otherwise false
- validationResult.hasError(ConcreteValidatableEntity.class);
  </code>
  </pre>
 
  <pre>
  Get a business error of a specified entity that implements <a href="../entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><code>ValidatableEntity</code></a> .
  <code>
- final ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
+ ValidationResult validationResult = Envali.validate(concreteValidatableEntity);
 
- if (validationResult.hasError(ConcreteValidationResult.class)) {
-     // Returns List&lt;BusinessError&gt;
-     validationResult.getError(ConcreteValidatableEntity.class);
- }
+ * // Returns List&lt;BusinessError&gt;
+ List&lt;BusinessError&gt; businessErrors = validationResult.getError(ConcreteValidatableEntity.class);
  </code>
  </pre></div>
 <dl class="notes">

@@ -69,12 +69,11 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link"><span class="type-name-link">Object</span></a>
 <ul>
-<li class="circle">org.thinkit.framework.envali.strategy.<a href="org/thinkit/framework/envali/strategy/AnnotationContext.html" title="org.thinkit.framework.envali.strategy内のクラス"><span class="type-name-link">AnnotationContext</span></a></li>
 <li class="circle">org.thinkit.framework.envali.result.<a href="org/thinkit/framework/envali/result/BusinessError.html" title="org.thinkit.framework.envali.result内のクラス"><span class="type-name-link">BusinessError</span></a> (implements java.io.<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/io/Serializable.html" title="java.io内のクラスまたはインタフェース" class="external-link">Serializable</a>)</li>
 <li class="circle">org.thinkit.framework.envali.<a href="org/thinkit/framework/envali/Envali.html" title="org.thinkit.framework.envali内のクラス"><span class="type-name-link">Envali</span></a></li>
 <li class="circle">org.thinkit.framework.envali.helper.<a href="org/thinkit/framework/envali/helper/EnvaliContentHelper.html" title="org.thinkit.framework.envali.helper内のクラス"><span class="type-name-link">EnvaliContentHelper</span></a></li>
 <li class="circle">org.thinkit.framework.envali.helper.<a href="org/thinkit/framework/envali/helper/EnvaliFieldHelper.html" title="org.thinkit.framework.envali.helper内のクラス"><span class="type-name-link">EnvaliFieldHelper</span></a></li>
-<li class="circle">org.thinkit.framework.envali.context.<a href="org/thinkit/framework/envali/context/ErrorContext.html" title="org.thinkit.framework.envali.context内のクラス"><span class="type-name-link">ErrorContext</span></a> (implements java.io.<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/io/Serializable.html" title="java.io内のクラスまたはインタフェース" class="external-link">Serializable</a>)</li>
+<li class="circle">org.thinkit.framework.envali.context.<a href="org/thinkit/framework/envali/context/ErrorContext.html" title="org.thinkit.framework.envali.context内のクラス"><span class="type-name-link">ErrorContext</span></a>&lt;T&gt; (implements java.io.<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/io/Serializable.html" title="java.io内のクラスまたはインタフェース" class="external-link">Serializable</a>)</li>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Throwable.html" title="java.lang内のクラスまたはインタフェース" class="external-link"><span class="type-name-link">Throwable</span></a> (implements java.io.<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/io/Serializable.html" title="java.io内のクラスまたはインタフェース" class="external-link">Serializable</a>)
 <ul>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Exception.html" title="java.lang内のクラスまたはインタフェース" class="external-link"><span class="type-name-link">Exception</span></a>
@@ -90,6 +89,8 @@ loadScripts(document, 'script');</script>
 </ul>
 </li>
 <li class="circle">org.thinkit.framework.envali.result.<a href="org/thinkit/framework/envali/result/ValidationResult.html" title="org.thinkit.framework.envali.result内のクラス"><span class="type-name-link">ValidationResult</span></a> (implements java.io.<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/io/Serializable.html" title="java.io内のクラスまたはインタフェース" class="external-link">Serializable</a>)</li>
+<li class="circle">org.thinkit.framework.envali.strategy.<a href="org/thinkit/framework/envali/strategy/ValidationStrategyContext.html" title="org.thinkit.framework.envali.strategy内のクラス"><span class="type-name-link">ValidationStrategyContext</span></a></li>
+<li class="circle">org.thinkit.framework.envali.strategy.<a href="org/thinkit/framework/envali/strategy/ValidationStrategyFactory.html" title="org.thinkit.framework.envali.strategy内のクラス"><span class="type-name-link">ValidationStrategyFactory</span></a> (implements org.thinkit.framework.envali.strategy.<a href="org/thinkit/framework/envali/strategy/StrategyFactory.html" title="org.thinkit.framework.envali.strategy内のインタフェース">StrategyFactory</a>)</li>
 </ul>
 </li>
 </ul>
@@ -97,6 +98,7 @@ loadScripts(document, 'script');</script>
 <section class="hierarchy">
 <h2 title="インタフェース階層">インタフェース階層</h2>
 <ul>
+<li class="circle">org.thinkit.framework.envali.strategy.<a href="org/thinkit/framework/envali/strategy/StrategyFactory.html" title="org.thinkit.framework.envali.strategy内のインタフェース"><span class="type-name-link">StrategyFactory</span></a></li>
 <li class="circle">org.thinkit.framework.envali.entity.<a href="org/thinkit/framework/envali/entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース"><span class="type-name-link">ValidatableEntity</span></a></li>
 </ul>
 </section>
@@ -129,6 +131,8 @@ loadScripts(document, 'script');</script>
 <li class="circle">org.thinkit.framework.envali.catalog.<a href="org/thinkit/framework/envali/catalog/EnvaliContentRoot.html" title="org.thinkit.framework.envali.catalog内の列挙型"><span class="type-name-link">EnvaliContentRoot</span></a> (implements org.thinkit.api.catalog.BiCatalog&lt;E,&#8203;T&gt;)</li>
 <li class="circle">org.thinkit.framework.envali.catalog.<a href="org/thinkit/framework/envali/catalog/ErrorType.html" title="org.thinkit.framework.envali.catalog内の列挙型"><span class="type-name-link">ErrorType</span></a> (implements org.thinkit.api.catalog.Catalog&lt;E&gt;)</li>
 <li class="circle">org.thinkit.framework.envali.catalog.<a href="org/thinkit/framework/envali/catalog/InternalErrorType.html" title="org.thinkit.framework.envali.catalog内の列挙型"><span class="type-name-link">InternalErrorType</span></a> (implements org.thinkit.api.catalog.Catalog&lt;E&gt;)</li>
+<li class="circle">org.thinkit.framework.envali.catalog.<a href="org/thinkit/framework/envali/catalog/ParameterConfig.html" title="org.thinkit.framework.envali.catalog内の列挙型"><span class="type-name-link">ParameterConfig</span></a> (implements org.thinkit.api.catalog.Catalog&lt;E&gt;)</li>
+<li class="circle">org.thinkit.framework.envali.catalog.<a href="org/thinkit/framework/envali/catalog/ValidationPattern.html" title="org.thinkit.framework.envali.catalog内の列挙型"><span class="type-name-link">ValidationPattern</span></a> (implements org.thinkit.api.catalog.BiCatalog&lt;E,&#8203;T&gt;)</li>
 </ul>
 </li>
 </ul>

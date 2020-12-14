@@ -69,7 +69,8 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="description">
 <hr>
-<pre><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/annotation/Target.html" title="java.lang.annotation内のクラスまたはインタフェース" class="external-link">@Target</a>(<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/annotation/ElementType.html#FIELD" title="java.lang.annotation内のクラスまたはインタフェース" class="external-link">FIELD</a>)
+<pre><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/annotation/Documented.html" title="java.lang.annotation内のクラスまたはインタフェース" class="external-link">@Documented</a>
+<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/annotation/Target.html" title="java.lang.annotation内のクラスまたはインタフェース" class="external-link">@Target</a>(<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/annotation/ElementType.html#FIELD" title="java.lang.annotation内のクラスまたはインタフェース" class="external-link">FIELD</a>)
 <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/annotation/Retention.html" title="java.lang.annotation内のクラスまたはインタフェース" class="external-link">@Retention</a>(<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/annotation/RetentionPolicy.html#RUNTIME" title="java.lang.annotation内のクラスまたはインタフェース" class="external-link">RUNTIME</a>)
 public @interface <span class="type-name-label">RequireRangeFrom</span></pre>
 <div class="block">An annotation indicating that the value is not under the lower limit.
@@ -110,6 +111,20 @@ public @interface <span class="type-name-label">RequireRangeFrom</span></pre>
 </thead>
 <tbody>
 <tr class="alt-color">
+<td class="col-first"><code>byte</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#byteFrom()">byteFrom</a></span></code></th>
+<td class="col-last">
+<div class="block">Returns the lower limit of byte type.</div>
+</td>
+</tr>
+<tr class="row-color">
+<td class="col-first"><code>double</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#doubleFrom()">doubleFrom</a></span></code></th>
+<td class="col-last">
+<div class="block">Returns the lower limit of double type.</div>
+</td>
+</tr>
+<tr class="alt-color">
 <td class="col-first"><code><a href="../catalog/ErrorType.html" title="org.thinkit.framework.envali.catalog内の列挙型">ErrorType</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#errorType()">errorType</a></span></code></th>
 <td class="col-last">
@@ -118,11 +133,39 @@ public @interface <span class="type-name-label">RequireRangeFrom</span></pre>
 </td>
 </tr>
 <tr class="row-color">
+<td class="col-first"><code>float</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#floatFrom()">floatFrom</a></span></code></th>
+<td class="col-last">
+<div class="block">Returns the lower limit of float type.</div>
+</td>
+</tr>
+<tr class="alt-color">
+<td class="col-first"><code>int</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#intFrom()">intFrom</a></span></code></th>
+<td class="col-last">
+<div class="block">Returns the lower limit of int type.</div>
+</td>
+</tr>
+<tr class="row-color">
+<td class="col-first"><code>long</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#longFrom()">longFrom</a></span></code></th>
+<td class="col-last">
+<div class="block">Returns the lower limit of long type.</div>
+</td>
+</tr>
+<tr class="alt-color">
 <td class="col-first"><code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#message()">message</a></span></code></th>
 <td class="col-last">
 <div class="block">Returns the error type based on <a href="../catalog/ErrorType.html" title="org.thinkit.framework.envali.catalog内の列挙型"><code>ErrorType</code></a> , and empty (<code>""</code>) is
  set as the default.</div>
+</td>
+</tr>
+<tr class="row-color">
+<td class="col-first"><code>short</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#shortFrom()">shortFrom</a></span></code></th>
+<td class="col-last">
+<div class="block">Returns the lower limit of short type.</div>
 </td>
 </tr>
 </tbody>
@@ -168,6 +211,114 @@ public @interface <span class="type-name-label">RequireRangeFrom</span></pre>
 <dl class="notes">
 <dt>デフォルト:</dt>
 <dd>""</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="intFrom()">
+<h3>intFrom</h3>
+<div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="member-name">intFrom</span></div>
+<div class="block">Returns the lower limit of int type. The default value is
+ <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Integer.html#MIN_VALUE" title="java.lang内のクラスまたはインタフェース" class="external-link"><code>Integer.MIN_VALUE</code></a> .</div>
+<dl class="notes">
+<dt>戻り値:</dt>
+<dd>The lower limit of int type</dd>
+<dt>導入されたバージョン:</dt>
+<dd>1.0.2</dd>
+</dl>
+<dl class="notes">
+<dt>デフォルト:</dt>
+<dd>-2147483648</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="longFrom()">
+<h3>longFrom</h3>
+<div class="member-signature"><span class="return-type">long</span>&nbsp;<span class="member-name">longFrom</span></div>
+<div class="block">Returns the lower limit of long type. The default value is
+ <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Long.html#MIN_VALUE" title="java.lang内のクラスまたはインタフェース" class="external-link"><code>Long.MIN_VALUE</code></a> .</div>
+<dl class="notes">
+<dt>戻り値:</dt>
+<dd>The lower limit of long type</dd>
+<dt>導入されたバージョン:</dt>
+<dd>1.0.2</dd>
+</dl>
+<dl class="notes">
+<dt>デフォルト:</dt>
+<dd>-9223372036854775808L</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="floatFrom()">
+<h3>floatFrom</h3>
+<div class="member-signature"><span class="return-type">float</span>&nbsp;<span class="member-name">floatFrom</span></div>
+<div class="block">Returns the lower limit of float type. The default value is
+ <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Float.html#MIN_VALUE" title="java.lang内のクラスまたはインタフェース" class="external-link"><code>Float.MIN_VALUE</code></a> .</div>
+<dl class="notes">
+<dt>戻り値:</dt>
+<dd>The lower limit of float type</dd>
+<dt>導入されたバージョン:</dt>
+<dd>1.0.2</dd>
+</dl>
+<dl class="notes">
+<dt>デフォルト:</dt>
+<dd>1.4E-45f</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="doubleFrom()">
+<h3>doubleFrom</h3>
+<div class="member-signature"><span class="return-type">double</span>&nbsp;<span class="member-name">doubleFrom</span></div>
+<div class="block">Returns the lower limit of double type. The default value is
+ <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Double.html#MIN_VALUE" title="java.lang内のクラスまたはインタフェース" class="external-link"><code>Double.MIN_VALUE</code></a> .</div>
+<dl class="notes">
+<dt>戻り値:</dt>
+<dd>The lower limit of double type</dd>
+<dt>導入されたバージョン:</dt>
+<dd>1.0.2</dd>
+</dl>
+<dl class="notes">
+<dt>デフォルト:</dt>
+<dd>4.9E-324</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="shortFrom()">
+<h3>shortFrom</h3>
+<div class="member-signature"><span class="return-type">short</span>&nbsp;<span class="member-name">shortFrom</span></div>
+<div class="block">Returns the lower limit of short type. The default value is
+ <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Short.html#MIN_VALUE" title="java.lang内のクラスまたはインタフェース" class="external-link"><code>Short.MIN_VALUE</code></a> .</div>
+<dl class="notes">
+<dt>戻り値:</dt>
+<dd>The lower limit of short type</dd>
+<dt>導入されたバージョン:</dt>
+<dd>1.0.2</dd>
+</dl>
+<dl class="notes">
+<dt>デフォルト:</dt>
+<dd>-32768</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="byteFrom()">
+<h3>byteFrom</h3>
+<div class="member-signature"><span class="return-type">byte</span>&nbsp;<span class="member-name">byteFrom</span></div>
+<div class="block">Returns the lower limit of byte type. The default value is
+ <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Byte.html#MIN_VALUE" title="java.lang内のクラスまたはインタフェース" class="external-link"><code>Byte.MIN_VALUE</code></a> .</div>
+<dl class="notes">
+<dt>戻り値:</dt>
+<dd>The lower limit of byte type</dd>
+<dt>導入されたバージョン:</dt>
+<dd>1.0.2</dd>
+</dl>
+<dl class="notes">
+<dt>デフォルト:</dt>
+<dd>(byte)0x80</dd>
 </dl>
 </section>
 </li>
