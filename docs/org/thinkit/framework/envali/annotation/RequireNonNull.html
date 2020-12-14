@@ -85,6 +85,12 @@ public @interface <span class="type-name-label">RequireNonNull</span></pre>
 
       &#64;RequireNonNull
       private String literal;
+
+      &#64;RequireNonNull( ErrorType = ErrorType.RECOVERABLE, message = "failed!" )
+      private List&lt;String&gt; literalList;
+
+      &#64;RequireNonNull( ErrorType = ErrorType.UNRECOVERABLE, message = "failed!" )
+      private Map&lt;String, String&gt; literalMap;
  }
  </code>
  </pre></div>

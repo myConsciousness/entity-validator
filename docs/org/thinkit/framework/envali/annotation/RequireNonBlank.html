@@ -77,7 +77,9 @@ public @interface <span class="type-name-label">RequireNonBlank</span></pre>
  .
  <p>
  Specify this annotation <a href="RequireNonBlank.html" title="org.thinkit.framework.envali.annotation内の注釈"><code>RequireNonBlank</code></a> for fields that do not allow
- <code>""</code> as follows.
+ <code>""</code> as follows. If this annotation is specified for an object of type
+ other than String, UnsupportedOperationException will always be thrown at
+ runtime.
 
  <pre>
  <code>

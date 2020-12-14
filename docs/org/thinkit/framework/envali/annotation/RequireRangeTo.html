@@ -76,15 +76,41 @@ public @interface <span class="type-name-label">RequireRangeTo</span></pre>
 <div class="block">An annotation indicating that the value is not above the upper limit.
  <p>
  Specify this annotation for fields that do not allow numbers to exceed the
- limit as follows.
+ limit as follows. If this annotation is specified for an object of type other
+ than int, long, short, byte, float, double, Integer, Long, Short, Byte, Float
+ or Double, UnsupportedOperationException will always be thrown at runtime.
 
  <pre>
+ Specify the expected value for Content Framework:
  <code>
  &#64;ParameterMapping( content = "Parameter" )
  public class ConcreteEntity implements ValidatableEntity, Serializable {
 
       &#64;RequireRangeTo
-      private int number;
+      private int intTo;
+
+      &#64;RequireRangeTo( ErrorType.RECOVERABLE, message = "failed!" )
+      private long longTo;
+
+      &#64;RequireRangeTo( ErrorType.UNRECOVERABLE, message = "failed!" )
+      private double doubleTo;
+ }
+ </code>
+ </pre>
+
+ <pre>
+ Specify the expected value for the annotation:
+ <code>
+ public class ConcreteEntity implements ValidatableEntity, Serializable {
+
+      &#64;RequireRangeTo( intTo = 100 )
+      private int intTo;
+
+      &#64;RequireRangeTo( longTo = 100l, ErrorType.RECOVERABLE, message = "failed!" )
+      private long longTo;
+
+      &#64;RequireRangeTo( doubleTo = 100.0d, ErrorType.UNRECOVERABLE, message = "failed!" )
+      private double doubleTo;
  }
  </code>
  </pre></div>
