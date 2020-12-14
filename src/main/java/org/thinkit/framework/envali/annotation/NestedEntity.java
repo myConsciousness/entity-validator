@@ -24,7 +24,9 @@ import java.lang.annotation.Target;
  * An annotation that indicates the field is the nested validatable entity.
  * <p>
  * Specify this annotation for fields that is nested validatable entity as
- * follows.
+ * follows. Whenever this annotation is specified for an object that does not
+ * implement the ValidatableEntity annotation, UnsupportedOperationException
+ * will be thrown at runtime.
  *
  * <pre>
  * <code>

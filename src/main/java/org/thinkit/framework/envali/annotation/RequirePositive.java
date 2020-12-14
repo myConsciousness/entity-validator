@@ -27,7 +27,8 @@ import org.thinkit.framework.envali.catalog.ErrorType;
  * numbers.
  * <p>
  * Specify this annotation for fields that do not allow negative numbers as
- * follows.
+ * follows. If this annotation is specified for an object of type other than int
+ * or Integer, UnsupportedOperationException will always be thrown at runtime.
  *
  * <pre>
  * <code>
@@ -35,6 +36,12 @@ import org.thinkit.framework.envali.catalog.ErrorType;
  *
  *      &#64;RequirePositive
  *      private int number;
+ *
+ *      &#64;RequirePositive(errorType = ErrorType.RECOVERABLE, message = "failed!" )
+ *      private int recoverableNumber;
+ *
+ *      &#64;RequirePositive(errorType = ErrorType.UNRECOVERABLE, message = "failed!" )
+ *      private int unrecoverableNumber;
  * }
  * </code>
  * </pre>

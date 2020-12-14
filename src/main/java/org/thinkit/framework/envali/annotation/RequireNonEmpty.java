@@ -27,7 +27,9 @@ import org.thinkit.framework.envali.catalog.ErrorType;
  * {@code null} or empty.
  * <p>
  * Specify this annotation {@link RequireNonNull} for fields that do not allow
- * {@code null} or empty as follows.
+ * {@code null} or empty as follows. This annotation can be specified for Array,
+ * String, List, Map, and Set, otherwise UnsupportedOperationException will be
+ * thrown at runtime.
  *
  * <pre>
  * <code>
@@ -35,6 +37,18 @@ import org.thinkit.framework.envali.catalog.ErrorType;
  *
  *      &#64;RequireNonEmpty
  *      private String literal;
+ *
+ *      &#64;RequireNonEmpty( ErrorType = ErrorType.RECOVERABLE, message = "failed!" )
+ *      private String[] literals;
+ *
+ *      &#64;RequireNonEmpty( ErrorType = ErrorType.RECOVERABLE, message = "failed!" )
+ *      private List<String> literalList;
+ *
+ *      &#64;RequireNonEmpty( ErrorType = ErrorType.UNRECOVERABLE, message = "failed!" )
+ *      private Map<String, String> literalMap;
+ *
+ *      &#64;RequireNonEmpty( ErrorType = ErrorType.UNRECOVERABLE, message = "failed!" )
+ *      private Set<String> literalSet;
  * }
  * </code>
  * </pre>

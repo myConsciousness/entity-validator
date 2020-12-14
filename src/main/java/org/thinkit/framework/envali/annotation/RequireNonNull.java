@@ -35,6 +35,12 @@ import org.thinkit.framework.envali.catalog.ErrorType;
  *
  *      &#64;RequireNonNull
  *      private String literal;
+ *
+ *      &#64;RequireNonNull( ErrorType = ErrorType.RECOVERABLE, message = "failed!" )
+ *      private List<String> literalList;
+ *
+ *      &#64;RequireNonNull( ErrorType = ErrorType.UNRECOVERABLE, message = "failed!" )
+ *      private Map<String, String> literalMap;
  * }
  * </code>
  * </pre>

@@ -27,15 +27,42 @@ import org.thinkit.framework.envali.catalog.ErrorType;
  * limits.
  * <p>
  * Specify this annotation for fields that do not allow exceed the lower and
- * upper limits,as follows.
+ * upper limits,as follows. If this annotation is specified for an object of
+ * type other than int, long, short, byte, float, double, Integer, Long, Short,
+ * Byte, Float or Double, UnsupportedOperationException will always be thrown at
+ * runtime.
  *
  * <pre>
+ * Specify the expected value for Content Framework:
  * <code>
  * &#64;ParameterMapping( content = "Parameter" )
  * public class ConcreteEntity implements ValidatableEntity, Serializable {
  *
  *      &#64;RequireRangeFromTo
- *      private int number;
+ *      private int intFromTo;
+ *
+ *      &#64;RequireRangeFromTo( ErrorType.RECOVERABLE, message = "failed!" )
+ *      private long longFromTo;
+ *
+ *      &#64;RequireRangeFromTo( ErrorType.UNRECOVERABLE, message = "failed!" )
+ *      private double doubleFromTo;
+ * }
+ * </code>
+ * </pre>
+ *
+ * <pre>
+ * Specify the expected value for the annotation:
+ * <code>
+ * public class ConcreteEntity implements ValidatableEntity, Serializable {
+ *
+ *      &#64;RequireRangeFromTo( intFrom = -10, intTo = 10 )
+ *      private int intFromTo;
+ *
+ *      &#64;RequireRangeFromTo( longFrom = -10l, longTo = 10l, ErrorType.RECOVERABLE, message = "failed!" )
+ *      private long longFromTo;
+ *
+ *      &#64;RequireRangeFromTo( doubleFrom = -10.0d, doubleTo = 10.0d, ErrorType.UNRECOVERABLE, message = "failed!" )
+ *      private double doubleFromTo;
  * }
  * </code>
  * </pre>

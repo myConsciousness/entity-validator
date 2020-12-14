@@ -27,7 +27,9 @@ import org.thinkit.framework.envali.catalog.ErrorType;
  * .
  * <p>
  * Specify this annotation {@link RequireNonBlank} for fields that do not allow
- * {@code ""} as follows.
+ * {@code ""} as follows. If this annotation is specified for an object of type
+ * other than String, UnsupportedOperationException will always be thrown at
+ * runtime.
  *
  * <pre>
  * <code>
@@ -35,6 +37,12 @@ import org.thinkit.framework.envali.catalog.ErrorType;
  *
  *      &#64;RequireNonBlank
  *      private String literal;
+ *
+ *      &#64;RequireNonBlank( errorType = ErrorType.RECOVERABLE, message = "failed!" )
+ *      private String recoverableLiteral;
+ *
+ *      &#64;RequireNonBlank( errorType = ErrorType.UNRECOVERABLE, message = "failed!" )
+ *      private String unrecoverableLiteral;
  * }
  * </code>
  * </pre>

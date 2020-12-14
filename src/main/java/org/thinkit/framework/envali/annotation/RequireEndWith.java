@@ -26,7 +26,10 @@ import org.thinkit.framework.envali.catalog.ErrorType;
  * An annotation indicating that the string ends with a specific string.
  * <p>
  * Specify this annotation for fields that do not allow the string not to end
- * with a specific string as follows.
+ * with a specific string as follows. If this annotation is specified for an
+ * object of type other than String, UnsupportedOperationException will always
+ * be thrown at runtime.
+ *
  *
  * <pre>
  * Specify the expected value for Content Framework:
