@@ -24,7 +24,7 @@ import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.framework.envali.helper.EnvaliContentHelper;
 import org.thinkit.framework.envali.helper.EnvaliFieldHelper;
 import org.thinkit.framework.envali.result.BusinessError;
-import org.thinkit.framework.envali.rule.AnnotationSupport;
+import org.thinkit.framework.envali.rule.AnnotationRequirement;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -85,7 +85,7 @@ abstract class ValidationStrategy<T extends Annotation> {
         this.errorContext = errorContext;
         this.fieldHelper = EnvaliFieldHelper.of(entity, field);
 
-        getAnnotationSupport(errorContext.getValidationPattern()).requireSupportedDataType(this.fieldHelper);
+        getAnnotationRequirement(errorContext.getValidationPattern()).requireSupportedDataType(this.fieldHelper);
 
         if (errorContext.getParameterConfig() == ParameterConfig.CONTENT) {
             this.contentHelper = EnvaliContentHelper.of(entity, field);
@@ -113,31 +113,31 @@ abstract class ValidationStrategy<T extends Annotation> {
     }
 
     /**
-     * Returns the {@link AnnotationSupport} associated with the validation pattern
-     * passed as an argument.
+     * Returns the {@link AnnotationRequirement} associated with the validation
+     * pattern passed as an argument.
      *
      * @param validationPattern The validation pattern based on
      *                          {@link ValidationPattern}
-     * @return The {@link AnnotationSupport} associated with the validation pattern
-     *         passed as an argument.
+     * @return The {@link AnnotationRequirement} associated with the validation
+     *         pattern passed as an argument.
      *
      * @exception NullPointerException If {@code null} is passed as an argument
      *
      * @since 1.0.2
      */
-    private static AnnotationSupport getAnnotationSupport(@NonNull ValidationPattern validationPattern) {
+    private static AnnotationRequirement getAnnotationRequirement(@NonNull ValidationPattern validationPattern) {
         return switch (validationPattern) {
-            case REQUIRE_NON_NULL -> AnnotationSupport.REQUIRE_NON_NULL;
-            case REQUIRE_NON_BLANK -> AnnotationSupport.REQUIRE_NON_BLANK;
-            case REQUIRE_POSITIVE -> AnnotationSupport.REQUIRE_POSITIVE;
-            case REQUIRE_NEGATIVE -> AnnotationSupport.REQUIRE_NEGATIVE;
-            case REQUIRE_RANGE_FROM -> AnnotationSupport.REQUIRE_RANGE_FROM;
-            case REQUIRE_RANGE_TO -> AnnotationSupport.REQUIRE_RANGE_TO;
-            case REQUIRE_RANGE_FROM_TO -> AnnotationSupport.REQUIRE_RANGE_FROM_TO;
-            case REQUIRE_START_WITH -> AnnotationSupport.REQUIRE_START_WITH;
-            case REQUIRE_END_WITH -> AnnotationSupport.REQUIRE_END_WITH;
-            case REQUIRE_NON_EMPTY -> AnnotationSupport.REQUIRE_NON_EMPTY;
-            case NESTED_ENTITY -> AnnotationSupport.NESTED_ENTITY;
+            case REQUIRE_NON_NULL -> AnnotationRequirement.REQUIRE_NON_NULL;
+            case REQUIRE_NON_BLANK -> AnnotationRequirement.REQUIRE_NON_BLANK;
+            case REQUIRE_POSITIVE -> AnnotationRequirement.REQUIRE_POSITIVE;
+            case REQUIRE_NEGATIVE -> AnnotationRequirement.REQUIRE_NEGATIVE;
+            case REQUIRE_RANGE_FROM -> AnnotationRequirement.REQUIRE_RANGE_FROM;
+            case REQUIRE_RANGE_TO -> AnnotationRequirement.REQUIRE_RANGE_TO;
+            case REQUIRE_RANGE_FROM_TO -> AnnotationRequirement.REQUIRE_RANGE_FROM_TO;
+            case REQUIRE_START_WITH -> AnnotationRequirement.REQUIRE_START_WITH;
+            case REQUIRE_END_WITH -> AnnotationRequirement.REQUIRE_END_WITH;
+            case REQUIRE_NON_EMPTY -> AnnotationRequirement.REQUIRE_NON_EMPTY;
+            case NESTED_ENTITY -> AnnotationRequirement.NESTED_ENTITY;
         };
     }
 }

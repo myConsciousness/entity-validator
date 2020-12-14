@@ -23,15 +23,15 @@ import org.thinkit.framework.envali.helper.EnvaliFieldHelper;
 import lombok.NonNull;
 
 /**
- * The rule that manages the support of Envali annotation.
+ * The rule that manages the requirement of Envali annotation.
  *
  * @author Kato Shinya
  * @since 1.0.2
  */
-public enum AnnotationSupport {
+public enum AnnotationRequirement {
 
     /**
-     * The support for {@link RequireNonNull}
+     * The requirement for {@link RequireNonNull}
      */
     REQUIRE_NON_NULL {
         @Override
@@ -41,7 +41,7 @@ public enum AnnotationSupport {
     },
 
     /**
-     * The support for {@link RequireNonBlank}
+     * The requirement for {@link RequireNonBlank}
      */
     REQUIRE_NON_BLANK {
         @Override
@@ -55,7 +55,7 @@ public enum AnnotationSupport {
     },
 
     /**
-     * The support for {@link RequirePositive}
+     * The requirement for {@link RequirePositive}
      */
     REQUIRE_POSITIVE {
         @Override
@@ -69,7 +69,7 @@ public enum AnnotationSupport {
     },
 
     /**
-     * The support for {@link RequireNegative}
+     * The requirement for {@link RequireNegative}
      */
     REQUIRE_NEGATIVE {
         @Override
@@ -83,46 +83,52 @@ public enum AnnotationSupport {
     },
 
     /**
-     * The support for {@link RequireRangeFrom}
+     * The requirement for {@link RequireRangeFrom}
      */
     REQUIRE_RANGE_FROM {
         @Override
         public void requireSupportedDataType(@NonNull EnvaliFieldHelper field) {
             if (!(field.isInteger() || field.isLong() || field.isShort() || field.isByte() || field.isFloat()
                     || field.isDouble())) {
-
+                throw new UnsupportedOperationException(String.format(
+                        "The org.thinkit.framework.envali.annotation.RequireRangeFrom annotation supports Integer, Long, Short, Byte, Float, Double type, but was specified for the variable %s#%s of type %s.",
+                        field.getEntityName(), field.getName(), field.getType().getName()));
             }
         }
     },
 
     /**
-     * The support for {@link RequireRangeTo}
+     * The requirement for {@link RequireRangeTo}
      */
     REQUIRE_RANGE_TO {
         @Override
         public void requireSupportedDataType(@NonNull EnvaliFieldHelper field) {
             if (!(field.isInteger() || field.isLong() || field.isShort() || field.isByte() || field.isFloat()
                     || field.isDouble())) {
-
+                throw new UnsupportedOperationException(String.format(
+                        "The org.thinkit.framework.envali.annotation.RequireRangeTo annotation supports Integer, Long, Short, Byte, Float, Double type, but was specified for the variable %s#%s of type %s.",
+                        field.getEntityName(), field.getName(), field.getType().getName()));
             }
         }
     },
 
     /**
-     * The support for {@link RequireRangeFromTo}
+     * The requirement for {@link RequireRangeFromTo}
      */
     REQUIRE_RANGE_FROM_TO {
         @Override
         public void requireSupportedDataType(@NonNull EnvaliFieldHelper field) {
             if (!(field.isInteger() || field.isLong() || field.isShort() || field.isByte() || field.isFloat()
                     || field.isDouble())) {
-
+                throw new UnsupportedOperationException(String.format(
+                        "The org.thinkit.framework.envali.annotation.RequireRangeFromTo annotation supports Integer, Long, Short, Byte, Float, Double type, but was specified for the variable %s#%s of type %s.",
+                        field.getEntityName(), field.getName(), field.getType().getName()));
             }
         }
     },
 
     /**
-     * The support for {@link RequireStartWith}
+     * The requirement for {@link RequireStartWith}
      */
     REQUIRE_START_WITH {
         @Override
@@ -136,7 +142,7 @@ public enum AnnotationSupport {
     },
 
     /**
-     * The support for {@link RequireEndWith}
+     * The requirement for {@link RequireEndWith}
      */
     REQUIRE_END_WITH {
         @Override
@@ -150,19 +156,21 @@ public enum AnnotationSupport {
     },
 
     /**
-     * The support for {@link RequireNonEmpty}
+     * The requirement for {@link RequireNonEmpty}
      */
     REQUIRE_NON_EMPTY {
         @Override
         public void requireSupportedDataType(@NonNull EnvaliFieldHelper field) {
             if (!(field.isString() || field.isArray() || field.isList() || field.isMap() || field.isSet())) {
-
+                throw new UnsupportedOperationException(String.format(
+                        "The org.thinkit.framework.envali.annotation.RequireNonEmpty annotation supports String, Array, List, Map, Set type, but was specified for the variable %s#%s of type %s.",
+                        field.getEntityName(), field.getName(), field.getType().getName()));
             }
         }
     },
 
     /**
-     * The support for {@link NestedEntity}
+     * The requirement for {@link NestedEntity}
      */
     NESTED_ENTITY {
         @Override
@@ -196,12 +204,15 @@ public enum AnnotationSupport {
     };
 
     /**
+     * Tests if the data type of the annotated field to be validated is the data
+     * type supported by the specified Envali annotation.
      *
+     * @param field The field to be validated
      *
-     * @param field
-     * @return
-     *
-     * @exception NullPointerException If {@code null} is passed as an argument
+     * @exception NullPointerException          If {@code null} is passed as an
+     *                                          argument
+     * @exception UnsupportedOperationException If the data type of the annotated
+     *                                          field is not supported
      */
     public abstract void requireSupportedDataType(@NonNull EnvaliFieldHelper field);
 }
