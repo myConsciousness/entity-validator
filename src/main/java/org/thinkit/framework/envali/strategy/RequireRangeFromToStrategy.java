@@ -141,7 +141,7 @@ final class RequireRangeFromToStrategy extends ValidationStrategy<RequireRangeFr
                         Long.parseLong(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
                         Long.parseLong(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)), exception);
             } else {
-                Preconditions.requireRange(field.getInt(), annotation.longFrom(), annotation.longTo(), exception);
+                Preconditions.requireRange(field.getLong(), annotation.longFrom(), annotation.longTo(), exception);
             }
         } else if (field.isShort()) {
             if (super.isContentConfig()) {
@@ -149,7 +149,7 @@ final class RequireRangeFromToStrategy extends ValidationStrategy<RequireRangeFr
                         Short.parseShort(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
                         Short.parseShort(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)), exception);
             } else {
-                Preconditions.requireRange(field.getInt(), annotation.shortFrom(), annotation.shortTo(), exception);
+                Preconditions.requireRange(field.getShort(), annotation.shortFrom(), annotation.shortTo(), exception);
             }
         } else if (field.isByte()) {
             if (super.isContentConfig()) {
@@ -157,7 +157,7 @@ final class RequireRangeFromToStrategy extends ValidationStrategy<RequireRangeFr
                         Byte.parseByte(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
                         Byte.parseByte(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)), exception);
             } else {
-                Preconditions.requireRange(field.getInt(), annotation.byteFrom(), annotation.byteTo(), exception);
+                Preconditions.requireRange(field.getByte(), annotation.byteFrom(), annotation.byteTo(), exception);
             }
         } else if (field.isFloat()) {
             if (super.isContentConfig()) {
@@ -165,7 +165,7 @@ final class RequireRangeFromToStrategy extends ValidationStrategy<RequireRangeFr
                         Float.parseFloat(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
                         Float.parseFloat(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)), exception);
             } else {
-                Preconditions.requireRange(field.getInt(), annotation.floatFrom(), annotation.floatTo(), exception);
+                Preconditions.requireRange(field.getFloat(), annotation.floatFrom(), annotation.floatTo(), exception);
             }
         } else if (field.isDouble()) {
             if (super.isContentConfig()) {
@@ -173,7 +173,8 @@ final class RequireRangeFromToStrategy extends ValidationStrategy<RequireRangeFr
                         Double.parseDouble(super.getContentHelper().get(EnvaliContentAttribute.RANGE_FROM)),
                         Double.parseDouble(super.getContentHelper().get(EnvaliContentAttribute.RANGE_TO)), exception);
             } else {
-                Preconditions.requireRange(field.getInt(), annotation.doubleFrom(), annotation.doubleTo(), exception);
+                Preconditions.requireRange(field.getDouble(), annotation.doubleFrom(), annotation.doubleTo(),
+                        exception);
             }
         }
     }
