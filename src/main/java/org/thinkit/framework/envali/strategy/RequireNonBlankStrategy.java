@@ -76,8 +76,7 @@ final class RequireNonBlankStrategy extends ValidationStrategy<RequireNonBlank> 
         return switch (annotation.errorType()) {
             case RECOVERABLE -> {
                 try {
-                    Preconditions.requireNonBlank(super.getFieldHelper().getString(),
-                            new InvalidValueDetectedException());
+                    Preconditions.requireNonBlank(super.getFieldHelper().getString(), new InvalidValueDetectedException());
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
                     yield BusinessError.recoverable(annotation.message());
@@ -86,8 +85,7 @@ final class RequireNonBlankStrategy extends ValidationStrategy<RequireNonBlank> 
 
             case UNRECOVERABLE -> {
                 try {
-                    Preconditions.requireNonBlank(super.getFieldHelper().getString(),
-                            new InvalidValueDetectedException());
+                    Preconditions.requireNonBlank(super.getFieldHelper().getString(), new InvalidValueDetectedException());
                     yield BusinessError.none();
                 } catch (InvalidValueDetectedException e) {
                     yield BusinessError.unrecoverable(annotation.message());

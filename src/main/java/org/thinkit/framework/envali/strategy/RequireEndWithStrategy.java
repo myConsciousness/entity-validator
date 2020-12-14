@@ -22,7 +22,6 @@ import org.thinkit.framework.envali.catalog.EnvaliContentAttribute;
 import org.thinkit.framework.envali.context.ErrorContext;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.framework.envali.exception.InvalidValueDetectedException;
-import org.thinkit.framework.envali.helper.EnvaliFieldHelper;
 import org.thinkit.framework.envali.result.BusinessError;
 
 import lombok.EqualsAndHashCode;
@@ -72,21 +71,13 @@ final class RequireEndWithStrategy extends ValidationStrategy<RequireEndWith> {
     @Override
     public BusinessError validate() {
 
-        final EnvaliFieldHelper field = super.getFieldHelper();
-
-        if (!field.isString()) {
-            throw new UnsupportedOperationException(String.format(
-                    "The org.thinkit.framework.envali.annotation.RequireEndWith annotation supports String type, but was specified for the variable %s#%s of type %s.",
-                    field.getEntityName(), field.getName(), field.getType().getName()));
-        }
-
         final ErrorContext<RequireEndWith> errorContext = super.getErrorContext();
         final RequireEndWith annotation = errorContext.getAnnotation();
 
         return switch (annotation.errorType()) {
             case RECOVERABLE -> {
                 try {
-                    Preconditions.requireEndWith(field.getString(),
+                    Preconditions.requireEndWith(super.getFieldHelper().getString(),
                             super.isContentConfig() ? super.getContentHelper().get(EnvaliContentAttribute.END_WITH)
                                     : annotation.suffix(),
                             new InvalidValueDetectedException());
@@ -98,7 +89,7 @@ final class RequireEndWithStrategy extends ValidationStrategy<RequireEndWith> {
 
             case UNRECOVERABLE -> {
                 try {
-                    Preconditions.requireEndWith(field.getString(),
+                    Preconditions.requireEndWith(super.getFieldHelper().getString(),
                             super.isContentConfig() ? super.getContentHelper().get(EnvaliContentAttribute.END_WITH)
                                     : annotation.suffix(),
                             new InvalidValueDetectedException());
@@ -109,7 +100,7 @@ final class RequireEndWithStrategy extends ValidationStrategy<RequireEndWith> {
             }
 
             case RUNTIME -> {
-                Preconditions.requireEndWith(field.getString(),
+                Preconditions.requireEndWith(super.getFieldHelper().getString(),
                         super.isContentConfig() ? super.getContentHelper().get(EnvaliContentAttribute.END_WITH)
                                 : annotation.suffix());
                 yield BusinessError.none();

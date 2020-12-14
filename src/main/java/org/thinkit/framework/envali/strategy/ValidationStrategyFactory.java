@@ -97,57 +97,72 @@ public final class ValidationStrategyFactory implements StrategyFactory {
             @NonNull ValidationPattern validationPattern) {
         return switch (validationPattern) {
             case REQUIRE_NON_NULL -> {
-                yield RequireNonNullStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        field.getAnnotation(RequireNonNull.class)), this.validatableEntity, this.field);
+                yield RequireNonNullStrategy.of(
+                        ErrorContext.of(field.getAnnotation(RequireNonNull.class), validationPattern),
+                        this.validatableEntity, this.field);
             }
 
             case REQUIRE_NON_BLANK -> {
-                yield RequireNonBlankStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        field.getAnnotation(RequireNonBlank.class)), this.validatableEntity, this.field);
+                yield RequireNonBlankStrategy.of(
+                        ErrorContext.of(field.getAnnotation(RequireNonBlank.class), validationPattern),
+                        this.validatableEntity, this.field);
             }
 
             case REQUIRE_POSITIVE -> {
-                yield RequirePositiveStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        field.getAnnotation(RequirePositive.class)), this.validatableEntity, this.field);
+                yield RequirePositiveStrategy.of(
+                        ErrorContext.of(field.getAnnotation(RequirePositive.class), validationPattern),
+                        this.validatableEntity, this.field);
             }
 
             case REQUIRE_NEGATIVE -> {
-                yield RequireNegativeStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        field.getAnnotation(RequireNegative.class)), this.validatableEntity, this.field);
+                yield RequireNegativeStrategy.of(
+                        ErrorContext.of(field.getAnnotation(RequireNegative.class), validationPattern),
+                        this.validatableEntity, this.field);
             }
 
             case REQUIRE_RANGE_FROM -> {
-                yield RequireRangeFromStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        field.getAnnotation(RequireRangeFrom.class)), this.validatableEntity, this.field);
+                yield RequireRangeFromStrategy.of(
+                        ErrorContext.of(this.validatableEntity.getParameterConfig(),
+                                field.getAnnotation(RequireRangeFrom.class), validationPattern),
+                        this.validatableEntity, this.field);
             }
 
             case REQUIRE_RANGE_TO -> {
-                yield RequireRangeToStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        field.getAnnotation(RequireRangeTo.class)), this.validatableEntity, this.field);
+                yield RequireRangeToStrategy.of(
+                        ErrorContext.of(this.validatableEntity.getParameterConfig(),
+                                field.getAnnotation(RequireRangeTo.class), validationPattern),
+                        this.validatableEntity, this.field);
             }
 
             case REQUIRE_RANGE_FROM_TO -> {
-                yield RequireRangeFromToStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        field.getAnnotation(RequireRangeFromTo.class)), this.validatableEntity, this.field);
+                yield RequireRangeFromToStrategy.of(
+                        ErrorContext.of(this.validatableEntity.getParameterConfig(),
+                                field.getAnnotation(RequireRangeFromTo.class), validationPattern),
+                        this.validatableEntity, this.field);
             }
 
             case REQUIRE_START_WITH -> {
-                yield RequireStartWithStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        field.getAnnotation(RequireStartWith.class)), this.validatableEntity, this.field);
+                yield RequireStartWithStrategy.of(
+                        ErrorContext.of(this.validatableEntity.getParameterConfig(),
+                                field.getAnnotation(RequireStartWith.class), validationPattern),
+                        this.validatableEntity, this.field);
             }
 
             case REQUIRE_END_WITH -> {
-                yield RequireEndWithStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        field.getAnnotation(RequireEndWith.class)), this.validatableEntity, this.field);
+                yield RequireEndWithStrategy.of(
+                        ErrorContext.of(this.validatableEntity.getParameterConfig(),
+                                field.getAnnotation(RequireEndWith.class), validationPattern),
+                        this.validatableEntity, this.field);
             }
 
             case REQUIRE_NON_EMPTY -> {
-                yield RequireNonEmptyStrategy.of(ErrorContext.of(this.validatableEntity.getParameterConfig(),
-                        field.getAnnotation(RequireNonEmpty.class)), this.validatableEntity, this.field);
+                yield RequireNonEmptyStrategy.of(
+                        ErrorContext.of(field.getAnnotation(RequireNonEmpty.class), validationPattern),
+                        this.validatableEntity, this.field);
             }
 
             case NESTED_ENTITY -> {
-                yield NestedEntityStrategy.of(ErrorContext.none(), this.validatableEntity, this.field);
+                yield NestedEntityStrategy.of(ErrorContext.of(validationPattern), this.validatableEntity, this.field);
             }
         };
     }

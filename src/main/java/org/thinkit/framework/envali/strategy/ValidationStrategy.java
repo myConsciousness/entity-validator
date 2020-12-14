@@ -18,11 +18,13 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 import org.thinkit.framework.envali.catalog.ParameterConfig;
+import org.thinkit.framework.envali.catalog.ValidationPattern;
 import org.thinkit.framework.envali.context.ErrorContext;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.framework.envali.helper.EnvaliContentHelper;
 import org.thinkit.framework.envali.helper.EnvaliFieldHelper;
 import org.thinkit.framework.envali.result.BusinessError;
+import org.thinkit.framework.envali.rule.AnnotationSupport;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -72,12 +74,18 @@ abstract class ValidationStrategy<T extends Annotation> {
      * @param entity       The entity for validation
      * @param field        The field for validation
      *
-     * @exception NullPointerException If {@code null} is passed as an argument
+     * @exception NullPointerException          If {@code null} is passed as an
+     *                                          argument
+     * @exception UnsupportedOperationException When specific Envali annotation is
+     *                                          specified for the field of
+     *                                          unsupported data type
      */
     protected ValidationStrategy(@NonNull ErrorContext<T> errorContext, @NonNull ValidatableEntity entity,
             @NonNull Field field) {
         this.errorContext = errorContext;
         this.fieldHelper = EnvaliFieldHelper.of(entity, field);
+
+        getAnnotationSupport(errorContext.getValidationPattern()).requireSupportedDataType(this.fieldHelper);
 
         if (errorContext.getParameterConfig() == ParameterConfig.CONTENT) {
             this.contentHelper = EnvaliContentHelper.of(entity, field);
@@ -102,5 +110,34 @@ abstract class ValidationStrategy<T extends Annotation> {
      */
     protected boolean isContentConfig() {
         return this.errorContext.getParameterConfig() == ParameterConfig.CONTENT;
+    }
+
+    /**
+     * Returns the {@link AnnotationSupport} associated with the validation pattern
+     * passed as an argument.
+     *
+     * @param validationPattern The validation pattern based on
+     *                          {@link ValidationPattern}
+     * @return The {@link AnnotationSupport} associated with the validation pattern
+     *         passed as an argument.
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     *
+     * @since 1.0.2
+     */
+    private static AnnotationSupport getAnnotationSupport(@NonNull ValidationPattern validationPattern) {
+        return switch (validationPattern) {
+            case REQUIRE_NON_NULL -> AnnotationSupport.REQUIRE_NON_NULL;
+            case REQUIRE_NON_BLANK -> AnnotationSupport.REQUIRE_NON_BLANK;
+            case REQUIRE_POSITIVE -> AnnotationSupport.REQUIRE_POSITIVE;
+            case REQUIRE_NEGATIVE -> AnnotationSupport.REQUIRE_NEGATIVE;
+            case REQUIRE_RANGE_FROM -> AnnotationSupport.REQUIRE_RANGE_FROM;
+            case REQUIRE_RANGE_TO -> AnnotationSupport.REQUIRE_RANGE_TO;
+            case REQUIRE_RANGE_FROM_TO -> AnnotationSupport.REQUIRE_RANGE_FROM_TO;
+            case REQUIRE_START_WITH -> AnnotationSupport.REQUIRE_START_WITH;
+            case REQUIRE_END_WITH -> AnnotationSupport.REQUIRE_END_WITH;
+            case REQUIRE_NON_EMPTY -> AnnotationSupport.REQUIRE_NON_EMPTY;
+            case NESTED_ENTITY -> AnnotationSupport.NESTED_ENTITY;
+        };
     }
 }
