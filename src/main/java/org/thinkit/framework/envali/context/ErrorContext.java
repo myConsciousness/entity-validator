@@ -77,10 +77,12 @@ public final class ErrorContext<T extends Annotation> implements Serializable {
      * Returns the new instance of {@link ErrorContext} based on the data passed as
      * argument.
      *
+     * @param <T>             The annotation type with
+     *                        {@link java.lang.annotation.Annotation} class as a
+     *                        parent
      * @param parameterConfig The parameter configuration based on
      *                        {@link ParameterConfig}
-     * @param errorType       The error type based on {@link ErrorType}
-     * @param message         The message
+     * @param annotation      The Envali supported annotation
      * @return The new instance of {@link ErrorContext} based on the data passed as
      *         argument
      *
@@ -95,6 +97,8 @@ public final class ErrorContext<T extends Annotation> implements Serializable {
      * Returns the new instance of {@link ErrorContext} indicates there is no
      * context.
      *
+     * @param <T> The annotation type with {@link java.lang.annotation.Annotation}
+     *            class as a parent
      * @return The new instance of {@link ErrorContext} indicates there is no
      *         context
      */
