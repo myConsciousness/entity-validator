@@ -6,4 +6,5 @@ org.thinkit.framework.envali.entity
 org.thinkit.framework.envali.exception
 org.thinkit.framework.envali.helper
 org.thinkit.framework.envali.result
+org.thinkit.framework.envali.rule
 org.thinkit.framework.envali.strategy

@@ -85,6 +85,12 @@ public @interface <span class="type-name-label">RequireNegative</span></pre>
 
       &#64;RequireNegative
       private int number;
+
+      &#64;RequireNegative(errorType = ErrorType.RECOVERABLE, message = "failed!" )
+      private int recoverableNumber;
+
+      &#64;RequireNegative(errorType = ErrorType.UNRECOVERABLE, message = "failed!" )
+      private int unrecoverableNumber;
  }
  </code>
  </pre></div>

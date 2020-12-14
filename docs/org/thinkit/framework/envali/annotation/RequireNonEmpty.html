@@ -78,6 +78,10 @@ public @interface <span class="type-name-label">RequireNonEmpty</span></pre>
  <p>
  Specify this annotation <a href="RequireNonNull.html" title="org.thinkit.framework.envali.annotation内の注釈"><code>RequireNonNull</code></a> for fields that do not allow
  <code>null</code> or empty as follows.
+ <p>
+ This annotation can be specified for array, <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link"><code>String</code></a>, <code>List</code>,
+ <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/Map.html" title="java.util内のクラスまたはインタフェース" class="external-link"><code>Map</code></a>, and <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/Set.html" title="java.util内のクラスまたはインタフェース" class="external-link"><code>Set</code></a>, otherwise <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="java.lang内のクラスまたはインタフェース" class="external-link"><code>UnsupportedOperationException</code></a>
+ will be thrown at runtime.
 
  <pre>
  <code>

@@ -85,6 +85,12 @@ public @interface <span class="type-name-label">RequireNonBlank</span></pre>
 
       &#64;RequireNonBlank
       private String literal;
+
+      &#64;RequireNonBlank( errorType = ErrorType.RECOVERABLE, message = "failed!" )
+      private String recoverableLiteral;
+
+      &#64;RequireNonBlank( errorType = ErrorType.UNRECOVERABLE, message = "failed!" )
+      private String unrecoverableLiteral;
  }
  </code>
  </pre></div>
