@@ -12,36 +12,36 @@
     {
       "node": {
         "conditionId": "0",
-        "errorType": "",
         "message": "",
         "rangeFrom": "",
         "rangeTo": "",
         "startWith": "",
-        "endWith": ""
+        "endWith": "",
+        "regexExpression": ""
       }
     },
 
     {
       "node": {
         "conditionId": "1",
-        "errorType": "",
         "message": "",
         "rangeFrom": "",
         "rangeTo": "",
         "startWith": "",
-        "endWith": ""
+        "endWith": "",
+        "regexExpression": ""
       }
     },
 
     {
       "node": {
         "conditionId": "2",
-        "errorType": "",
         "message": "",
         "rangeFrom": "",
         "rangeTo": "",
         "startWith": "",
-        "endWith": ""
+        "endWith": "",
+        "regexExpression": ""
       }
     }
   ],
