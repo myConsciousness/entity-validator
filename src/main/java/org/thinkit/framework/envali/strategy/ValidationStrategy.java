@@ -138,6 +138,8 @@ abstract class ValidationStrategy<T extends Annotation> {
             case REQUIRE_END_WITH -> AnnotationRequirement.REQUIRE_END_WITH;
             case REQUIRE_NON_EMPTY -> AnnotationRequirement.REQUIRE_NON_EMPTY;
             case NESTED_ENTITY -> AnnotationRequirement.NESTED_ENTITY;
+            case REQUIRE_MATCH -> AnnotationRequirement.REQUIRE_MATCH;
+            case REQUIRE_MATCH_PRESET -> AnnotationRequirement.REQUIRE_MATCH_PRESET;
         };
     }
 }

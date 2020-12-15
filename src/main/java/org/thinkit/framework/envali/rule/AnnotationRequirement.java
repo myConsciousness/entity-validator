@@ -14,8 +14,8 @@
 
 package org.thinkit.framework.envali.rule;
 
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.framework.envali.helper.EnvaliFieldHelper;
@@ -200,6 +200,34 @@ public enum AnnotationRequirement {
             }
 
             return false;
+        }
+    },
+
+    /**
+     * The requirement for RequireMatch
+     */
+    REQUIRE_MATCH {
+        @Override
+        public void requireSupportedDataType(@NonNull EnvaliFieldHelper field) {
+            if (!field.isString()) {
+                throw new UnsupportedOperationException(String.format(
+                        "The org.thinkit.framework.envali.annotation.RequireMatch annotation supports String type, but was specified for the variable %s#%s of type %s.",
+                        field.getEntityName(), field.getName(), field.getType().getName()));
+            }
+        }
+    },
+
+    /**
+     * The requirement for RequireMatchPreset
+     */
+    REQUIRE_MATCH_PRESET {
+        @Override
+        public void requireSupportedDataType(@NonNull EnvaliFieldHelper field) {
+            if (!field.isString()) {
+                throw new UnsupportedOperationException(String.format(
+                        "The org.thinkit.framework.envali.annotation.RequireMatchPreset annotation supports String type, but was specified for the variable %s#%s of type %s.",
+                        field.getEntityName(), field.getName(), field.getType().getName()));
+            }
         }
     };
 

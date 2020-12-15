@@ -164,6 +164,14 @@ public final class ValidationStrategyFactory implements StrategyFactory {
             case NESTED_ENTITY -> {
                 yield NestedEntityStrategy.of(ErrorContext.of(validationPattern), this.validatableEntity, this.field);
             }
+
+            case REQUIRE_MATCH -> {
+                yield null;
+            }
+
+            case REQUIRE_MATCH_PRESET -> {
+                yield null;
+            }
         };
     }
 }
