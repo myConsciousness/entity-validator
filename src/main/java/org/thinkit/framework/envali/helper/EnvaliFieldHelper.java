@@ -15,6 +15,7 @@
 package org.thinkit.framework.envali.helper;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -128,6 +129,15 @@ public final class EnvaliFieldHelper {
      */
     public Class<?> getType() {
         return this.field.getType();
+    }
+
+    /**
+     * Returns the generic type.
+     *
+     * @return The generic type
+     */
+    public Type getGenericType() {
+        return this.field.getGenericType();
     }
 
     /**
