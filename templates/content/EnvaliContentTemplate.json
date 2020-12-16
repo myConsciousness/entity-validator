@@ -12,7 +12,6 @@
     {
       "node": {
         "conditionId": "0",
-        "message": "",
         "rangeFrom": "",
         "rangeTo": "",
         "startWith": "",
@@ -24,7 +23,6 @@
     {
       "node": {
         "conditionId": "1",
-        "message": "",
         "rangeFrom": "",
         "rangeTo": "",
         "startWith": "",
@@ -36,7 +34,6 @@
     {
       "node": {
         "conditionId": "2",
-        "message": "",
         "rangeFrom": "",
         "rangeTo": "",
         "startWith": "",

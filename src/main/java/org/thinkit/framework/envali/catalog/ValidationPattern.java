@@ -20,7 +20,6 @@ import org.thinkit.api.catalog.BiCatalog;
 import org.thinkit.framework.envali.annotation.NestedEntity;
 import org.thinkit.framework.envali.annotation.RequireEndWith;
 import org.thinkit.framework.envali.annotation.RequireMatch;
-import org.thinkit.framework.envali.annotation.RequireMatchPreset;
 import org.thinkit.framework.envali.annotation.RequireNegative;
 import org.thinkit.framework.envali.annotation.RequireNonBlank;
 import org.thinkit.framework.envali.annotation.RequireNonEmpty;
@@ -101,12 +100,7 @@ public enum ValidationPattern implements BiCatalog<ValidationPattern, Class<? ex
     /**
      * The pattern of {@link RequireMatch}
      */
-    REQUIRE_MATCH(11, RequireMatch.class),
-
-    /**
-     * The pattern of {@link RequireMatchPreset}
-     */
-    REQUIRE_MATCH_PRESET(12, RequireMatchPreset.class);
+    REQUIRE_MATCH(11, RequireMatch.class);
 
     /**
      * The code

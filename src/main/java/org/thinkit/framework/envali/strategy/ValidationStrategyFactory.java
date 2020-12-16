@@ -18,6 +18,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 import org.thinkit.framework.envali.annotation.RequireEndWith;
+import org.thinkit.framework.envali.annotation.RequireMatch;
 import org.thinkit.framework.envali.annotation.RequireNegative;
 import org.thinkit.framework.envali.annotation.RequireNonBlank;
 import org.thinkit.framework.envali.annotation.RequireNonEmpty;
@@ -166,11 +167,9 @@ public final class ValidationStrategyFactory implements StrategyFactory {
             }
 
             case REQUIRE_MATCH -> {
-                yield null;
-            }
-
-            case REQUIRE_MATCH_PRESET -> {
-                yield null;
+                yield RequireMatchStrategy.of(
+                        ErrorContext.of(field.getAnnotation(RequireMatch.class), validationPattern),
+                        this.validatableEntity, this.field);
             }
         };
     }

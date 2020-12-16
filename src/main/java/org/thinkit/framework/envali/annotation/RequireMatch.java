@@ -23,6 +23,7 @@ import java.lang.annotation.Target;
 import org.thinkit.framework.envali.catalog.ErrorType;
 import org.thinkit.framework.envali.catalog.RegexMethod;
 import org.thinkit.framework.envali.catalog.RegexModifier;
+import org.thinkit.framework.envali.catalog.RegexPreset;
 
 /**
  * An annotation that indicates the value of the field matches the regular
@@ -59,6 +60,14 @@ public @interface RequireMatch {
      * @return The regular expression
      */
     public String expression() default "";
+
+    /**
+     * Returns the preset of regular expression based on {@link RegexPreset} , and
+     * {@link RegexPreset#NONE} is set as the default.
+     *
+     * @return The preset of regular expression based on {@link RegexPreset}
+     */
+    public RegexPreset presetExpression() default RegexPreset.NONE;
 
     /**
      * Returns the array of regex modifiers based on {@link RegexModifier} , and an

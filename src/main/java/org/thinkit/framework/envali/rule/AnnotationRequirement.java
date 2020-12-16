@@ -215,20 +215,6 @@ public enum AnnotationRequirement {
                         field.getEntityName(), field.getName(), field.getType().getName()));
             }
         }
-    },
-
-    /**
-     * The requirement for RequireMatchPreset
-     */
-    REQUIRE_MATCH_PRESET {
-        @Override
-        public void requireSupportedDataType(@NonNull EnvaliFieldHelper field) {
-            if (!field.isString()) {
-                throw new UnsupportedOperationException(String.format(
-                        "The org.thinkit.framework.envali.annotation.RequireMatchPreset annotation supports String type, but was specified for the variable %s#%s of type %s.",
-                        field.getEntityName(), field.getName(), field.getType().getName()));
-            }
-        }
     };
 
     /**
