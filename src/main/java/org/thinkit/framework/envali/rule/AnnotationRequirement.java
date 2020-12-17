@@ -178,18 +178,17 @@ public enum AnnotationRequirement {
         public void requireSupportedDataType(@NonNull EnvaliFieldHelper field) {
             if (field.isCollection()) {
                 try {
-                    final ParameterizedType type = ((ParameterizedType) field.getGenericType());
+                    final ParameterizedType parameterizedType = ((ParameterizedType) field.getGenericType());
+                    final Class<?> clazz = Class.forName(parameterizedType.getActualTypeArguments()[0].getTypeName());
 
-                    if (!this.isValidatableEntity(Arrays
-                            .asList(Class.forName(type.getActualTypeArguments()[0].getTypeName()).getInterfaces()))) {
+                    if (!this.isValidatableEntity(Arrays.asList(clazz.getInterfaces()))) {
                         throw new UnsupportedOperationException(String.format(
                                 "The generic type specified for collection %s#%s does not implement the org.thinkit.framework.envali.entity.ValidatableEntity interface.",
-                                type, field.getName()));
+                                parameterizedType, field.getName()));
                     }
                 } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+                    throw new IllegalStateException(e);
                 }
-
             } else {
                 if (!this.isValidatableEntity(Arrays.asList(field.get().getClass().getInterfaces()))) {
                     throw new UnsupportedOperationException(String.format(
@@ -203,7 +202,7 @@ public enum AnnotationRequirement {
          * Tests if a field object annotated with NestedEntity implements the
          * {@link ValidatableEntity} interface.
          *
-         * @param interfaces The list of to be validated
+         * @param interfaces The list of interfaces to be validated
          * @return {@code true} if a field object implemets the the ValidatableEntity} ,
          *         or {@code false}
          *
