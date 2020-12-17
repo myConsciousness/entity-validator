@@ -91,10 +91,11 @@ public final class EnvaliFieldHelper {
      * @return An object field value
      *
      * @exception UnsupportedOperationException If a different object is passed
-     *                                          during the reflection process, or if
-     *                                          an attempt is made to access an area
-     *                                          that does not meet the permissions
-     *                                          during the reflection process
+     *                                          during the reflection process,
+     *                                          otherwise if an attempt is made to
+     *                                          access an area that does not meet
+     *                                          the permissions during the
+     *                                          reflection process
      */
     public Object get() {
         try {
@@ -260,7 +261,8 @@ public final class EnvaliFieldHelper {
     /**
      * Checks if the data type of the field is String.
      *
-     * @return {@code true} if the data type of field is String, or {@code false}
+     * @return {@code true} if the data type of field is String, otherwise
+     *         {@code false}
      */
     public boolean isString() {
         return this.fieldDataType.equals(String.class);
@@ -269,7 +271,8 @@ public final class EnvaliFieldHelper {
     /**
      * Checks if the data type of the field is Integer.
      *
-     * @return {@code true} if the data type of field is Integer, or {@code false}
+     * @return {@code true} if the data type of field is Integer, otherwise
+     *         {@code false}
      */
     public boolean isInteger() {
         return this.fieldDataType.equals(Integer.class) || this.fieldDataType.equals(int.class);
@@ -278,7 +281,8 @@ public final class EnvaliFieldHelper {
     /**
      * Checks if the data type of the field is Long.
      *
-     * @return {@code true} if the data type of field is Long, or {@code false}
+     * @return {@code true} if the data type of field is Long, otherwise
+     *         {@code false}
      */
     public boolean isLong() {
         return this.fieldDataType.equals(Long.class) || this.fieldDataType.equals(long.class);
@@ -287,7 +291,8 @@ public final class EnvaliFieldHelper {
     /**
      * Checks if the data type of the field is Short.
      *
-     * @return {@code true} if the data type of field is Short, or {@code false}
+     * @return {@code true} if the data type of field is Short, otherwise
+     *         {@code false}
      */
     public boolean isShort() {
         return this.fieldDataType.equals(Short.class) || this.fieldDataType.equals(short.class);
@@ -296,7 +301,8 @@ public final class EnvaliFieldHelper {
     /**
      * Checks if the data type of the field is Byte.
      *
-     * @return {@code true} if the data type of field is Byte, or {@code false}
+     * @return {@code true} if the data type of field is Byte, otherwise
+     *         {@code false}
      */
     public boolean isByte() {
         return this.fieldDataType.equals(Byte.class) || this.fieldDataType.equals(byte.class);
@@ -305,7 +311,8 @@ public final class EnvaliFieldHelper {
     /**
      * Checks if the data type of the field is Float.
      *
-     * @return {@code true} if the data type of field is Float, or {@code false}
+     * @return {@code true} if the data type of field is Float, otherwise
+     *         {@code false}
      */
     public boolean isFloat() {
         return this.fieldDataType.equals(Float.class) || this.fieldDataType.equals(float.class);
@@ -314,7 +321,8 @@ public final class EnvaliFieldHelper {
     /**
      * Checks if the data type of the field is Array.
      *
-     * @return {@code true} if the data type of field is Array, or {@code false}
+     * @return {@code true} if the data type of field is Array, otherwise
+     *         {@code false}
      */
     public boolean isArray() {
         return this.fieldDataType.isArray();
@@ -323,7 +331,8 @@ public final class EnvaliFieldHelper {
     /**
      * Checks if the data type of the field is List.
      *
-     * @return {@code true} if the data type of field is List, or {@code false}
+     * @return {@code true} if the data type of field is List, otherwise
+     *         {@code false}
      */
     public boolean isList() {
         return this.fieldDataType.equals(List.class);
@@ -332,7 +341,8 @@ public final class EnvaliFieldHelper {
     /**
      * Checks if the data type of the field is Map.
      *
-     * @return {@code true} if the data type of field is Map, or {@code false}
+     * @return {@code true} if the data type of field is Map, otherwise
+     *         {@code false}
      */
     public boolean isMap() {
         return this.fieldDataType.equals(Map.class);
@@ -341,16 +351,28 @@ public final class EnvaliFieldHelper {
     /**
      * Checks if the data type of the field is Set.
      *
-     * @return {@code true} if the data type of field is Set, or {@code false}
+     * @return {@code true} if the data type of field is Set, otherwise
+     *         {@code false}
      */
     public boolean isSet() {
         return this.fieldDataType.equals(Set.class);
     }
 
     /**
+     * Checks if the data type of the field is collection.
+     *
+     * @return {@code true} if the data type of field is List, Map or Set, otherwise
+     *         {@code false}
+     */
+    public boolean isCollection() {
+        return this.isList() || this.isMap() || this.isSet();
+    }
+
+    /**
      * Checks if the data type of the field is Double.
      *
-     * @return {@code true} if the data type of field is Double, or {@code false}
+     * @return {@code true} if the data type of field is Double, otherwise
+     *         {@code false}
      */
     public boolean isDouble() {
         return this.fieldDataType.equals(Double.class) || this.fieldDataType.equals(double.class);
@@ -360,7 +382,7 @@ public final class EnvaliFieldHelper {
      * Checks if the data type of the field is {@link ValidatableEntity} .
      *
      * @return {@code true} if the data type of field is {@link ValidatableEntity} ,
-     *         or {@code false}
+     *         otherwise {@code false}
      */
     public boolean isValidatableEntity() {
         return this.fieldDataType.equals(ValidatableEntity.class);

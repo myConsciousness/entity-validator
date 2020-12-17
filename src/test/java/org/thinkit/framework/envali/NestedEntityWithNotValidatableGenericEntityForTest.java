@@ -14,6 +14,8 @@
 
 package org.thinkit.framework.envali;
 
+import java.util.List;
+
 import org.thinkit.framework.envali.annotation.NestedEntity;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 
@@ -22,29 +24,29 @@ import org.thinkit.framework.envali.entity.ValidatableEntity;
  * {@link Envali} interface and the {@link NestedEntity} annotation.
  *
  * @author Kato Shinya
- * @since 1.0.0
+ * @since 1.0.2
  */
-final class NestedEntityWithNotValidatableEntityForTest implements ValidatableEntity {
+final class NestedEntityWithNotValidatableGenericEntityForTest implements ValidatableEntity {
 
     /**
-     * The entity
+     * The entity with generic
      */
     @NestedEntity
-    private StringBuilder entity;
+    private List<String> genericEntity;
 
     /**
      * Default constructor
      */
     @SuppressWarnings("unused")
-    private NestedEntityWithNotValidatableEntityForTest() {
+    private NestedEntityWithNotValidatableGenericEntityForTest() {
     }
 
     /**
      * Constructor
      *
-     * @param entity The entity
+     * @param genericEntity The entity with generic type
      */
-    public NestedEntityWithNotValidatableEntityForTest(StringBuilder entity) {
-        this.entity = entity;
+    public NestedEntityWithNotValidatableGenericEntityForTest(List<String> genericEntity) {
+        this.genericEntity = genericEntity;
     }
 }

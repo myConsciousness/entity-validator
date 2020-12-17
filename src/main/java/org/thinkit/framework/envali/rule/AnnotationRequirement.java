@@ -178,13 +178,13 @@ public enum AnnotationRequirement {
         public void requireSupportedDataType(@NonNull EnvaliFieldHelper field) {
             if (field.isCollection()) {
                 try {
-                    final Class<?> clazz = Class.forName(
-                            ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0].getTypeName());
+                    final ParameterizedType type = ((ParameterizedType) field.getGenericType());
 
-                    if (!this.isValidatableEntity(Arrays.asList(clazz.getInterfaces()))) {
+                    if (!this.isValidatableEntity(Arrays
+                            .asList(Class.forName(type.getActualTypeArguments()[0].getTypeName()).getInterfaces()))) {
                         throw new UnsupportedOperationException(String.format(
                                 "The generic type specified for collection %s#%s does not implement the org.thinkit.framework.envali.entity.ValidatableEntity interface.",
-                                clazz.getName(), field.getName()));
+                                type, field.getName()));
                     }
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();

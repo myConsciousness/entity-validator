@@ -544,12 +544,24 @@ public final class EnvaliTest {
         }
 
         @Test
+        void testWhenNestedGenericEntityIsNotValidatable() {
+            final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
+                    () -> Envali.validate(new NestedEntityWithNotValidatableGenericEntityForTest(List.of())));
+
+                    assertNotNull(exception);
+            assertEquals(
+                    "The generic type specified for collection java.util.List<java.lang.String>#genericEntity does not implement the org.thinkit.framework.envali.entity.ValidatableEntity interface.",
+                    exception.getMessage());
+        }
+
+        @Test
         void testWhenNestedEntityIsNotValidatable() {
             final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
-                    () -> Envali.validate(new NestedEntityWithNotValidatableEntityForTest(List.of())));
+                    () -> Envali.validate(new NestedEntityWithNotValidatableEntityForTest(new StringBuilder())));
 
+                    assertNotNull(exception);
             assertEquals(
-                    "The java.util.ImmutableCollections$ListN does not implement the org.thinkit.framework.envali.entity.ValidatableEntity interface.",
+                    "The org.thinkit.framework.envali.NestedEntityWithNotValidatableEntityForTest#entity does not implement the org.thinkit.framework.envali.entity.ValidatableEntity interface.",
                     exception.getMessage());
         }
     }
