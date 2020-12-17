@@ -14,6 +14,7 @@
 
 package org.thinkit.framework.envali.rule;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.List;
 
@@ -161,7 +162,7 @@ public enum AnnotationRequirement {
     REQUIRE_NON_EMPTY {
         @Override
         public void requireSupportedDataType(@NonNull EnvaliFieldHelper field) {
-            if (!(field.isString() || field.isArray() || field.isList() || field.isMap() || field.isSet())) {
+            if (!(field.isString() || field.isArray() || field.isCollection())) {
                 throw new UnsupportedOperationException(String.format(
                         "The org.thinkit.framework.envali.annotation.RequireNonEmpty annotation supports String, Array, List, Map, Set type, but was specified for the variable %s#%s of type %s.",
                         field.getEntityName(), field.getName(), field.getType().getName()));
@@ -175,10 +176,26 @@ public enum AnnotationRequirement {
     NESTED_ENTITY {
         @Override
         public void requireSupportedDataType(@NonNull EnvaliFieldHelper field) {
-            if (!this.isValidatableEntity(field)) {
-                throw new UnsupportedOperationException(String.format(
-                        "The %s does not implement the org.thinkit.framework.envali.entity.ValidatableEntity interface.",
-                        field.get().getClass().getName()));
+            if (field.isCollection()) {
+                try {
+                    final Class<?> clazz = Class.forName(
+                            ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0].getTypeName());
+
+                    if (!this.isValidatableEntity(Arrays.asList(clazz.getInterfaces()))) {
+                        throw new UnsupportedOperationException(String.format(
+                                "The generic type specified for collection %s#%s does not implement the org.thinkit.framework.envali.entity.ValidatableEntity interface.",
+                                clazz.getName(), field.getName()));
+                    }
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+                if (!this.isValidatableEntity(Arrays.asList(field.get().getClass().getInterfaces()))) {
+                    throw new UnsupportedOperationException(String.format(
+                            "The %s#%s does not implement the org.thinkit.framework.envali.entity.ValidatableEntity interface.",
+                            field.getEntityName(), field.getName()));
+                }
             }
         }
 
@@ -186,12 +203,13 @@ public enum AnnotationRequirement {
          * Tests if a field object annotated with NestedEntity implements the
          * {@link ValidatableEntity} interface.
          *
+         * @param interfaces The list of to be validated
          * @return {@code true} if a field object implemets the the ValidatableEntity} ,
          *         or {@code false}
+         *
+         * @exception NullPointerException If {@code null} is passed as an argument
          */
-        private boolean isValidatableEntity(@NonNull EnvaliFieldHelper field) {
-
-            final List<Class<?>> interfaces = Arrays.asList(field.get().getClass().getInterfaces());
+        private boolean isValidatableEntity(@NonNull List<Class<?>> interfaces) {
 
             for (Class<?> _interface : interfaces) {
                 if (_interface.equals(ValidatableEntity.class)) {
