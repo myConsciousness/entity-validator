@@ -15,7 +15,10 @@
 package org.thinkit.framework.envali.helper;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,6 +26,7 @@ import java.util.Set;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 
@@ -50,7 +54,20 @@ public final class EnvaliFieldHelper {
     /**
      * The field data type
      */
-    private Class<?> fieldDataType;
+    @Getter
+    private Class<?> type;
+
+    /**
+     * The list of parameterized validatable entity
+     */
+    @Getter
+    private ParameterizedType parameterizedType;
+
+    /**
+     * The list of parameterized validatable entity
+     */
+    @Getter
+    private List<Class<?>> parameterizedValidatableEntities = new ArrayList<>(0);
 
     /**
      * Default Constructor
@@ -69,7 +86,21 @@ public final class EnvaliFieldHelper {
     private EnvaliFieldHelper(@NonNull ValidatableEntity validatableEntity, @NonNull Field field) {
         this.validatableEntity = validatableEntity;
         this.field = field;
-        this.fieldDataType = field.getType();
+        this.type = field.getType();
+
+        final Type genericType = field.getGenericType();
+
+        if (genericType instanceof ParameterizedType) {
+            this.parameterizedType = (ParameterizedType) genericType;
+
+            Arrays.asList(this.parameterizedType.getActualTypeArguments()).forEach(actualTypeArgument -> {
+                try {
+                    this.parameterizedValidatableEntities.add(Class.forName(actualTypeArgument.getTypeName()));
+                } catch (ClassNotFoundException e) {
+                    throw new IllegalStateException(e);
+                }
+            });
+        }
     }
 
     /**
@@ -121,15 +152,6 @@ public final class EnvaliFieldHelper {
      */
     public String getEntitySimpleName() {
         return this.validatableEntity.getClass().getSimpleName();
-    }
-
-    /**
-     * Returns the field type.
-     *
-     * @return The field type
-     */
-    public Class<?> getType() {
-        return this.field.getType();
     }
 
     /**
@@ -259,107 +281,107 @@ public final class EnvaliFieldHelper {
     }
 
     /**
-     * Checks if the data type of the field is String.
+     * Tests if the data type of the field is String.
      *
      * @return {@code true} if the data type of field is String, otherwise
      *         {@code false}
      */
     public boolean isString() {
-        return this.fieldDataType.equals(String.class);
+        return this.type.equals(String.class);
     }
 
     /**
-     * Checks if the data type of the field is Integer.
+     * Tests if the data type of the field is Integer.
      *
      * @return {@code true} if the data type of field is Integer, otherwise
      *         {@code false}
      */
     public boolean isInteger() {
-        return this.fieldDataType.equals(Integer.class) || this.fieldDataType.equals(int.class);
+        return this.type.equals(Integer.class) || this.type.equals(int.class);
     }
 
     /**
-     * Checks if the data type of the field is Long.
+     * Tests if the data type of the field is Long.
      *
      * @return {@code true} if the data type of field is Long, otherwise
      *         {@code false}
      */
     public boolean isLong() {
-        return this.fieldDataType.equals(Long.class) || this.fieldDataType.equals(long.class);
+        return this.type.equals(Long.class) || this.type.equals(long.class);
     }
 
     /**
-     * Checks if the data type of the field is Short.
+     * Tests if the data type of the field is Short.
      *
      * @return {@code true} if the data type of field is Short, otherwise
      *         {@code false}
      */
     public boolean isShort() {
-        return this.fieldDataType.equals(Short.class) || this.fieldDataType.equals(short.class);
+        return this.type.equals(Short.class) || this.type.equals(short.class);
     }
 
     /**
-     * Checks if the data type of the field is Byte.
+     * Tests if the data type of the field is Byte.
      *
      * @return {@code true} if the data type of field is Byte, otherwise
      *         {@code false}
      */
     public boolean isByte() {
-        return this.fieldDataType.equals(Byte.class) || this.fieldDataType.equals(byte.class);
+        return this.type.equals(Byte.class) || this.type.equals(byte.class);
     }
 
     /**
-     * Checks if the data type of the field is Float.
+     * Tests if the data type of the field is Float.
      *
      * @return {@code true} if the data type of field is Float, otherwise
      *         {@code false}
      */
     public boolean isFloat() {
-        return this.fieldDataType.equals(Float.class) || this.fieldDataType.equals(float.class);
+        return this.type.equals(Float.class) || this.type.equals(float.class);
     }
 
     /**
-     * Checks if the data type of the field is Array.
+     * Tests if the data type of the field is Array.
      *
      * @return {@code true} if the data type of field is Array, otherwise
      *         {@code false}
      */
     public boolean isArray() {
-        return this.fieldDataType.isArray();
+        return this.type.isArray();
     }
 
     /**
-     * Checks if the data type of the field is List.
+     * Tests if the data type of the field is List.
      *
      * @return {@code true} if the data type of field is List, otherwise
      *         {@code false}
      */
     public boolean isList() {
-        return this.fieldDataType.equals(List.class);
+        return this.type.equals(List.class);
     }
 
     /**
-     * Checks if the data type of the field is Map.
+     * Tests if the data type of the field is Map.
      *
      * @return {@code true} if the data type of field is Map, otherwise
      *         {@code false}
      */
     public boolean isMap() {
-        return this.fieldDataType.equals(Map.class);
+        return this.type.equals(Map.class);
     }
 
     /**
-     * Checks if the data type of the field is Set.
+     * Tests if the data type of the field is Set.
      *
      * @return {@code true} if the data type of field is Set, otherwise
      *         {@code false}
      */
     public boolean isSet() {
-        return this.fieldDataType.equals(Set.class);
+        return this.type.equals(Set.class);
     }
 
     /**
-     * Checks if the data type of the field is collection.
+     * Tests if the data type of the field is collection.
      *
      * @return {@code true} if the data type of field is List, Map or Set, otherwise
      *         {@code false}
@@ -369,22 +391,64 @@ public final class EnvaliFieldHelper {
     }
 
     /**
-     * Checks if the data type of the field is Double.
+     * Tests if the data type of the field is Double.
      *
      * @return {@code true} if the data type of field is Double, otherwise
      *         {@code false}
      */
     public boolean isDouble() {
-        return this.fieldDataType.equals(Double.class) || this.fieldDataType.equals(double.class);
+        return this.type.equals(Double.class) || this.type.equals(double.class);
     }
 
     /**
-     * Checks if the data type of the field is {@link ValidatableEntity} .
+     * Tests if the data type of the field is {@link ValidatableEntity} .
      *
      * @return {@code true} if the data type of field is {@link ValidatableEntity} ,
      *         otherwise {@code false}
      */
     public boolean isValidatableEntity() {
-        return this.fieldDataType.equals(ValidatableEntity.class);
+        return this.isValidatableEntity(this.get().getClass().getInterfaces());
+    }
+
+    /**
+     * Tests if the field has {@link ValidatableEntity} as parameterized data type.
+     *
+     * @return {@code true} if the field has {@link ValidatableEntity} as
+     *         parameterized data type, otherwise {@code false}
+     */
+    public boolean hasParameterizedValidatableEntity() {
+
+        if (this.parameterizedValidatableEntities.isEmpty()) {
+            return false;
+        }
+
+        if (this.isList() || this.isSet()) {
+            return this.isValidatableEntity(this.parameterizedValidatableEntities.get(0).getInterfaces());
+        } else if (this.isMap()) {
+            return this.isValidatableEntity(this.parameterizedValidatableEntities.get(1).getInterfaces());
+        }
+
+        return false;
+    }
+
+    /**
+     * Tests if a field object annotated with NestedEntity implements the
+     * {@link ValidatableEntity} interface.
+     *
+     * @param interfaces The array of interfaces to be validated
+     * @return {@code true} if a field object implemets the the ValidatableEntity} ,
+     *         or {@code false}
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
+    private boolean isValidatableEntity(@NonNull Class<?>[] interfaces) {
+
+        for (Class<?> _interface : interfaces) {
+            if (_interface.equals(ValidatableEntity.class)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
