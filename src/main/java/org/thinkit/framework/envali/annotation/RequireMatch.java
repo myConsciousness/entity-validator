@@ -27,7 +27,43 @@ import org.thinkit.framework.envali.catalog.RegexPreset;
 
 /**
  * An annotation that indicates the value of the field matches the regular
- * expression specified in the {@link #expression()} .
+ * expression specified in the {@link #expression()} or
+ * {@link #presetExpression()} .
+ *
+ * <pre>
+ * Specify the expected value for Content Framework:
+ * <code>
+ * &#64;ParameterMapping( content = "Parameter" )
+ * public class ConcreteEntity implements ValidatableEntity, Serializable {
+ *
+ *      &#64;RequireMatch
+ *      private String literal;
+ *
+ *      &#64;RequireMatch( method = RegexMethod.MATCHES, errorType = ErrorType.UNRECOVERABLE, message = "failed!" )
+ *      private String unrecoverableLiteral;
+ * }
+ * </code>
+ * </pre>
+ *
+ * <pre>
+ * Specify the expected value for the annotation:
+ * <code>
+ * public class ConcreteEntity implements ValidatableEntity, Serializable {
+ *
+ *      &#64;RequireMatch( presetExpression = RegexPreset.EMAIL_ADDRESS )
+ *      private String literalWithRegexPreset;
+ *
+ *      &#64;RequireMatch( expression = "\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*" )
+ *      private String literalWithSpesifiedExpression;
+ *
+ *      &#64;RequireMatch( presetExpression = RegexPreset.EMAIL_ADDRESS, method = RegexMethod.MATCHES )
+ *      private String literalWithMatchesMethod;
+ *
+ *      &#64;RequireMatch( presetExpression = RegexPreset.EMAIL_ADDRESS, method = RegexMethod.LOOKING_AT, errorType = ErrorType.RECOVERABLE, message = "failed!" )
+ *      private String recoverableLiteral;
+ * }
+ * </code>
+ * </pre>
  *
  * @author Kato Shinya
  * @since 1.0.2
