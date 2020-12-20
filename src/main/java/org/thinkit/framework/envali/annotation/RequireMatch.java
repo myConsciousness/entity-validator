@@ -29,6 +29,36 @@ import org.thinkit.framework.envali.catalog.RegexPreset;
  * An annotation that indicates the value of the field matches the regular
  * expression specified in the {@link #expression()} or
  * {@link #presetExpression()} .
+ * <p>
+ * Several regular expression presets have already been defined as
+ * {@link RegexPreset} for this annotation. If you want to use a regular
+ * expression preset, specify the {@link RegexPreset} element for
+ * {@link #presetExpression()} . The regular expression can also be specified as
+ * an arbitrary string instead of {@link RegexPreset} . To specify an arbitrary
+ * regular expression, specify a regular expression literal for
+ * {@link #expression()} . If a regular expression preset and a regular
+ * expression literal are specified in the same annotation at the same time,
+ * like {@code &#64;RequireMatch(expression =
+ * "\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*", presetExpression =
+ * RegexPreset.EMAIL_ADDRESS)} , {@link #presetExpression()} and
+ * {@link RegexPreset} will be used preferentially in the validation process.
+ * <p>
+ * This annotation validation process provides several methods for applying
+ * regular expressions as {@link RegexMethod} . Each of them provides
+ * {@link RegexMethod#FIND} , {@link RegexMethod#LOOKING_AT} and
+ * {@link RegexMethod#MATCHES} methods, and the specification is similar to that
+ * of Matcher class which is widely known in Java. By specifying
+ * {@link RegexMethod} element in the annotation, like
+ * {@code &#64;RequireMatch(method = RegexMethod.MATCHES)} , the regular
+ * expression will be applied in the specified method during the validation
+ * process.
+ * <p>
+ * You can specify any modifier flag by specifying {@link RegexModifier} to the
+ * annotation like <code>&#64;RequireMatch(modifiers =
+ * {RegexModifier.UNIX_LINES, RegexModifier.DOTALL})</code>.
+ * <p>
+ * If this annotation is specified for an object of type other than String,
+ * UnsupportedOperationException will always be thrown at runtime.
  *
  * <pre>
  * Specify the expected value for Content Framework:
