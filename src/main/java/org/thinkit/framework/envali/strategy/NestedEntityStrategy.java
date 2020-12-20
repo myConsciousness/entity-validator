@@ -15,11 +15,13 @@
 package org.thinkit.framework.envali.strategy;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
 
 import org.thinkit.framework.envali.Envali;
 import org.thinkit.framework.envali.annotation.NestedEntity;
 import org.thinkit.framework.envali.context.ErrorContext;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
+import org.thinkit.framework.envali.helper.EnvaliFieldHelper;
 import org.thinkit.framework.envali.result.BusinessError;
 import org.thinkit.framework.envali.result.ValidationResult;
 
@@ -69,8 +71,34 @@ final class NestedEntityStrategy extends ValidationStrategy<NestedEntity> {
     @Override
     public BusinessError validate() {
 
-        final ValidationResult validationResult = Envali.validate(super.getFieldHelper().getValidatableEntity());
+        final EnvaliFieldHelper field = super.getFieldHelper();
 
+        if (field.isCollection()) {
+            for (ValidatableEntity validatableEntity : this.getValidatableEntityCollection(field)) {
+                final ValidationResult validationResult = Envali.validate(validatableEntity);
+
+                if (validationResult.hasError()) {
+                    return BusinessError.nestedError(validationResult);
+                }
+            }
+
+            return BusinessError.none();
+        }
+
+        final ValidationResult validationResult = Envali.validate(field.getValidatableEntity());
         return validationResult.hasError() ? BusinessError.nestedError(validationResult) : BusinessError.none();
+    }
+
+    /**
+     * Returns the collection of validatable entity from the field.
+     *
+     * @param field The field to be validated
+     * @return The collection of validatable entity from the field
+     *
+     * @exception NullPointerException If {@code null} is passed as an argument
+     */
+    private Collection<ValidatableEntity> getValidatableEntityCollection(@NonNull EnvaliFieldHelper field) {
+        return field.isList() ? field.getValidatableEntityList()
+                : field.isSet() ? field.getValidatableEntitySet() : field.getValidatableEntityMap().values();
     }
 }

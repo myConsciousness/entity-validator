@@ -272,6 +272,54 @@ public final class EnvaliFieldHelper {
     }
 
     /**
+     * Returns a list of validatable entity from a field object.
+     * <p>
+     * This method was created to get a ValidatableEntity in the strategy class
+     * corresponding to the NestedEntity annotation. When the strategy class
+     * corresponding to the NestedEntity annotation is started, it is already
+     * guaranteed that the field object is a ValidatableEntity, so there is no need
+     * to check when casting.
+     *
+     * @return A field object of validatable entity list
+     */
+    @SuppressWarnings("unchecked")
+    public List<ValidatableEntity> getValidatableEntityList() {
+        return (List<ValidatableEntity>) this.get();
+    }
+
+    /**
+     * Returns a map of validatable entity from a field object.
+     * <p>
+     * This method was created to get a ValidatableEntity in the strategy class
+     * corresponding to the NestedEntity annotation. When the strategy class
+     * corresponding to the NestedEntity annotation is started, it is already
+     * guaranteed that the field object is a ValidatableEntity, so there is no need
+     * to check when casting.
+     *
+     * @return A field object of validatable entity map
+     */
+    @SuppressWarnings("unchecked")
+    public Map<?, ValidatableEntity> getValidatableEntityMap() {
+        return (Map<?, ValidatableEntity>) this.get();
+    }
+
+    /**
+     * Returns a set of validatable entity from a field object.
+     * <p>
+     * This method was created to get a ValidatableEntity in the strategy class
+     * corresponding to the NestedEntity annotation. When the strategy class
+     * corresponding to the NestedEntity annotation is started, it is already
+     * guaranteed that the field object is a ValidatableEntity, so there is no need
+     * to check when casting.
+     *
+     * @return A field object of validatable entity set
+     */
+    @SuppressWarnings("unchecked")
+    public Set<ValidatableEntity> getValidatableEntitySet() {
+        return (Set<ValidatableEntity>) this.get();
+    }
+
+    /**
      * Returns a validatable entity from a field object.
      *
      * @return A field object of validatable entity
