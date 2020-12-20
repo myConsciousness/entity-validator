@@ -15,7 +15,7 @@
 <script type="text/javascript" src="script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="all-classes-index-page">
-<script type="text/javascript">var data = {"i0":4,"i1":2,"i2":8,"i3":2,"i4":4,"i5":4,"i6":2,"i7":4,"i8":2,"i9":2,"i10":4,"i11":4,"i12":8,"i13":32,"i14":4,"i15":32,"i16":32,"i17":32,"i18":32,"i19":32,"i20":32,"i21":32,"i22":32,"i23":32,"i24":32,"i25":32,"i26":1,"i27":1,"i28":4,"i29":2,"i30":2,"i31":2};
+<script type="text/javascript">var data = {"i0":4,"i1":2,"i2":8,"i3":2,"i4":4,"i5":4,"i6":2,"i7":4,"i8":2,"i9":2,"i10":4,"i11":4,"i12":8,"i13":32,"i14":4,"i15":32,"i16":4,"i17":4,"i18":4,"i19":32,"i20":32,"i21":32,"i22":32,"i23":32,"i24":32,"i25":32,"i26":32,"i27":32,"i28":32,"i29":32,"i30":1,"i31":1,"i32":4,"i33":2,"i34":2,"i35":2};
 var tabs = {65535:["t0","\u3059\u3079\u3066\u306E\u30AF\u30E9\u30B9"],1:["t1","\u30A4\u30F3\u30BF\u30D5\u30A7\u30FC\u30B9\u306E\u6982\u8981"],2:["t2","\u30AF\u30E9\u30B9\u306E\u6982\u8981"],4:["t3","\u5217\u6319\u578B\u306E\u6982\u8981"],8:["t4","\u4F8B\u5916\u306E\u6982\u8981"],32:["t6","\u6CE8\u91C8\u578B\u306E\u6982\u8981"]};
 var altColor = "alt-color";
 var rowColor = "row-color";
@@ -172,103 +172,128 @@ loadScripts(document, 'script');</script>
 </th>
 </tr>
 <tr class="alt-color" id="i16">
+<td class="col-first"><a href="org/thinkit/framework/envali/catalog/RegexMethod.html" title="org.thinkit.framework.envali.catalog内の列挙型">RegexMethod</a></td>
+<th class="col-last" scope="row">
+<div class="block">The catalog that manages the method used to apply regular expression.</div>
+</th>
+</tr>
+<tr class="row-color" id="i17">
+<td class="col-first"><a href="org/thinkit/framework/envali/catalog/RegexModifier.html" title="org.thinkit.framework.envali.catalog内の列挙型">RegexModifier</a></td>
+<th class="col-last" scope="row">
+<div class="block">The catalog that manages regex modifier.</div>
+</th>
+</tr>
+<tr class="alt-color" id="i18">
+<td class="col-first"><a href="org/thinkit/framework/envali/catalog/RegexPreset.html" title="org.thinkit.framework.envali.catalog内の列挙型">RegexPreset</a></td>
+<th class="col-last" scope="row">
+<div class="block">The catalog that manages regex preset.</div>
+</th>
+</tr>
+<tr class="row-color" id="i19">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireEndWith.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireEndWith</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation indicating that the string ends with a specific string.</div>
 </th>
 </tr>
-<tr class="row-color" id="i17">
+<tr class="alt-color" id="i20">
+<td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireMatch.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireMatch</a></td>
+<th class="col-last" scope="row">
+<div class="block">An annotation that indicates the value of the field matches the regular
+ expression specified in the <a href="org/thinkit/framework/envali/annotation/RequireMatch.html#expression()"><code>RequireMatch.expression()</code></a> .</div>
+</th>
+</tr>
+<tr class="row-color" id="i21">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireNegative.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireNegative</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation that indicates the field is not allowed to be set to positive
  numbers.</div>
 </th>
 </tr>
-<tr class="alt-color" id="i18">
+<tr class="alt-color" id="i22">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireNonBlank.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireNonBlank</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation that indicates the field is not allowed to be set to <code>""</code>
  .</div>
 </th>
 </tr>
-<tr class="row-color" id="i19">
+<tr class="row-color" id="i23">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireNonEmpty.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireNonEmpty</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation that indicates the field is not allowed to be set to
  <code>null</code> or empty.</div>
 </th>
 </tr>
-<tr class="alt-color" id="i20">
+<tr class="alt-color" id="i24">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireNonNull.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireNonNull</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation that indicates the field is not allowed to be set to
  <code>null</code> .</div>
 </th>
 </tr>
-<tr class="row-color" id="i21">
+<tr class="row-color" id="i25">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequirePositive.html" title="org.thinkit.framework.envali.annotation内の注釈">RequirePositive</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation that indicates the field is not allowed to be set to negative
  numbers.</div>
 </th>
 </tr>
-<tr class="alt-color" id="i22">
+<tr class="alt-color" id="i26">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireRangeFrom.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireRangeFrom</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation indicating that the value is not under the lower limit.</div>
 </th>
 </tr>
-<tr class="row-color" id="i23">
+<tr class="row-color" id="i27">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireRangeFromTo.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireRangeFromTo</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation that indicate that the numbers are within the lower and upper
  limits.</div>
 </th>
 </tr>
-<tr class="alt-color" id="i24">
+<tr class="alt-color" id="i28">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireRangeTo.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireRangeTo</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation indicating that the value is not above the upper limit.</div>
 </th>
 </tr>
-<tr class="row-color" id="i25">
+<tr class="row-color" id="i29">
 <td class="col-first"><a href="org/thinkit/framework/envali/annotation/RequireStartWith.html" title="org.thinkit.framework.envali.annotation内の注釈">RequireStartWith</a></td>
 <th class="col-last" scope="row">
 <div class="block">An annotation indicating that the string starts with a specific string.</div>
 </th>
 </tr>
-<tr class="alt-color" id="i26">
+<tr class="alt-color" id="i30">
 <td class="col-first"><a href="org/thinkit/framework/envali/strategy/StrategyFactory.html" title="org.thinkit.framework.envali.strategy内のインタフェース">StrategyFactory</a></td>
 <th class="col-last" scope="row">
 <div class="block">The abstract factory class that abstracts the process of generating the
  strategy class for the validation process.</div>
 </th>
 </tr>
-<tr class="row-color" id="i27">
+<tr class="row-color" id="i31">
 <td class="col-first"><a href="org/thinkit/framework/envali/entity/ValidatableEntity.html" title="org.thinkit.framework.envali.entity内のインタフェース">ValidatableEntity</a></td>
 <th class="col-last" scope="row">
 <div class="block">A marker interface that indicates that it is a verifiable entity.</div>
 </th>
 </tr>
-<tr class="alt-color" id="i28">
+<tr class="alt-color" id="i32">
 <td class="col-first"><a href="org/thinkit/framework/envali/catalog/ValidationPattern.html" title="org.thinkit.framework.envali.catalog内の列挙型">ValidationPattern</a></td>
 <th class="col-last" scope="row">
 <div class="block">The catalog that manages validation pattern.</div>
 </th>
 </tr>
-<tr class="row-color" id="i29">
+<tr class="row-color" id="i33">
 <td class="col-first"><a href="org/thinkit/framework/envali/result/ValidationResult.html" title="org.thinkit.framework.envali.result内のクラス">ValidationResult</a></td>
 <th class="col-last" scope="row">
 <div class="block">A data class that manages the results of validation by <a href="org/thinkit/framework/envali/Envali.html" title="org.thinkit.framework.envali内のクラス"><code>Envali</code></a> .</div>
 </th>
 </tr>
-<tr class="alt-color" id="i30">
+<tr class="alt-color" id="i34">
 <td class="col-first"><a href="org/thinkit/framework/envali/strategy/ValidationStrategyContext.html" title="org.thinkit.framework.envali.strategy内のクラス">ValidationStrategyContext</a></td>
 <th class="col-last" scope="row">
 <div class="block">Context class to execute the validation strategy.</div>
 </th>
 </tr>
-<tr class="row-color" id="i31">
+<tr class="row-color" id="i35">
 <td class="col-first"><a href="org/thinkit/framework/envali/strategy/ValidationStrategyFactory.html" title="org.thinkit.framework.envali.strategy内のクラス">ValidationStrategyFactory</a></td>
 <th class="col-last" scope="row">
 <div class="block">The concrete factory class that generating the strategy class for the
