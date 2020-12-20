@@ -74,7 +74,73 @@ loadScripts(document, 'script');</script>
 <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/annotation/Retention.html" title="java.lang.annotation内のクラスまたはインタフェース" class="external-link">@Retention</a>(<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/annotation/RetentionPolicy.html#RUNTIME" title="java.lang.annotation内のクラスまたはインタフェース" class="external-link">RUNTIME</a>)
 public @interface <span class="type-name-label">RequireMatch</span></pre>
 <div class="block">An annotation that indicates the value of the field matches the regular
- expression specified in the <a href="#expression()"><code>expression()</code></a> .</div>
+ expression specified in the <a href="#expression()"><code>expression()</code></a> or
+ <a href="#presetExpression()"><code>presetExpression()</code></a> .
+ <p>
+ Several regular expression presets have already been defined as
+ <a href="../catalog/RegexPreset.html" title="org.thinkit.framework.envali.catalog内の列挙型"><code>RegexPreset</code></a> for this annotation. If you want to use a regular
+ expression preset, specify the <a href="../catalog/RegexPreset.html" title="org.thinkit.framework.envali.catalog内の列挙型"><code>RegexPreset</code></a> element for
+ <a href="#presetExpression()"><code>presetExpression()</code></a> . The regular expression can also be specified as
+ an arbitrary string instead of <a href="../catalog/RegexPreset.html" title="org.thinkit.framework.envali.catalog内の列挙型"><code>RegexPreset</code></a> . To specify an arbitrary
+ regular expression, specify a regular expression literal for
+ <a href="#expression()"><code>expression()</code></a> . If a regular expression preset and a regular
+ expression literal are specified in the same annotation at the same time,
+ like <code>&amp;#64;RequireMatch(expression =
+ "\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*", presetExpression =
+ RegexPreset.EMAIL_ADDRESS)</code> , <a href="#presetExpression()"><code>presetExpression()</code></a> and
+ <a href="../catalog/RegexPreset.html" title="org.thinkit.framework.envali.catalog内の列挙型"><code>RegexPreset</code></a> will be used preferentially in the validation process.
+ <p>
+ This annotation validation process provides several methods for applying
+ regular expressions as <a href="../catalog/RegexMethod.html" title="org.thinkit.framework.envali.catalog内の列挙型"><code>RegexMethod</code></a> . Each of them provides
+ <a href="../catalog/RegexMethod.html#FIND"><code>RegexMethod.FIND</code></a> , <a href="../catalog/RegexMethod.html#LOOKING_AT"><code>RegexMethod.LOOKING_AT</code></a> and
+ <a href="../catalog/RegexMethod.html#MATCHES"><code>RegexMethod.MATCHES</code></a> methods, and the specification is similar to that
+ of Matcher class which is widely known in Java. By specifying
+ <a href="../catalog/RegexMethod.html" title="org.thinkit.framework.envali.catalog内の列挙型"><code>RegexMethod</code></a> element in the annotation, like
+ <code>&amp;#64;RequireMatch(method = RegexMethod.MATCHES)</code> , the regular
+ expression will be applied in the specified method during the validation
+ process.
+ <p>
+ You can specify any modifier flag by specifying <a href="../catalog/RegexModifier.html" title="org.thinkit.framework.envali.catalog内の列挙型"><code>RegexModifier</code></a> to the
+ annotation like <code>&#64;RequireMatch(modifiers =
+ {RegexModifier.UNIX_LINES, RegexModifier.DOTALL})</code>.
+ <p>
+ If this annotation is specified for an object of type other than String,
+ UnsupportedOperationException will always be thrown at runtime.
+
+ <pre>
+ Specify the expected value for Content Framework:
+ <code>
+ &#64;ParameterMapping( content = "Parameter" )
+ public class ConcreteEntity implements ValidatableEntity, Serializable {
+
+      &#64;RequireMatch
+      private String literal;
+
+      &#64;RequireMatch( method = RegexMethod.MATCHES, errorType = ErrorType.UNRECOVERABLE, message = "failed!" )
+      private String unrecoverableLiteral;
+ }
+ </code>
+ </pre>
+
+ <pre>
+ Specify the expected value for the annotation:
+ <code>
+ public class ConcreteEntity implements ValidatableEntity, Serializable {
+
+      &#64;RequireMatch( presetExpression = RegexPreset.EMAIL_ADDRESS )
+      private String literalWithRegexPreset;
+
+      &#64;RequireMatch( expression = "\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*" )
+      private String literalWithSpesifiedExpression;
+
+      &#64;RequireMatch( presetExpression = RegexPreset.EMAIL_ADDRESS, method = RegexMethod.MATCHES )
+      private String literalWithMatchesMethod;
+
+      &#64;RequireMatch( presetExpression = RegexPreset.EMAIL_ADDRESS, method = RegexMethod.LOOKING_AT, errorType = ErrorType.RECOVERABLE, message = "failed!" )
+      private String recoverableLiteral;
+ }
+ </code>
+ </pre></div>
 <dl class="notes">
 <dt>導入されたバージョン:</dt>
 <dd>1.0.2</dd>
