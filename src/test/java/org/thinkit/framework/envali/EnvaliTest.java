@@ -548,7 +548,7 @@ public final class EnvaliTest {
             final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
                     () -> Envali.validate(new NestedEntityWithNotValidatableGenericEntityForTest(List.of())));
 
-                    assertNotNull(exception);
+            assertNotNull(exception);
             assertEquals(
                     "The generic type specified for collection java.util.List<java.lang.String>#genericEntity does not implement the org.thinkit.framework.envali.entity.ValidatableEntity interface.",
                     exception.getMessage());
@@ -559,10 +559,59 @@ public final class EnvaliTest {
             final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
                     () -> Envali.validate(new NestedEntityWithNotValidatableEntityForTest(new StringBuilder())));
 
-                    assertNotNull(exception);
+            assertNotNull(exception);
             assertEquals(
                     "The org.thinkit.framework.envali.NestedEntityWithNotValidatableEntityForTest#entity does not implement the org.thinkit.framework.envali.entity.ValidatableEntity interface.",
                     exception.getMessage());
+        }
+
+        @Test
+        void testWhenNestedParameterizedEntitiesAreValidatable() {
+            assertDoesNotThrow(() -> Envali.validate(new NestedParameterizedValidatableEntityForTest(
+                    List.of(new RequireNegativeForTest(-1)), Map.of("test", new RecoverableRequireNegativeForTest(-1)),
+                    Set.of(new UnrecoverableRequireNegativeForTest(-1)))));
+        }
+
+        @Test
+        void testWhenNestedParameterizedEntitiesAreNotValidatable() {
+            final ValidationResult validationResult = assertDoesNotThrow(() -> Envali
+                    .validate(new NestedParameterizedValidatableEntityForTest(List.of(new RequireNegativeForTest(-1)),
+                            Map.of("test", new RecoverableRequireNegativeForTest(0)),
+                            Set.of(new UnrecoverableRequireNegativeForTest(0)))));
+
+            assertNotNull(validationResult);
+            assertTrue(validationResult.hasError());
+
+            final List<BusinessError> businessErrors = validationResult
+                    .getError(NestedParameterizedValidatableEntityForTest.class);
+
+            assertNotNull(businessErrors);
+            assertTrue(businessErrors.size() == 2);
+            assertTrue(businessErrors.get(0).hasNestedError());
+            assertTrue(businessErrors.get(1).hasNestedError());
+
+            final ValidationResult nestedValidationResultForRecoverable = businessErrors.get(0).getNestedError();
+            final ValidationResult nestedValidationResultForUnrecoverable = businessErrors.get(1).getNestedError();
+
+            assertNotNull(nestedValidationResultForRecoverable);
+            assertNotNull(nestedValidationResultForUnrecoverable);
+            assertTrue(nestedValidationResultForRecoverable.hasError());
+            assertTrue(nestedValidationResultForUnrecoverable.hasError());
+
+            final List<BusinessError> businessErrorsForRecoverable = nestedValidationResultForRecoverable
+                    .getError(RecoverableRequireNegativeForTest.class);
+            final List<BusinessError> businessErrorsForUnrecoverable = nestedValidationResultForUnrecoverable
+                    .getError(UnrecoverableRequireNegativeForTest.class);
+
+            assertNotNull(businessErrorsForRecoverable);
+            assertNotNull(businessErrorsForUnrecoverable);
+            assertTrue(businessErrorsForRecoverable.size() == 1);
+            assertTrue(businessErrorsForUnrecoverable.size() == 1);
+            assertTrue(businessErrorsForRecoverable.get(0).isRecoverable());
+            assertTrue(businessErrorsForUnrecoverable.get(0).isUnrecoverable());
+            assertEquals("success", businessErrorsForRecoverable.get(0).getMessage());
+            assertEquals("success", businessErrorsForUnrecoverable.get(0).getMessage());
+
         }
     }
 
