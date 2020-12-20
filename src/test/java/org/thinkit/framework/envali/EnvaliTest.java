@@ -573,6 +573,14 @@ public final class EnvaliTest {
         }
 
         @Test
+        void testWhenNestedParameterizedEntityIsNotValidatableAtRuntime() {
+            assertThrows(PreconditionFailedException.class, () -> Envali
+                    .validate(new NestedParameterizedValidatableEntityForTest(List.of(new RequireNegativeForTest(0)),
+                            Map.of("test", new RecoverableRequireNegativeForTest(-1)),
+                            Set.of(new UnrecoverableRequireNegativeForTest(-1)))));
+        }
+
+        @Test
         void testWhenNestedParameterizedEntitiesAreNotValidatable() {
             final ValidationResult validationResult = assertDoesNotThrow(() -> Envali
                     .validate(new NestedParameterizedValidatableEntityForTest(List.of(new RequireNegativeForTest(-1)),
