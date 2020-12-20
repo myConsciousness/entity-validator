@@ -27,6 +27,19 @@ import java.lang.annotation.Target;
  * follows. Whenever this annotation is specified for an object that does not
  * implement the ValidatableEntity annotation, UnsupportedOperationException
  * will be thrown at runtime.
+ * <p>
+ * This annotation can also be specified for collection classes that implement
+ * interfaces such as List, Map, and Set. When this annotation is specified for
+ * a collection class, the type specified in the generics of the collection is
+ * parsed, and if the type specified in the generics implements the
+ * ValidatableEntity interface, validation can be performed. If the type
+ * specified in the generic does not implement the ValidatableEntity interface,
+ * UnsupportedOperationException will be thrown at runtime.
+ * <p>
+ * For List and Set, the zeroth generic type (of course) must be a
+ * ValidatableEntity, and for Map the value, like Map&lt;String,
+ * ConcreteValidatableEntity&gt;), of the value generic must be a
+ * ValidatableEntity.
  *
  * <pre>
  * <code>
@@ -34,6 +47,15 @@ import java.lang.annotation.Target;
  *
  *      &#64;NestedEntity
  *      private ValidatableEntity entity;
+ *
+ *      &#64;NestedEntity
+ *      private List&lt;ConcreteValidatableEntity&gt; validatableEntityList;
+ *
+ *      &#64;NestedEntity
+ *      private Map&lt;String, ConcreteValidatableEntity&gt; validatableEntityMap;
+ *
+ *      &#64;NestedEntity
+ *      private Set&lt;ConcreteValidatableEntity&gt; validatableEntitySet;
  * }
  * </code>
  * </pre>
