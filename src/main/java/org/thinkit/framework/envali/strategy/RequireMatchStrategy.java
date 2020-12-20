@@ -20,6 +20,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.thinkit.common.base.precondition.Preconditions;
 import org.thinkit.common.base.precondition.exception.PreconditionFailedException;
 import org.thinkit.common.regex.Epitaph;
 import org.thinkit.common.regex.catalog.RegexOption;
@@ -82,21 +83,11 @@ final class RequireMatchStrategy extends ValidationStrategy<RequireMatch> {
         final RequireMatch annotation = errorContext.getAnnotation();
 
         return switch (annotation.errorType()) {
-            case RECOVERABLE -> {
-                if (this.validate(annotation)) {
-                    yield BusinessError.none();
-                }
+            case RECOVERABLE -> this.validate(annotation) ? BusinessError.none()
+                    : BusinessError.recoverable(annotation.message());
 
-                yield BusinessError.recoverable(annotation.message());
-            }
-
-            case UNRECOVERABLE -> {
-                if (this.validate(annotation)) {
-                    yield BusinessError.none();
-                }
-
-                yield BusinessError.unrecoverable(annotation.message());
-            }
+            case UNRECOVERABLE -> this.validate(annotation) ? BusinessError.none()
+                    : BusinessError.unrecoverable(annotation.message());
 
             case RUNTIME -> {
                 if (this.validate(annotation)) {
@@ -122,6 +113,7 @@ final class RequireMatchStrategy extends ValidationStrategy<RequireMatch> {
 
         final Epitaph.Builder builder = Epitaph.builder().input(super.getFieldHelper().getString());
         final RegexPreset presetExpression = annotation.presetExpression();
+        Preconditions.requireNonNull(presetExpression);
 
         if (presetExpression == RegexPreset.NONE) {
             builder.pattern(
