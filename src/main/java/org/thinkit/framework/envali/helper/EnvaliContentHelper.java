@@ -19,6 +19,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.thinkit.common.base.precondition.Preconditions;
@@ -156,14 +157,14 @@ public final class EnvaliContentHelper {
     }
 
     /**
-     * Returns a list containing Envali's content attributes based on the definition
+     * Returns a set containing Envali's content attributes based on the definition
      * information for {@link EnvaliContentAttribute} .
      *
-     * @return A list containing Envali's content attributes
+     * @return A set containing Envali's content attributes
      */
-    private List<String> getContentAttributes() {
+    private Set<String> getContentAttributes() {
         return Arrays.asList(EnvaliContentAttribute.values()).stream().map(EnvaliContentAttribute::getTag)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     /**
