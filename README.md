@@ -1,5 +1,5 @@
 ![Build](https://img.shields.io/badge/Build-Automated-2980b9.svg?style=for-the-badge)
-![Latest Version](https://img.shields.io/badge/Latest_Version-v1.0.2-27ae60.svg?style=for-the-badge)
+![Latest Version](https://img.shields.io/badge/Latest_Version-v1.0.3-27ae60.svg?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-Apache_2.0-e74c3c.svg?style=for-the-badge)</br>
 ![Java CI with Gradle](https://github.com/myConsciousness/entity-validator/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=main)
 
@@ -7,6 +7,7 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 **Table of Contents**
 
 - [What is it?](#what-is-it)
@@ -46,7 +47,7 @@ Validation items can be configured by adding annotations to the target field in 
 <dependency>
   <groupId>org.thinkit.framework.envali</groupId>
   <artifactId>entity-validator</artifactId>
-  <version>v1.0.2</version>
+  <version>v1.0.3</version>
 </dependency>
 
 <servers>
@@ -73,7 +74,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.thinkit.framework.envali:entity-validator:v1.0.2'
+    implementation 'org.thinkit.framework.envali:entity-validator:v1.0.3'
 }
 ```
 
