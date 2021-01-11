@@ -168,12 +168,12 @@ public final class EnvaliContentHelper {
     }
 
     /**
-     * Returns a map containing Envali's content conditions based on the definition
+     * Returns a list containing Envali's content conditions based on the definition
      * information for {@link EnvaliContentCondition} .
      *
-     * @return A map containing Envali's content conditions
+     * @return A list containing Envali's content conditions
      */
-    private Map<String, String> getContentConditions() {
-        return Map.of(EnvaliContentCondition.VARIABLE_NAME.getTag(), this.fieldName);
+    private List<Map<String, String>> getContentConditions() {
+        return List.of(Map.of(EnvaliContentCondition.VARIABLE_NAME.getTag(), this.fieldName));
     }
 }
